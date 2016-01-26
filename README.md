@@ -1,4 +1,4 @@
-# GigRTC
+# gigg.tv
 
 Twitch.TV for live performances
 
