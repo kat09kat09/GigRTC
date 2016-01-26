@@ -148,7 +148,7 @@ function showSpinner() {
 function hideSpinner() {
   for (var i = 0; i < arguments.length; i++) {
     arguments[i].src = '';
-    arguments[i].poster = './img/guitarist.jpg';
+    arguments[i].poster = './public/img/guitarist.jpg';
     arguments[i].style.background = '';
   }
 }
