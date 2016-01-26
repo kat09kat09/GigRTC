@@ -25,3 +25,16 @@ video {
   background-color: #33f;
   border-style: none;
 }
+
+.SideBar {
+  background-color: gray;
+  max-width: 200px; 
+  height: 100vh; 
+}
+
+.container {
+  position: relative;  
+  display: inline-block;
+  padding-left: 0px;
+
+}
