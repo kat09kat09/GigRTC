@@ -7,6 +7,9 @@ logs
 pids
 *.pid
 *.seed
+
+client/bundle.js
+
 #dependency directories
 /node_modules
 client/bower_components
