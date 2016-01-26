@@ -2,17 +2,17 @@
 <html>
 <head>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="public/css/main.css">
   <script src="bower_components/adapter.js/adapter.js"></script>
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="bower_components/kurento-utils/js/kurento-utils.js"></script>
-  <script src="js/webRTC.js"></script>
+  <script src="public/js/webRTC.js"></script>
   <title>Welcome to gigg.tv enjoy the show!</title>
 </head>
 <body>
   <div id="videoBig">
-            <video id="video" autoplay width="640px" height="480px" poster="img/guitarist.jpg"> 
+            <video id="video" autoplay width="640px" height="480px" poster="public/img/guitarist.jpg">
             </video>
                  <div class="video-overlay">
                  <div class="btn-group video-controls">
@@ -25,5 +25,8 @@
                 </div>
                 </div>
           </div>
+  <div class="container"></div>
+
+  <script src="/bundle.js"></script>
 </body>
 </html>
