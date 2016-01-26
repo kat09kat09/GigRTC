@@ -1,0 +1,20 @@
+{
+  "name": "gigg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "team dream stream",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "kurento-client": "^6.2.0",
+    "minimist": "^1.2.0",
+    "ws": "^1.0.1"
+  },
+  "devDependencies": {
+    "bower": "^1.4.1"
+  }
+}

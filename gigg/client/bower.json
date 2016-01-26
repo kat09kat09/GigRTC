@@ -1,0 +1,24 @@
+{
+  "name": "gigg",
+  "authors": [
+    "team dream stream"
+  ],
+  "description": "",
+  "main": "index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "gigg.tv",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "adapter.js": "*",
+    "bootstrap": "~3.3.6",
+    "kurento-utils": "~6.2.0"
+  }
+}

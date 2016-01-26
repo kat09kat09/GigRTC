@@ -1,0 +1,27 @@
+video {
+  display: block;
+  font-size: 1rem;
+  line-height: .5rem;
+  color: #555;
+  background-color: #000;
+  background-image: none;
+  border: 1px solid #000;
+}
+
+#videoBig {
+  max-width: 640px;
+  max-height: 480px;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+#call {
+  background-color: #970;
+  border-style: none; 
+}
+
+#viewer {
+  background-color: #33f;
+  border-style: none;
+}
