@@ -13,3 +13,8 @@ client/bundle.js
 #dependency directories
 /node_modules
 client/bower_components
+client/node_modules
+
+# Floobits
+.floo
+.flooignore
