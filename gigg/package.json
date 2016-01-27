@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "postinstall": "cd client && bower install && npm install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "team dream stream",
@@ -12,7 +13,6 @@
     "express": "^4.13.4",
     "kurento-client": "^6.2.0",
     "minimist": "^1.2.0",
-    "react-bootstrap": "^0.28.2",
     "ws": "^1.0.1"
   },
   "devDependencies": {
