@@ -6,9 +6,9 @@ export default () => {
   return (
     <Navbar className="header">
       <Navbar.Header>
-       
-          <Link to="/" className="link">Gigg.TV</Link>
-        
+         
+          <Link to="/" className="logoLink"><h1>GIGG.TV</h1></Link>
+         
       </Navbar.Header>
     </Navbar>
   );
