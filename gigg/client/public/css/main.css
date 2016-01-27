@@ -18,10 +18,23 @@ video {
 
 #call {
   background-color: #970;
-  border-style: none; 
+  border-style: none;
 }
 
 #viewer {
   background-color: #33f;
   border-style: none;
+}
+
+.SideBar {
+  background-color: gray;
+  max-width: 200px;
+  height: 100vh;
+}
+
+.container {
+  position: relative;
+  display: inline-block;
+  padding-left: 0px;
+
 }
