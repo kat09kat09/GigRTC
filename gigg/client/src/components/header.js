@@ -4,11 +4,11 @@ import { Link } from 'react-router';
 
 export default () => {
   return (
-    <Navbar>
+    <Navbar className="header">
       <Navbar.Header>
-        <Navbar.Brand>
-          <Link to="/" >Gigg.TV</Link>
-        </Navbar.Brand>
+       
+          <Link to="/" className="link">Gigg.TV</Link>
+        
       </Navbar.Header>
     </Navbar>
   );

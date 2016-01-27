@@ -1,5 +1,17 @@
+/* COLOR SWATCHES */
+/* #ededed #7f7f7f #212121 #141414 #cf0b22 */
+/*  white   ltgrey  dkgrey  black    red */
+
+/* ELEMENT STYLES */
+
+body {
+  background-color: #ededed;
+  color: #141414;
+}
+
+
 video {
-  display: block;
+  display: inline-block;
   font-size: 1rem;
   line-height: .5rem;
   color: #555;
@@ -9,11 +21,10 @@ video {
 }
 
 #videoBig {
-  max-width: 640px;
-  max-height: 480px;
-  top: 0;
-  left: 0;
-  z-index: 1;
+  width: 640px;
+  height: 480px;
+  margin: 0 auto;
+  display: inline-block;
 }
 
 
@@ -27,15 +38,29 @@ video {
   border-style: none;
 }
 
+.header {
+  width: 100vw;
+  height: 72px;
+  margin: 0 0 0 0;
+  border-style: none;
+  background-color: #cf0b22;
+  color: #141414;
+  border-radius: 0px;
+}
+
+ .link {
+  color: #141414;
+}
+
 .SideBar {
-  background-color: gray;
-  max-width: 200px;
+  background-color: #7f7f7f;
+  width: 200px;
   height: 100vh;
+  display: inline-block;
+  float: left;
 }
 
 .container {
-  position: relative;
   display: inline-block;
   padding-left: 0px;
-
 }
