@@ -16,12 +16,13 @@ video {
   z-index: 1;
 }
 
-#call {
+
+.startBroadcast {
   background-color: #970;
   border-style: none; 
 }
 
-#viewer {
+.joinBroadcast {
   background-color: #33f;
   border-style: none;
 }

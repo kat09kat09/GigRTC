@@ -6,16 +6,16 @@ window.onload = function() {
   
   video = document.getElementById('video');
 
-  document.getElementById('call').addEventListener('click', function() { presenter(); } );
-  document.getElementById('viewer').addEventListener('click', function() { viewer(); } );
-  document.getElementById('terminate').addEventListener('click', function() { stop(); } );
+  document.getElementsByClassName('startBroadcast')[0].addEventListener('click', function() { presenter(); } );
+  document.getElementsByClassName('joinBroadcast')[0].addEventListener('click', function() { viewer(); } );
+  document.getElementsByClassName('endBroadcast')[0].addEventListener('click', function() { stop(); } );
 }
 
 window.onbeforeunload = function() {
   ws.close();
 }
 
-//This is where the signalling takes place. Look in server.js to see the other half
+//This is where the signaling takes place. Look in server.js to see the other half
 ws.onmessage = function(message) {
   var parsedMessage = JSON.parse(message.data);
   console.info('Received message: ' + message.data);
@@ -32,7 +32,7 @@ ws.onmessage = function(message) {
 
 function presenterResponse(message) {
   if (message.response != 'accepted') {
-    var errorMsg = message.message ? message.message : 'Unknow error';
+    var errorMsg = message.message ? message.message : 'Unknown error';
     console.warn('Call not accepted for the following reason: ' + errorMsg);
     dispose();
   } else {
@@ -42,7 +42,7 @@ function presenterResponse(message) {
 
 function viewerResponse(message) {
   if (message.response != 'accepted') {
-    var errorMsg = message.message ? message.message : 'Unknow error';
+    var errorMsg = message.message ? message.message : 'Unknown error';
     console.warn('Call not accepted for the following reason: ' + errorMsg);
     dispose();
   } else {
@@ -134,7 +134,7 @@ function dispose() {
 
 function sendMessage(message) {
   var jsonMessage = JSON.stringify(message);
-  console.log('Senging message: ' + jsonMessage);
+  console.log('Sending message: ' + jsonMessage);
   ws.send(jsonMessage);
 }
 
