@@ -10,7 +10,9 @@ export default class App extends Component {
       <div>
         <Header/>
         <SideBar/>
-        {this.props.children}
+        <div className="videoWrapper">
+          {this.props.children}
+        </div>
       </div>
     );
   }

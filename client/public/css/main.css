@@ -2,14 +2,21 @@
 /* #ededed #7f7f7f #212121 #141414 #cf0b22 */
 /*  white   ltgrey  dkgrey  black    red */
 
+/* #BE5446 #FCF660 #FD9C65 #44343E #282E3E */
+/*   red    yellow  orange  purp     navy  */
+
+/* #B09EAC #7B0D0C #500000 #260000 #141414 */
 /* ELEMENT STYLES */
 
 body {
-  background-color: #ededed;
+  background-color: #BE5446;
   color: #141414;
 }
 
-
+h1 {
+  font-size: 3rem;
+  color: #FCF660;
+}
 video {
   display: inline-block;
   font-size: 1rem;
@@ -18,15 +25,21 @@ video {
   background-color: #000;
   background-image: none;
   border: 1px solid #000;
+  margin-top: 20px;
 }
 
 #videoBig {
   width: 640px;
   height: 480px;
   margin: 0 auto;
-  display: inline-block;
+
 }
 
+
+.streamButtons {
+  width: 320px;
+  margin: 0 auto;
+}
 
 .startBroadcast {
   background-color: #970;
@@ -38,29 +51,43 @@ video {
   border-style: none;
 }
 
-.header {
-  width: 100vw;
-  height: 72px;
-  margin: 0 0 0 0;
+.endBroadcast {
+  background-color: red;
   border-style: none;
-  background-color: #cf0b22;
+}
+
+/*.videoWrapper {
+  max-width: 100%;
+}*/
+
+.header {
+  width: 100%;
+  height: 72px;
+  background-color: #44343E;
   color: #141414;
   border-radius: 0px;
+  font-family: 'Chelsea Market', cursive;
+  padding-left: 16px;
 }
 
- .link {
-  color: #141414;
+ .logoLink {
+  text-decoration: none;
+  margin: 15px;
 }
+
+
 
 .SideBar {
-  background-color: #7f7f7f;
-  width: 200px;
-  height: 100vh;
+  background-color: #FD9C65;
+  width: 15%;
+  height: 100%;
   display: inline-block;
   float: left;
+  position: absolute;
 }
 
 .container {
   display: inline-block;
-  padding-left: 0px;
+  height: 100%;
+  width: 100%;
 }
