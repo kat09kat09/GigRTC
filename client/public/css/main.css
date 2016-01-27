@@ -70,12 +70,29 @@ video {
   padding-left: 16px;
 }
 
- .logoLink {
+.logoLink {
   text-decoration: none;
-  margin: 15px;
+   position: relative;
+   top: -30px;
+}
+
+.streamYourselfLink {
+  text-decoration: none;
+   position: relative;
+   /*top: -30px;*/
+   float: right;
 }
 
 
+.streamYourself {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  margin-top: -25px;
+  margin-left: -25px;
+  width: 100px;
+  height: 100px;
+}
 
 .SideBar {
   background-color: #FD9C65;
@@ -91,3 +108,5 @@ video {
   height: 100%;
   width: 100%;
 }
+
+

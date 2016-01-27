@@ -8,7 +8,8 @@ export default () => {
       <Navbar.Header>
          
           <Link to="/" className="logoLink"><h1>GIGG.TV</h1></Link>
-         
+          <Link to="/streamYourself" className="streamYourselfLink"><div>Stream Yourself</div></Link>
+
       </Navbar.Header>
     </Navbar>
   );
