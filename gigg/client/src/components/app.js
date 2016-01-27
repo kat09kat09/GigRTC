@@ -9,8 +9,8 @@ export default class App extends Component {
     return (
       <div>
         <Header/>
-        {this.props.children}
         <SideBar/>
+        {this.props.children}
       </div>
     );
   }
