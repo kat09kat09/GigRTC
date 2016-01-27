@@ -18,8 +18,8 @@
   ],
   "dependencies": {
     "adapter.js": "*",
-    "bootstrap": "~3.3.6",
     "kurento-utils": "~6.2.0",
-    "reset-css": "~2.0.2011012602"
+    "reset-css": "~2.0.2011012602",
+    "jquery": "~2.2.0"
   }
 }
