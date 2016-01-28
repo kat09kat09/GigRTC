@@ -142,7 +142,7 @@ export function determineEnvironment(){
     return (dispatch,state) => {
        return fetch('https://localhost:1337/auth/getToken/', config)
             .then(response=> {
-                dispatch(environmentLocation('https://localhost:1337'))
+                dispatch(environmentLocation('https://localhost:1338'))
             }).catch((error)=> {
             dispatch(environmentLocation('https://tranquil-dusk-46949.herokuapp.com'))
 
