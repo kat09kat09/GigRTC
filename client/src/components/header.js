@@ -13,7 +13,7 @@ class Header extends Component {
                 <Navbar.Header>
 
                     {this.props.isAuthenticated
-                        ? <li><a href='#' onClick={() => this.props.logoutAndRedirect()}>Logout</a> </li>
+                        ? <li className="loginForm"><a href='#' onClick={() => this.props.logoutAndRedirect()}>Logout</a> </li>
                         : <Login />
                     }
                     <Link to="/" className="logoLink"><h1>GIGG.TV</h1></Link>

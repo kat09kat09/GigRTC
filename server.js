@@ -7,6 +7,11 @@ var kurento = require('kurento-client');
 var fs    = require('fs');
 var https = require('https');
 var http = require('http');
+var CONFIG = require('./config.js')
+
+var favicon = require('serve-favicon');
+
+
 
 var argv = minimist(process.argv.slice(2), {
     default: {
@@ -371,20 +376,43 @@ function onIceCandidate(sessionId, _candidate) {
     }
 }
 
-var jwt = require('jsonwebtoken')
+var jwt = require('jsonwebtoken');
+var expressJWT = require('express-jwt')
 var bodyParser = require('body-parser');
 
+app.use(favicon(__dirname + '/client/public/img/spinner.gif'));
 
 
 app.use(bodyParser.json());
+
 app.use(express.static(path.join(__dirname, 'client')));
+app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/','/auth/getToken/']}));
 
 app.post('/auth/getToken/', (req, res) => {
-    console.log("hey there", req.body)
     if (req.body.userName == 'tds@tds.com' && req.body.password == 'tds') {
+        var myToken = jwt.sign({userName:req.body.userName},CONFIG.JWT_SECRET)
         res.status(200)
-            .json({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRlc3QgVXNlciJ9.J6n4-v0I85zk9MkxBHroZ9ZPZEES-IKeul9ozxYnoZ8'});
+            .json({token: myToken});
     } else {
         res.sendStatus(403);
     }
 });
+
+app.get('/getData/', (req, res) => {
+    //var token = req.headers['authorization'];
+    //if (!token) {
+    //    res.sendStatus(401);
+    //} else {
+    //    try {
+    //        console.log(token)
+    //        var decoded = jwt.verify(token.replace('Bearer ', ''), 'secret-key');
+    //        res.status(200)
+    //            .json({data: 'Valid JWT found! This protected data was fetched from the server.'});
+    //    } catch (e) {
+    //        res.sendStatus(401);
+    //    }
+    //}
+    res.status(200)
+        .json({data: 'Valid JWT found! This protected data was fetched from the server.'});
+
+})

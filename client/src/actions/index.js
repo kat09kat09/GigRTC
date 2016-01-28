@@ -43,7 +43,7 @@ export function logout() {
 export function logoutAndRedirect() {
     return (dispatch, state) => {
         dispatch(logout());
-        browserHistory('/');
+        browserHistory.push('/');
     }
 }
 
