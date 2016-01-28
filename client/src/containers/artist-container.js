@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
-import {reduxForm} from 'redux-form'; 
+import {reduxForm} from 'redux-form';
 
-import VideoContainer from './video-container'; 
-import StreamButtons from '../components/streamButtons'; 
-import saveBroadcast from '../actions/index'; 
+import VideoContainer from './video-container';
+import StreamButtons from '../components/streamButtons';
+import saveBroadcast from '../actions/index';
 
 class ArtistContainer extends Component {
+
+  componentWillMount(){
+    console.log('PROPS FROM ARTIST CONTAINER SEE IF JSON TOKEN IS HERE',this.props)
+  }
+
   onSubmit(props){
     this.props.saveBroadcast(props)
     .then(()=>{

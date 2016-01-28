@@ -72,6 +72,7 @@ video {
 
 .logoLink {
   text-decoration: none;
+
    position: relative;
    top: -30px;
 }
@@ -118,4 +119,11 @@ video {
   width: 100%;
 }
 
+.loginForm{
+  float: right;
+  display: inline-block;
+  position: relative;
+  top:20px;
+  right: 300px;
 
+}
