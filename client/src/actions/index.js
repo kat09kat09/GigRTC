@@ -60,7 +60,7 @@ export function loginUser(creds){
 
     return (dispatch) =>{
         dispatch(loginUserRequest());
-        return fetch('https://tranquil-dusk-46949.herokuapp.com/auth/getToken/', config)
+        return fetch(location.host, config)
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
