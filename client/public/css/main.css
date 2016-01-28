@@ -42,17 +42,17 @@ video {
 }
 
 .startBroadcast {
-  background-color: #970;
+  background-color: #ededed;
   border-style: none;
 }
 
 .joinBroadcast {
-  background-color: #33f;
+  background-color: #ededed;
   border-style: none;
 }
 
 .endBroadcast {
-  background-color: red;
+  background-color: #ededed;
   border-style: none;
 }
 
@@ -62,9 +62,9 @@ video {
 
 .header {
   width: 100%;
-  height: 72px;
+  height: 100px;
   background-color: #343434;
-  color: #141414;
+  color: #FCF660;
   border-radius: 0px;
   font-family: 'Chelsea Market', cursive;
   padding-left: 16px;
@@ -74,13 +74,6 @@ video {
   text-decoration: none;
 }
 
-
-.streamYourselfLink {
-  text-decoration: none;
-   position: relative;
-   /*top: -30px;*/
-   float: right;
- }
 
 .videoWrapper {
   background-image: url('../img/crowdVideo2.jpg');
@@ -117,8 +110,50 @@ video {
 }
 
 .loginForm{
-  float: right;
+  float: left;
   display: inline-block;
   position: relative;
 
+}
+
+
+
+.navigation{
+  float:right;
+  display: inline-block;
+}
+
+.streamYourselfLink {
+  text-decoration: none;
+  position: relative;
+  /*top: -30px;*/
+  float: left;
+  display: inline-block;
+  padding-right: 50px;
+
+
+ }
+
+.jsonLink{
+  float: left;
+  /*top: -30px;*/
+  display: inline-block;
+  position: relative;
+  padding-right: 50px;
+}
+
+.loginLink{
+  float: left;
+  top: -30px;
+  display: inline-block;
+  position: relative;
+  padding-right: 50px;
+}
+
+.streamYourselfLinkText{
+   color: #FCF660;
+}
+
+.jsonLinkText{
+ color: #FCF660;
 }

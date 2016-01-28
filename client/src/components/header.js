@@ -9,8 +9,26 @@ class Header extends Component {
 
     render() {
         return (
-            <Navbar className="header">
-                <Navbar.Header>
+            // <div>
+                <Navbar className="header">
+                    <Navbar.Header>
+                        <div className="titleHome">
+                            <Link to="/" className="logoLink"><h1>GIGG.TV</h1></Link>
+                        </div>
+                        <div className="navigation">
+                            <div className="streamYourselfLink">
+                                <Link to="/streamYourself" ><span className='streamYourselfLinkText'>Stream Yourself</span></Link>
+                            </div>
+                            <div className='jsonLink'>
+                                <a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token)}>FOR JSON</a>
+                            </div>
+                            <div className='loginLink'>
+                                {this.props.isAuthenticated
+                                    ? <li className="loginForm"><a href='#' onClick={() => this.props.logoutAndRedirect()}>Logout</a> </li>
+                                    : <Login />
+                                }
+                            </div>
+                        </div>
 
                     {this.props.isAuthenticated
                         ? <li className="loginForm"><a href='#' onClick={() => this.props.logoutAndRedirect()}>Logout</a> </li>
