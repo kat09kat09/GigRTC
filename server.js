@@ -15,7 +15,7 @@ var favicon = require('serve-favicon');
 
 var argv = minimist(process.argv.slice(2), {
     default: {
-        as_uri: 'https://localhost:1337',
+        as_uri: 'https://localhost:1338',
         ws_uri: 'ws://192.241.244.126:8888/kurento'
     }
 });
