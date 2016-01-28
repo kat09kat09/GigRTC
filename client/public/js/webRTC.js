@@ -3,7 +3,7 @@ var video;
 var webRtcPeer; //gets assigned in presenter function
 
   video = document.getElementById('video');
-  console.log("IT FUCKING loaded");
+  console.log("IT FUCKING loaded " + location.host);
   document.getElementsByClassName('startBroadcast')[0].addEventListener('click', function() { presenter(); } );
   document.getElementsByClassName('joinBroadcast')[0].addEventListener('click', function() { viewer(); } );
   document.getElementsByClassName('endBroadcast')[0].addEventListener('click', function() { stop(); } );

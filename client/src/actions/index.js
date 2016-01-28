@@ -60,7 +60,7 @@ export function loginUser(creds){
 
     return (dispatch) =>{
         dispatch(loginUserRequest());
-        return fetch('https://localhost:1337/auth/getToken/', config)
+        return fetch(location.host + '/auth/getToken/', config)
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
