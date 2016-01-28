@@ -119,7 +119,6 @@ export function fetchProtectedData(token) {
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
-                console.log("JSON AUTH WORKED WELL",response.data);
                 dispatch(receiveProtectedData(response.data));
             })
             .catch(error => {
@@ -144,12 +143,8 @@ export function determineEnvironment(){
     return (dispatch,state) => {
        return fetch('https://localhost:1337/auth/getToken/', config)
             .then(response=> {
-                console.log('development environment')
-
                 dispatch(environmentLocation('https://localhost:1337'))
             }).catch((error)=> {
-            console.log('production environment',error)
-
             dispatch(environmentLocation('https://tranquil-dusk-46949.herokuapp.com'))
 
         })
