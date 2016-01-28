@@ -4,8 +4,15 @@ import SideBar from './sidebar';
 import Header from './header';
 import VideoContainer from '../containers/video-container';
 import ArtistContainer from '../containers/artist-container';
+import {determineEnvironment} from '../actions';
+import {connect} from 'react-redux';
 
-export default class App extends Component {
+
+class App extends Component {
+
+  componentWillMount(){
+      this.props.determineEnvironment()
+  }
 
   render() {
     return (
@@ -19,3 +26,5 @@ export default class App extends Component {
     );
   }
 }
+
+export default connect(null,{determineEnvironment})(App)

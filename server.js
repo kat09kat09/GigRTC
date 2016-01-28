@@ -399,19 +399,6 @@ app.post('/auth/getToken/', (req, res) => {
 });
 
 app.get('/getData/', (req, res) => {
-    //var token = req.headers['authorization'];
-    //if (!token) {
-    //    res.sendStatus(401);
-    //} else {
-    //    try {
-    //        console.log(token)
-    //        var decoded = jwt.verify(token.replace('Bearer ', ''), 'secret-key');
-    //        res.status(200)
-    //            .json({data: 'Valid JWT found! This protected data was fetched from the server.'});
-    //    } catch (e) {
-    //        res.sendStatus(401);
-    //    }
-    //}
     res.status(200)
         .json({data: 'Valid JWT found! This protected data was fetched from the server.'});
 

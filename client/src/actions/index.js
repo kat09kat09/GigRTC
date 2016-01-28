@@ -1,9 +1,10 @@
 import { checkHttpStatus, parseJSON } from '../utils';
 import CONSTANTS from '../constants/index';
 import axios from 'axios';
-const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA, SAVE_BROADCAST} = CONSTANTS
+const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA, SAVE_BROADCAST,CURRENT_ENVIRONMENT} = CONSTANTS
 import jwtDecode from 'jwt-decode';
-import {browserHistory} from 'react-router'
+import {browserHistory} from 'react-router';
+let ENVIRONMENT = '';
 
 export function loginUserSuccess(token){
     localStorage.setItem('token',token);
@@ -47,7 +48,16 @@ export function logoutAndRedirect() {
     }
 }
 
-export function loginUser(creds){
+export function environmentLocation(data) {
+
+        return {
+            type : CURRENT_ENVIRONMENT,
+            payload : data
+        }
+}
+
+
+export function loginUser(creds,environment){
     let config = {
         method: 'post',
         credentials: 'include',
@@ -59,15 +69,16 @@ export function loginUser(creds){
     }
 
     return (dispatch) =>{
+        //return fetch(location.host + '/auth/getToken/', config) -> initial approach
         dispatch(loginUserRequest());
-        return fetch(location.host + '/auth/getToken/', config)
+        return fetch(`${environment}/auth/getToken/`, config)
+
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
                 try {
                     let decoded = jwtDecode(response.token);
                     dispatch(loginUserSuccess(response.token));
-                    //dispatch(pushState(null, "/"));
                     browserHistory.push('/')
                 } catch (e) {
                     dispatch(loginUserFailure({
@@ -101,7 +112,7 @@ export function fetchProtectedDataRequest() {
 export function fetchProtectedData(token) {
     return (dispatch, state) => {
         dispatch(fetchProtectedDataRequest());
-        return fetch('https://localhost:1337/getData/', {
+        return fetch(`${ENVIRONMENT}/getData/`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -109,7 +120,6 @@ export function fetchProtectedData(token) {
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
-                console.log("JSON AUTH WORKED WELL",response.data);
                 dispatch(receiveProtectedData(response.data));
             })
             .catch(error => {
@@ -120,6 +130,28 @@ export function fetchProtectedData(token) {
             })
     }
 }
+
+//establish Environment
+export function determineEnvironment(){
+    let config = {
+        method: 'post',
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    };
+    return (dispatch,state) => {
+       return fetch('https://localhost:1337/auth/getToken/', config)
+            .then(response=> {
+                dispatch(environmentLocation('https://localhost:1337'))
+            }).catch((error)=> {
+            dispatch(environmentLocation('https://tranquil-dusk-46949.herokuapp.com'))
+
+        })
+    }
+}
+
 
 
 //placeholder for post to /api/saveBroadcast endpoint
