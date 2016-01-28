@@ -20,14 +20,22 @@ ws.onmessage = function(message) {
   var parsedMessage = JSON.parse(message.data);
   console.info('Received message: ' + message.data);
 
-  var actions = {
-    'presenterResponse': preseenterResponse(parsedMessage), //this has been called, there is a bug in the presenterFunction and this is the hotfix
-    'viewerResponse': viewerResponse(parsedMessage),
-    'stopCommunication': dispose(),
-    'iceCandidate': webRtcPeer.addIceCandidate(parsedMessage.candidate),
-  };
-
-  actions[parsedMessage.id];
+  switch (parsedMessage.id) {
+  case 'presenterResponse':
+    presenterResponse(parsedMessage);
+    break;
+  case 'viewerResponse':
+    viewerResponse(parsedMessage);
+    break;
+  case 'stopCommunication':
+    dispose();
+    break;
+  case 'iceCandidate':
+    webRtcPeer.addIceCandidate(parsedMessage.candidate)
+    break;
+  default:
+    console.error('Unrecognized message', parsedMessage);
+  }
 }
 
 function presenterResponse(message) {

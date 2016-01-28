@@ -2,7 +2,7 @@ import React from 'react';
 
 const SideBar = (props) => {
   return (
-    <div className=  'SideBar'>
+    <div className='hide SideBar'>
       SideBar is here! 
     </div>
   )
