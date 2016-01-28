@@ -4,6 +4,12 @@ import {connect} from 'react-redux';
 
 export default class VideoContainer extends Component {
 
+  componentWillMount(){
+      var script   = document.createElement("script");
+      script.type  = "text/javascript";
+      script.src   = "../../public/js/webRTC.js";
+      document.body.appendChild(script);
+  }
 
   render () {
     return (
