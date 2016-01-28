@@ -6,6 +6,7 @@ const rootReducer = combineReducers({
   state: (state = {}) => state,
   // broadcasts: BroadcastReducer
   form: BroadcastReducer
+
 });
 
 export default rootReducer;
