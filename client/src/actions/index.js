@@ -71,7 +71,6 @@ export function loginUser(creds,environment){
         //return fetch(location.host + '/auth/getToken/', config) -> initial approach
         dispatch(loginUserRequest());
         return fetch(`${environment}/auth/getToken/`, config)
-
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
@@ -111,7 +110,7 @@ export function fetchProtectedDataRequest() {
 export function fetchProtectedData(token,environment) {
     return (dispatch, state) => {
         dispatch(fetchProtectedDataRequest());
-        return fetch(`${environment}/getData/`, {
+        return fetch(`${environment}/auth/getData/`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
