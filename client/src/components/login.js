@@ -11,7 +11,7 @@ export class LoginView extends Component {
     }
 
     login(props) {
-        this.props.actions.loginUser(props);
+        this.props.actions.loginUser(props,this.props.environment);
 
     }
 
@@ -33,7 +33,8 @@ export class LoginView extends Component {
 
 const mapStateToProps = (state) => ({
     isAuthenticating   : state.auth.isAuthenticating,
-    statusText         : state.auth.statusText
+    statusText         : state.auth.statusText,
+    environment : state.environment
 });
 
 const mapDispatchToProps = (dispatch) => ({

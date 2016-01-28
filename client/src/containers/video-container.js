@@ -9,6 +9,7 @@ export default class VideoContainer extends Component {
       script.type  = "text/javascript";
       script.src   = "../../public/js/webRTC.js";
       document.body.appendChild(script);
+      console.log(this.props)
   }
 
   render () {
