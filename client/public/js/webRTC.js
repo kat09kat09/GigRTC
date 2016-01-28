@@ -1,9 +1,9 @@
 var ws = new WebSocket('wss://' + location.host + '/one2many');
-var video;  
+var video;
 var webRtcPeer; //gets assigned in presenter function
 
 window.onload = function() {
-  
+
   video = document.getElementById('video');
 
   document.getElementsByClassName('startBroadcast')[0].addEventListener('click', function() { presenter(); } );
@@ -21,7 +21,7 @@ ws.onmessage = function(message) {
   console.info('Received message: ' + message.data);
 
   var actions = {
-    'presenterResponse': preseenterResponse(parsedMessage), //this has been called, there is a bug in the presenterFunction and this is the hotfix
+    'presenterResponse': presenterResponse(parsedMessage), //this has been called, there is a bug in the presenterFunction and this is the hotfix
     'viewerResponse': viewerResponse(parsedMessage),
     'stopCommunication': dispose(),
     'iceCandidate': webRtcPeer.addIceCandidate(parsedMessage.candidate),
