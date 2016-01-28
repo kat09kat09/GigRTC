@@ -4,7 +4,6 @@ import axios from 'axios';
 const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA, SAVE_BROADCAST,CURRENT_ENVIRONMENT} = CONSTANTS
 import jwtDecode from 'jwt-decode';
 import {browserHistory} from 'react-router';
-let ENVIRONMENT = '';
 
 export function loginUserSuccess(token){
     localStorage.setItem('token',token);
@@ -71,7 +70,8 @@ export function loginUser(creds,environment){
     return (dispatch) =>{
         //return fetch(location.host + '/auth/getToken/', config) -> initial approach
         dispatch(loginUserRequest());
-        return fetch(`${environment}/auth/getToken/`, config)
+        console.log('login',`${environment}/auth/getToken/`)
+        return fetch(`/auth/getToken/`, config)
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
@@ -108,14 +108,10 @@ export function fetchProtectedDataRequest() {
     }
 }
 
-export function fetchProtectedData(token) {
-    return (dispatch, state) => {
+export function fetchProtectedData(token,environment) {
+    return (dispatch) => {
         dispatch(fetchProtectedDataRequest());
-<<<<<<< HEAD
-        return fetch(`${ENVIRONMENT}/getData/`, {
-=======
-        return fetch('https://localhost:1337/auth/getData/', {
->>>>>>> (BUG) files ready for migration to kms server
+        return fetch(`${environment}/getData/`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -124,6 +120,7 @@ export function fetchProtectedData(token) {
             .then(parseJSON)
             .then(response => {
                 dispatch(receiveProtectedData(response.data));
+                console.log(response.data)
             })
             .catch(error => {
                 if(error.response.status === 401) {
@@ -145,9 +142,9 @@ export function determineEnvironment(){
         }
     };
     return (dispatch,state) => {
-       return fetch('https://localhost:1337/auth/getToken/', config)
+       return fetch('https://localhost:1338/auth/getToken/', config)
             .then(response=> {
-                dispatch(environmentLocation('https://localhost:1337'))
+                dispatch(environmentLocation('https://localhost:1338'))
             }).catch((error)=> {
             dispatch(environmentLocation('https://tranquil-dusk-46949.herokuapp.com'))
 

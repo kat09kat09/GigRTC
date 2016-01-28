@@ -20,7 +20,7 @@ class Header extends Component {
                                 <Link to="/streamYourself" ><span className='streamYourselfLinkText'>Stream Yourself</span></Link>
                             </div>
                             <div className='jsonLink'>
-                                <a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token)}>FOR JSON</a>
+                                <a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a>
                             </div>
                             <div className='loginLink'>
                                 {this.props.isAuthenticated
@@ -29,10 +29,9 @@ class Header extends Component {
                                 }
                             </div>
                         </div>
-
-                    </Navbar.Header>
-                </Navbar>
-            // </div>
+                        <Link to="/streamYourself" className="streamYourselfLink"><div>Stream Yourself</div></Link>
+                </Navbar.Header>
+            </Navbar>
         );
     }
 }
@@ -40,7 +39,8 @@ class Header extends Component {
 function mapStateToProps(state){
     return{
         isAuthenticated: state.auth.isAuthenticated,
-        token: state.auth.token
+        token: state.auth.token,
+        environment : state.environment
     }
 }
 
