@@ -6,6 +6,7 @@ var ws = require('ws');
 var kurento = require('kurento-client');
 var fs    = require('fs');
 var https = require('https');
+var http = require('http');
 
 var argv = minimist(process.argv.slice(2), {
     default: {
@@ -35,12 +36,25 @@ var noPresenterMessage = 'No active presenter. Try again later...';
 /*
  * Server startup
  */
-var asUrl = url.parse(argv.as_uri);
-var port = asUrl.port;
-var server = https.createServer(options, app).listen(port, function() {
-    console.log('Open ' + url.format(asUrl) + ' with a WebRTC capable browser');
-});
+var asUrl;
+var port;
+var server;
 
+if (process.env.ON_HEROKU) {
+  // run with http server
+  port = process.env.PORT;
+  server = http.createServer(app).listen(port, function() {
+    console.log('Running on port ' + port + ' on Heroku');
+  });
+} else {
+  asUrl = url.parse(argv.as_uri);
+  port = asUrl.port;
+  server = https.createServer(options, app).listen(port, function() {
+    console.log('Open ' + url.format(asUrl) + ' with a WebRTC capable browser');
+  });
+}
+
+// uses the web server created above
 var wss = new ws.Server({
     server : server,
     path : '/one2many'

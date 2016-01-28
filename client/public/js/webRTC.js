@@ -1,9 +1,9 @@
 var ws = new WebSocket('wss://' + location.host + '/one2many');
-var video;  
+var video;
 var webRtcPeer; //gets assigned in presenter function
 
 window.onload = function() {
-  
+
   video = document.getElementById('video');
 
   document.getElementsByClassName('startBroadcast')[0].addEventListener('click', function() { presenter(); } );
@@ -20,14 +20,22 @@ ws.onmessage = function(message) {
   var parsedMessage = JSON.parse(message.data);
   console.info('Received message: ' + message.data);
 
-  var actions = {
-    'presenterResponse': preseenterResponse(parsedMessage), //this has been called, there is a bug in the presenterFunction and this is the hotfix
-    'viewerResponse': viewerResponse(parsedMessage),
-    'stopCommunication': dispose(),
-    'iceCandidate': webRtcPeer.addIceCandidate(parsedMessage.candidate),
-  };
-
-  actions[parsedMessage.id];
+  switch (parsedMessage.id) {
+  case 'presenterResponse':
+    presenterResponse(parsedMessage);
+    break;
+  case 'viewerResponse':
+    viewerResponse(parsedMessage);
+    break;
+  case 'stopCommunication':
+    dispose();
+    break;
+  case 'iceCandidate':
+    webRtcPeer.addIceCandidate(parsedMessage.candidate)
+    break;
+  default:
+    console.error('Unrecognized message', parsedMessage);
+  }
 }
 
 function presenterResponse(message) {
@@ -141,7 +149,7 @@ function sendMessage(message) {
 function showSpinner() {
   for (var i = 0; i < arguments.length; i++) {
     arguments[i].poster = '';
-    arguments[i].style.background = 'center transparent url("./img/spinner.gif") no-repeat';
+    arguments[i].style.background = 'center transparent url("./public/img/spinner.gif") no-repeat';
   }
 }
 

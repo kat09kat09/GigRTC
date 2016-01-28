@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import StreamButtons from '../components/streamButtons';
+import {connect} from 'react-redux';
 
-class VideoContainer extends Component {
+export default class VideoContainer extends Component {
+
+
   render () {
     return (
       <div id="videoBig">
@@ -13,5 +16,4 @@ class VideoContainer extends Component {
   }
 }
 
-export default VideoContainer;
 

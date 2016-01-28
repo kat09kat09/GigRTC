@@ -14,7 +14,6 @@ Twitch.TV for live performances
 1. [Requirements](#requirements)
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
-    2. [Deploying to Heroku] (#deploying-to-heroku)
     1. [Roadmap](#roadmap)
 1. [Team](#team)
 1. [Contributing](#contributing)
@@ -38,22 +37,13 @@ Twitch.TV for live performances
 From within the root directory:
 
 ```sh
-cd gigg
 npm install
-cd client
-bower install
 ```
-
-### Deploying to Heroku
-
-Because the package.json is not in the root directory of this repo, you must deploy a subtree when you push the repo to Heroku:  
-
-```git subtree push --prefix gigg heroku master```
+Keep in mind that, when developing, you will need to rebuild the bundle.js by running ```webpack -w``` from /client.
 
 ### Roadmap
 
 View the project roadmap at https://waffle.io/TeamDreamStream/GigRTC
-
 
 ## Contributing
 

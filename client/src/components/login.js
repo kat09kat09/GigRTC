@@ -20,9 +20,9 @@ export class LoginView extends Component {
         return (
             <div className="loginForm">
                 <form onSubmit={handleSubmit(this.login.bind(this))}>
-                        <input type="text" className="form-control"  {...userName} placeholder="Enter a userName" />
+                        <input type="text"   {...userName} placeholder="Enter a userName" />
                     <br/>
-                        <input type="password" className="form-control"  {...password} placeholder="Plis password" />
+                        <input type="password"  {...password} placeholder="Plis password" />
                     <br/>
                     <button type="submit" className="btn btn-primary" >Submit</button>
                 </form>

@@ -1,7 +1,7 @@
 import { checkHttpStatus, parseJSON } from '../utils';
 import CONSTANTS from '../constants/index';
-//import { pushState } from 'redux-router';
-const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA} = CONSTANTS
+import axios from 'axios';
+const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA, SAVE_BROADCAST} = CONSTANTS
 import jwtDecode from 'jwt-decode';
 import {browserHistory} from 'react-router'
 
@@ -43,7 +43,7 @@ export function logout() {
 export function logoutAndRedirect() {
     return (dispatch, state) => {
         dispatch(logout());
-        dispatch(pushState(null, '/login'));
+        browserHistory('/');
     }
 }
 
@@ -68,7 +68,7 @@ export function loginUser(creds){
                     let decoded = jwtDecode(response.token);
                     dispatch(loginUserSuccess(response.token));
                     //dispatch(pushState(null, "/"));
-                    browserHistory.push('/video')
+                    browserHistory.push('/')
                 } catch (e) {
                     dispatch(loginUserFailure({
                         response: {
@@ -99,7 +99,6 @@ export function fetchProtectedDataRequest() {
 }
 
 export function fetchProtectedData(token) {
-
     return (dispatch, state) => {
         dispatch(fetchProtectedDataRequest());
         return fetch('https://localhost:1337/getData/', {
@@ -110,13 +109,25 @@ export function fetchProtectedData(token) {
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
+                console.log("JSON AUTH WORKED WELL",response.data);
                 dispatch(receiveProtectedData(response.data));
             })
             .catch(error => {
                 if(error.response.status === 401) {
                     dispatch(loginUserFailure(error));
-                    dispatch(pushState(null, '/login'));
+                    browserHistory.push('/');
                 }
             })
     }
+}
+
+
+//placeholder for post to /api/saveBroadcast endpoint
+export function saveBroadcast(broadcastData) {
+  axios.post('api/saveBroadcast', broadcastData);
+
+  return {
+    type: SAVE_BROADCAST,
+    payload: broadcastData
+  }
 }
