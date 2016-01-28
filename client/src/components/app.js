@@ -12,6 +12,7 @@ class App extends Component {
 
   componentWillMount(){
       this.props.determineEnvironment()
+
   }
 
   render() {
@@ -27,4 +28,10 @@ class App extends Component {
   }
 }
 
-export default connect(null,{determineEnvironment})(App)
+function mapStateToProps(state){
+    return {
+        environment : state.environment
+    }
+}
+
+export default connect(mapStateToProps,{determineEnvironment})(App)
