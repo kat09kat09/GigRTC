@@ -21,7 +21,7 @@ ws.onmessage = function(message) {
   console.info('Received message: ' + message.data);
 
   var actions = {
-    'presenterResponse': presenterResponse(parsedMessage), //this has been called, there is a bug in the presenterFunction and this is the hotfix
+    'presenterResponse': preseenterResponse(parsedMessage), //this has been called, there is a bug in the presenterFunction and this is the hotfix
     'viewerResponse': viewerResponse(parsedMessage),
     'stopCommunication': dispose(),
     'iceCandidate': webRtcPeer.addIceCandidate(parsedMessage.candidate),
@@ -141,7 +141,7 @@ function sendMessage(message) {
 function showSpinner() {
   for (var i = 0; i < arguments.length; i++) {
     arguments[i].poster = '';
-    arguments[i].style.background = 'center transparent url("./img/spinner.gif") no-repeat';
+    arguments[i].style.background = 'center transparent url("./public/img/spinner.gif") no-repeat';
   }
 }
 
