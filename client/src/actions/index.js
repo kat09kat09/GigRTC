@@ -69,15 +69,16 @@ export function loginUser(creds,environment){
     }
 
     return (dispatch) =>{
+        //return fetch(location.host + '/auth/getToken/', config) -> initial approach
         dispatch(loginUserRequest());
         return fetch(`${environment}/auth/getToken/`, config)
+
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
                 try {
                     let decoded = jwtDecode(response.token);
                     dispatch(loginUserSuccess(response.token));
-                    //dispatch(pushState(null, "/"));
                     browserHistory.push('/')
                 } catch (e) {
                     dispatch(loginUserFailure({
