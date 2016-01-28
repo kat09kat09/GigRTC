@@ -10,7 +10,7 @@ import ArtistContainer from './containers/artist-container';
 export default (
     <Route path="/" component={ App } >
 
-    <IndexRoute component={requireAuthentication(VideoPlayer)} />
+    <IndexRoute component={VideoPlayer} />
       <Route path="streamYourself" component={requireAuthentication(ArtistContainer)} />
 
     </Route>
