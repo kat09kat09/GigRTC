@@ -7,7 +7,6 @@ const initialState = '';
 
 export default createReducer(initialState, {
     [CURRENT_ENVIRONMENT]: (state, payload) => {
-        console.log("reaching reducer",payload)
        return payload
     }
 });

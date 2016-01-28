@@ -29,9 +29,7 @@ class Header extends Component {
                                 }
                             </div>
                         </div>
-
-                    <Link to="/" className="logoLink"><h1>GIGG.TV</h1></Link>
-                    <Link to="/streamYourself" className="streamYourselfLink"><div>Stream Yourself</div></Link>
+                        <Link to="/streamYourself" className="streamYourselfLink"><div>Stream Yourself</div></Link>
                     <li><a href='#' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a> </li>
                 </Navbar.Header>
             </Navbar>
