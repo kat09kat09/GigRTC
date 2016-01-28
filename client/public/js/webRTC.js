@@ -2,18 +2,15 @@ var ws = new WebSocket('wss://' + location.host + '/one2many');
 var video;
 var webRtcPeer; //gets assigned in presenter function
 
-window.onload = function() {
-
   video = document.getElementById('video');
-
+  console.log("IT FUCKING loaded");
   document.getElementsByClassName('startBroadcast')[0].addEventListener('click', function() { presenter(); } );
   document.getElementsByClassName('joinBroadcast')[0].addEventListener('click', function() { viewer(); } );
   document.getElementsByClassName('endBroadcast')[0].addEventListener('click', function() { stop(); } );
-}
 
 window.onbeforeunload = function() {
   ws.close();
-}
+};
 
 //This is where the signaling takes place. Look in server.js to see the other half
 ws.onmessage = function(message) {
