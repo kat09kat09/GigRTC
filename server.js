@@ -357,4 +357,20 @@ function onIceCandidate(sessionId, _candidate) {
     }
 }
 
+var jwt = require('jsonwebtoken')
+var bodyParser = require('body-parser');
+
+
+
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'client')));
+
+app.post('/auth/getToken/', (req, res) => {
+    console.log("hey there", req.body)
+    if (req.body.userName == 'tds@tds.com' && req.body.password == 'tds') {
+        res.status(200)
+            .json({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6IlRlc3QgVXNlciJ9.J6n4-v0I85zk9MkxBHroZ9ZPZEES-IKeul9ozxYnoZ8'});
+    } else {
+        res.sendStatus(403);
+    }
+});

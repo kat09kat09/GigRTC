@@ -11,14 +11,15 @@
   "author": "team dream stream",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.14.2",
     "bower": "^1.7.7",
     "express": "^4.13.4",
+    "jsonwebtoken": "^5.5.4",
     "kurento-client": "^6.2.0",
     "minimist": "^1.2.0",
     "ws": "^1.0.1"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TeamDreamStream/GigRTC.git"
