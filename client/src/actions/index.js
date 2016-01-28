@@ -1,7 +1,8 @@
 import { checkHttpStatus, parseJSON } from '../utils';
 import {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA} from '../constants';
-import { pushState } from 'redux-router';
+//import { pushState } from 'redux-router';
 import jwtDecode from 'jwt-decode';
+import {browserHistory} from 'react-router'
 
 export function loginUserSuccess(token){
     localStorage.setItem('token',token);
@@ -61,7 +62,8 @@ export function loginUser(creds){
                 try {
                     let decoded = jwtDecode(response.token);
                     dispatch(loginUserSuccess(response.token));
-                    dispatch(pushState(null, "/"));
+                    //dispatch(pushState(null, "/"));
+                    browserHistory.push('/')
                 } catch (e) {
                     dispatch(loginUserFailure({
                         response: {
