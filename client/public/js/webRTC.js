@@ -1,9 +1,9 @@
 var ws = new WebSocket('wss://' + location.host + '/one2many');
-var video;  
+var video;
 var webRtcPeer; //gets assigned in presenter function
 
 window.onload = function() {
-  
+
   video = document.getElementById('video');
 
   document.getElementsByClassName('startBroadcast')[0].addEventListener('click', function() { presenter(); } );
@@ -141,7 +141,7 @@ function sendMessage(message) {
 function showSpinner() {
   for (var i = 0; i < arguments.length; i++) {
     arguments[i].poster = '';
-    arguments[i].style.background = 'center transparent url("./img/spinner.gif") no-repeat';
+    arguments[i].style.background = 'center transparent url("./public/img/spinner.gif") no-repeat';
   }
 }
 

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "postinstall": "cd client && npm install && bower install"
+    "postinstall": "cd client && npm install && bower install && webpack --config ./webpack.config.js",
+    "start": "node server.js"
   },
   "author": "team dream stream",
   "license": "MIT",
@@ -15,10 +15,10 @@
     "express": "^4.13.4",
     "kurento-client": "^6.2.0",
     "minimist": "^1.2.0",
+    "webpack": "^1.12.12",
     "ws": "^1.0.1"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TeamDreamStream/GigRTC.git"
