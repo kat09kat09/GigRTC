@@ -72,7 +72,6 @@ export function loginUser(creds,environment){
         //return fetch(location.host + '/auth/getToken/', config) -> initial approach
         dispatch(loginUserRequest());
         return fetch(`${environment}/auth/getToken/`, config)
-
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
@@ -112,7 +111,11 @@ export function fetchProtectedDataRequest() {
 export function fetchProtectedData(token) {
     return (dispatch, state) => {
         dispatch(fetchProtectedDataRequest());
+<<<<<<< HEAD
         return fetch(`${ENVIRONMENT}/getData/`, {
+=======
+        return fetch('https://localhost:1337/auth/getData/', {
+>>>>>>> (BUG) files ready for migration to kms server
             headers: {
                 'Authorization': `Bearer ${token}`
             }
