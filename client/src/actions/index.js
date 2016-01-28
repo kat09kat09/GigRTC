@@ -140,7 +140,7 @@ export function determineEnvironment(){
         }
     };
     return (dispatch,state) => {
-       return fetch('https://localhost:1337/auth/getToken/', config)
+       return fetch('https://localhost:1338/auth/getToken/', config)
             .then(response=> {
                 dispatch(environmentLocation('https://localhost:1338'))
             }).catch((error)=> {
