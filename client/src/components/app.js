@@ -9,7 +9,6 @@ export default class App extends Component {
     return (
       <div>
         <Header/>
-        <SideBar/>
         <div className="videoWrapper">
           {this.props.children}
         </div>

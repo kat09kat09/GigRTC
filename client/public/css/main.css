@@ -90,3 +90,12 @@ video {
   height: 100%;
   width: 100%;
 }
+
+.loginForm{
+  float: right;
+  display: inline-block;
+  position: relative;
+  top:-40px;
+  right: 10px;
+
+}

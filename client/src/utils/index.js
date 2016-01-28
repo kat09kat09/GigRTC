@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Provider} from 'react-redux';
 
 export function createReducer(initialState,allSwitches){
     return (state = initialState,action) =>{
@@ -30,7 +29,6 @@ export function checkHttpStatus(response) {
 
 export function parseJSON(response) {
     return response.json()
-
 
 }
 

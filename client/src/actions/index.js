@@ -1,6 +1,7 @@
 import { checkHttpStatus, parseJSON } from '../utils';
-import {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA} from '../constants';
+import CONSTANTS from '../constants/index';
 //import { pushState } from 'redux-router';
+const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA} = CONSTANTS
 import jwtDecode from 'jwt-decode';
 import {browserHistory} from 'react-router'
 
@@ -48,14 +49,18 @@ export function logoutAndRedirect() {
 
 export function loginUser(creds){
     let config = {
-        method: 'POST',
-        headers: { 'Content-Type':'application/x-www-form-urlencoded' },
-        body: `username=${creds.username}&password=${creds.password}`
+        method: 'post',
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(creds)
     }
 
     return (dispatch) =>{
         dispatch(loginUserRequest());
-        return fetch('http://localhost:3000/auth/getToken/', config)
+        return fetch('https://localhost:1337/auth/getToken/', config)
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
@@ -63,7 +68,7 @@ export function loginUser(creds){
                     let decoded = jwtDecode(response.token);
                     dispatch(loginUserSuccess(response.token));
                     //dispatch(pushState(null, "/"));
-                    browserHistory.push('/')
+                    browserHistory.push('/video')
                 } catch (e) {
                     dispatch(loginUserFailure({
                         response: {
@@ -97,7 +102,7 @@ export function fetchProtectedData(token) {
 
     return (dispatch, state) => {
         dispatch(fetchProtectedDataRequest());
-        return fetch('http://localhost:3000/getData/', {
+        return fetch('https://localhost:1337/getData/', {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
