@@ -1,0 +1,114 @@
+import { checkHttpStatus, parseJSON } from '../utils';
+import {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA} from '../constants';
+import { pushState } from 'redux-router';
+
+export function loginUserSuccess(token){
+    localStorage.setItem('token',token);
+
+    return{
+        type : LOGIN_USER_SUCCESS,
+        payload : {
+            token
+        }
+    }
+}
+
+export function loginUserFailure(error) {
+    localStorage.removeItem('token');
+    return {
+        type: LOGIN_USER_FAILURE,
+        payload: {
+            status: error.response.status,
+            statusText: error.response.statusText
+        }
+    }
+}
+
+export function loginUserRequest() {
+    return {
+        type: LOGIN_USER_REQUEST
+    }
+}
+
+export function logout() {
+    localStorage.removeItem('token');
+    return {
+        type: LOGOUT_USER
+    }
+}
+
+export function logoutAndRedirect() {
+    return (dispatch, state) => {
+        dispatch(logout());
+        dispatch(pushState(null, '/login'));
+    }
+}
+
+export function loginUser(creds){
+    let config = {
+        method: 'POST',
+        headers: { 'Content-Type':'application/x-www-form-urlencoded' },
+        body: `username=${creds.username}&password=${creds.password}`
+    }
+
+    return (dispatch) =>{
+        dispatch(loginUserRequest());
+        return fetch('http://localhost:3000/auth/getToken/', config)
+            .then(checkHttpStatus)
+            .then(parseJSON)
+            .then(response => {
+                try {
+                    let decoded = jwtDecode(response.token);
+                    dispatch(loginUserSuccess(response.token));
+                    dispatch(pushState(null, "/"));
+                } catch (e) {
+                    dispatch(loginUserFailure({
+                        response: {
+                            status: 403,
+                            statusText: 'Invalid token'
+                        }
+                    }));
+                }
+            })
+            .catch(error => {
+                dispatch(loginUserFailure(error));
+            })
+    }
+
+}export function receiveProtectedData(data) {
+    return {
+        type: RECEIVE_PROTECTED_DATA,
+        payload: {
+            data: data
+        }
+    }
+}
+
+export function fetchProtectedDataRequest() {
+    return {
+        type: FETCH_PROTECTED_DATA_REQUEST
+    }
+}
+
+export function fetchProtectedData(token) {
+
+    return (dispatch, state) => {
+        dispatch(fetchProtectedDataRequest());
+        return fetch('http://localhost:3000/getData/', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(checkHttpStatus)
+            .then(parseJSON)
+            .then(response => {
+                dispatch(receiveProtectedData(response.data));
+            })
+            .catch(error => {
+                if(error.response.status === 401) {
+                    dispatch(loginUserFailure(error));
+                    dispatch(pushState(null, '/login'));
+                }
+            })
+    }
+}
