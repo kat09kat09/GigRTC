@@ -29,11 +29,7 @@ class Header extends Component {
                                 }
                             </div>
                         </div>
-
-                    {this.props.isAuthenticated
-                        ? <li className="loginForm"><a href='#' onClick={() => this.props.logoutAndRedirect()}>Logout</a> </li>
-                        : <Login />
-                    }
+                        
                     <Link to="/" className="logoLink"><h1>GIGG.TV</h1></Link>
                     <Link to="/streamYourself" className="streamYourselfLink"><div>Stream Yourself</div></Link>
                     <li><a href='#' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a> </li>
