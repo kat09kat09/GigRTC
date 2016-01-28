@@ -4,7 +4,6 @@ import axios from 'axios';
 const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA, SAVE_BROADCAST,CURRENT_ENVIRONMENT} = CONSTANTS
 import jwtDecode from 'jwt-decode';
 import {browserHistory} from 'react-router';
-let ENVIRONMENT = '';
 
 export function loginUserSuccess(token){
     localStorage.setItem('token',token);
@@ -109,10 +108,10 @@ export function fetchProtectedDataRequest() {
     }
 }
 
-export function fetchProtectedData(token) {
+export function fetchProtectedData(token,environment) {
     return (dispatch, state) => {
         dispatch(fetchProtectedDataRequest());
-        return fetch(`${ENVIRONMENT}/getData/`, {
+        return fetch(`${environment}/getData/`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

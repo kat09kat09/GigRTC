@@ -18,7 +18,7 @@ class Header extends Component {
                     }
                     <Link to="/" className="logoLink"><h1>GIGG.TV</h1></Link>
                     <Link to="/streamYourself" className="streamYourselfLink"><div>Stream Yourself</div></Link>
-                    <li><a href='#' onClick={() => this.props.fetchProtectedData(this.props.token)}>FOR JSON</a> </li>
+                    <li><a href='#' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a> </li>
                 </Navbar.Header>
             </Navbar>
         );
@@ -28,7 +28,8 @@ class Header extends Component {
 function mapStateToProps(state){
     return{
         isAuthenticated: state.auth.isAuthenticated,
-        token: state.auth.token
+        token: state.auth.token,
+        environment : state.environment
     }
 }
 
