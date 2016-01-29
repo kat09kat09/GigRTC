@@ -1,6 +1,6 @@
 //React and Redux imports
 var React = require('react')
-
+Object.assign = require('object-assign')
 
 //Reducer imports
 import AuthReducer from '../../../src/reducers/auth';
