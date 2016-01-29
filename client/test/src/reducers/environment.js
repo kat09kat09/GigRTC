@@ -21,9 +21,9 @@ describe('reducers', () => {
 
         it('should return the initial state', () => {
             expect(
-                AuthReducer(undefined, {})
+                EnvironmentReducer(undefined, {})
             ).toEqual(
-                {}
+                ''
             )
 
         })
