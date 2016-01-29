@@ -45,7 +45,7 @@ var asUrl;
 var port;
 var server;
 
-if (process.env.ON_HEROKU) {
+if (true) {  //set to process.env.ON_HEROKU for production set to false to test locally
   // run with http server
   port = process.env.PORT;
   server = http.createServer(app).listen(port, function() {
@@ -405,4 +405,4 @@ app.get('/getData/', (req, res) => {
 })
 
 
-module.exports = server;
+module.exports.server = server;
