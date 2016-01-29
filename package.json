@@ -4,7 +4,7 @@
   "description": "Twitch.TV for live performances",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cd tests && mocha circle-ci-true",
     "postinstall": "cd client && npm install && bower install && webpack --config ./webpack.config.js",
     "start": "node server.js"
   },
@@ -22,7 +22,10 @@
     "webpack": "^1.12.12",
     "ws": "^1.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TeamDreamStream/GigRTC.git"
