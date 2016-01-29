@@ -46,24 +46,24 @@ describe("server", function(){
   
 
 
-  xdescribe('It should have access to restricted routes after login', function(){
-    var agent;
+  // xdescribe('It should have access to restricted routes after login', function(){
+  //   var agent;
 
-    before(function(done){
-      login.login(request, function(loginAgent){
-        agent = loginAgent;
-        done();
-      });
-    });
+  //   xbefore(function(done){
+  //     login.login(request, function(loginAgent){
+  //       agent = loginAgent;
+  //       done();
+  //     });
+  //   });
 
     
-    xit('should have restricted access after login', function(done){
-      var req = request.get('/getData/');
-      agent.attachCookies(req);
-      console.log(req);
-      req.expect(200, done);
-    });
+  //   xit('should have restricted access after login', function(done){
+  //     var req = request.get('/getData/');
+  //     agent.attachCookies(req);
+  //     console.log(req);
+  //     req.expect(200, done);
+  //   });
 
-  });
+  // });
 
 });
