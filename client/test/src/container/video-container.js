@@ -32,7 +32,7 @@ function setup() {
     }
 }
 
-xdescribe('components', () => {
+describe('components', () => {
     const { output } = setup();
      const element = output.props.children
     describe('ArtistContainer', () => {

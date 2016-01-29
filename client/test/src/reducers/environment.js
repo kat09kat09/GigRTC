@@ -13,7 +13,7 @@ import CONSTANTS from '../../../src/constants/index';
 const { CURRENT_ENVIRONMENT} = CONSTANTS
 
 
-xdescribe('reducers', () => {
+describe('reducers', () => {
 
     describe('EnvironmentReducer', () => {
 

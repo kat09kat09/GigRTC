@@ -13,7 +13,7 @@ import CONSTANTS from '../../../src/constants/index';
 const { FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA} = CONSTANTS
 
 
-xdescribe('reducers', () => {
+describe('reducers', () => {
 
     describe('DataReducer', () => {
 

@@ -30,7 +30,7 @@ function setup() {
     }
 }
 
-xdescribe('components', () => {
+describe('components', () => {
     const { output } = setup();
     describe('streamButtons', () => {
 
