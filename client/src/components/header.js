@@ -5,6 +5,7 @@ import Login from './login';
 import {connect} from 'react-redux';
 import {logoutAndRedirect,fetchProtectedData} from '../actions';
 
+<<<<<<< HEAD
 export class Header extends Component {
 
     componentDidMount() {
@@ -12,32 +13,70 @@ export class Header extends Component {
         return{isAuthenticated : this.props.isAuthenticated}
 
     }
+=======
+
+import LeftNav from 'material-ui/lib/left-nav';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import RaisedButton from 'material-ui/lib/raised-button';
+import AppBar from 'material-ui/lib/app-bar';
+import IconButton from 'material-ui/lib/icon-button';
+import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
+import IconMenu from 'material-ui/lib/menus/icon-menu';
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+
+// let menuItems = [
+//   { route: '/', text: 'Home' },
+//   { route: 'streamYourself', text: 'Broadcast' },
+//   { route: 'contact', text: 'Contact' },
+// ];
+ 
+
+class Header extends Component {
+>>>>>>> Add Material UI to the header. Remove css from header, app, and artist container.
+
+    constructor(props) {
+      super(props);
+      this.state = {open: false};
+    }
+
+
+    handleToggle = () => this.setState({open: !this.state.open});
 
     render() {
         return (
-            // <div>
-                <Navbar className="header">
-                    <Navbar.Header>
-                        <div className="titleHome">
-                            <Link to="/" className="logoLink"><h1>GIGG.TV</h1></Link>
-                        </div>
-                        <div className="navigation">
-                            <div className="streamYourselfLink">
-                                <Link to="/streamYourself" ><span className='streamYourselfLinkText'>Stream Yourself</span></Link>
-                            </div>
-                            <div className='jsonLink'>
-                                <a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a>
-                            </div>
-                            <div className='loginLink'>
-                                {this.props.isAuthenticated
-                                    ? <li className="loginForm"><a href='#' onClick={() => this.props.logoutAndRedirect()}>Logout</a> </li>
-                                    : <Login />
-                                }
-                            </div>
-                        </div>
-                        <Link to="/streamYourself" className="streamYourselfLink"><div>Stream Yourself</div></Link>
-                </Navbar.Header>
-            </Navbar>
+          <div>
+            <AppBar
+              title="GIGG.TV"
+              containerElement={<Link to="/" className="logoLink"></Link>}
+              iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+              iconElementRight={
+                <IconMenu
+                  iconButtonElement={
+                    <IconButton><MoreVertIcon /></IconButton>
+                  }
+                  targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                  anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                >
+                  <MenuItem 
+                    linkButton={true}
+                    primaryText="Home"
+                    containerElement={<Link to="/" className="logoLink"></Link>} />
+                  <MenuItem 
+                    linkButton={true}
+                    primaryText="Broadcast"
+                    containerElement={<Link to="/streamYourself" ></Link>} />
+                  <MenuItem><a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a></MenuItem>
+                  <MenuItem primaryText="Sign in" />
+                  <MenuItem primaryText="Sign out" />
+                </IconMenu>
+              }/>
+              <div> 
+              {this.props.isAuthenticated
+                ? <li className="loginForm"><a href='#' onClick={() => this.props.logoutAndRedirect()}>Logout</a> </li>
+                : <Login />
+              }
+            </div>
+          </div>
         );
     }
 }
