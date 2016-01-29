@@ -7,6 +7,7 @@ var kurento = require('kurento-client');
 var fs    = require('fs');
 var https = require('https');
 var http = require('http');
+var babel/register = require('babel');
 var CONFIG = require('./config.js')
 
 var favicon = require('serve-favicon');
