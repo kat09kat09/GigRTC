@@ -403,3 +403,6 @@ app.get('/getData/', (req, res) => {
         .json({data: 'Valid JWT found! This protected data was fetched from the server.'});
 
 })
+
+
+module.exports = server;
