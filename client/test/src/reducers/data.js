@@ -40,7 +40,7 @@ describe('reducers', () => {
                     type: FETCH_PROTECTED_DATA_REQUEST
                 })
             ).toEqual(
-                Object.assign({}, initialStateDataReducer, {
+                ({ ...initialStateDataReducer,
                     'isFetching': true
                 })
             )
@@ -54,7 +54,7 @@ describe('reducers', () => {
                     }
                 })
             ).toEqual(
-                Object.assign({}, initialStateDataReducer, {
+                ({...initialStateDataReducer,
                     'data': 'Valid JWT found! This protected data was fetched from the server.',
                     'isFetching': false
                 })
