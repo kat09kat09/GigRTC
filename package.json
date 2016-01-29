@@ -4,7 +4,7 @@
   "description": "Twitch.TV for live performances",
   "main": "index.js",
   "scripts": {
-    "test": "cd tests && mocha circle-ci-true",
+    "test": "mocha && cd tests && mocha circle-ci-true",
     "postinstall": "cd client && npm install && bower install && webpack --config ./webpack.config.js",
     "start": "node server.js"
   },
