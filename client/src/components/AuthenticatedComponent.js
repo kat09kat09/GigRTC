@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 //import {pushState} from 'redux-router';
 import {browserHistory} from 'react-router'
 
-export function requireAuthentication(Component) {
+export function requireAuthentication(Component,test) {
 
     class AuthenticatedComponent extends Component {
 
@@ -17,7 +17,7 @@ export function requireAuthentication(Component) {
 
         checkAuth () {
             if (!this.props.isAuthenticated) {
-                let redirectAfterLogin = this.props.location.pathname;
+                //let redirectAfterLogin = this.props.location.pathname;
                 browserHistory.push(`/`)
             }
         }
@@ -42,6 +42,6 @@ export function requireAuthentication(Component) {
         environment: state.environment
     });
 
-    return connect(mapStateToProps)(AuthenticatedComponent);
+    return test ? AuthenticatedComponent : connect(mapStateToProps)(AuthenticatedComponent);
 
 }

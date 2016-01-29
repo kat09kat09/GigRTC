@@ -12,7 +12,7 @@ function setup() {
     let renderer = TestUtils.createRenderer()
     renderer.render(<Header {...props} />)
     let output = renderer.getRenderOutput()
-
+    //console.log(output.props.children.props.children[2])
     return {
         props,
         output,
@@ -20,22 +20,18 @@ function setup() {
     }
 }
 
-describe('components', () => {
+xdescribe('components', () => {
+    const { output } = setup();
     describe('Header', () => {
+
         it('should render correctly', () => {
-            const { output } = setup()
-
-            //expect(output.type).toBe('Navbar')
-            expect(output.props.className).toBe('header')
-
-            //let [ h1, input ] = output.props.children
-            //
-            //expect(h1.type).toBe('h1')
-            //expect(h1.props.children).toBe('todos')
-            //
-            //expect(input.type).toBe(TodoTextInput)
-            //expect(input.props.newTodo).toBe(true)
-            //expect(input.props.placeholder).toBe('What needs to be done?')
+            expect(output.props.className).toBe('header');
+        })
+        it('should contain a React Router Link', () => {
+            expect(output.props.children.props.children[2].type.displayName).toBe('Link')
+        })
+        it('Link should point to the right location', () => {
+            expect(output.props.children.props.children[2].props.to).toBe('/streamYourself')
         })
 
     })

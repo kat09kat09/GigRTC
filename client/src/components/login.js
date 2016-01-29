@@ -11,9 +11,8 @@ export class LoginView extends Component {
     }
 
     login(props) {
+
         this.props.actions.loginUser(props,this.props.environment)
-
-
     }
 
     render(){

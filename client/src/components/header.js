@@ -22,9 +22,6 @@ export class Header extends Component {
                             <Link to="/" className="logoLink"><h1>GIGG.TV</h1></Link>
                         </div>
                         <div className="navigation">
-                            <div className="streamYourselfLink">
-                                <Link to="/streamYourself" ><span className='streamYourselfLinkText'>Stream Yourself</span></Link>
-                            </div>
                             <div className='jsonLink'>
                                 <a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a>
                             </div>
@@ -35,9 +32,9 @@ export class Header extends Component {
                                 }
                             </div>
                         </div>
-                        <Link to="/streamYourself" className="streamYourselfLink"><div>Stream Yourself</div></Link>
-                </Navbar.Header>
-            </Navbar>
+                        <Link to="/streamYourself" className="streamYourselfLinkText"><div>Stream Yourself</div></Link>
+                      </Navbar.Header>
+                 </Navbar>
         );
     }
 }
