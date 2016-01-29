@@ -5,7 +5,13 @@ import Login from './login';
 import {connect} from 'react-redux';
 import {logoutAndRedirect,fetchProtectedData} from '../actions';
 
-class Header extends Component {
+export class Header extends Component {
+
+    componentDidMount() {
+
+        return{isAuthenticated : this.props.isAuthenticated}
+
+    }
 
     render() {
         return (

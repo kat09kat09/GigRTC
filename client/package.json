@@ -6,8 +6,7 @@
   "repository": "https://github.com/TeamDreamStream/GigRTC.git",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "test": "mocha --compilers js:babel/register --recursive"
-
+    "test": "mocha --compilers js:babel-core/register --recursive  ./test"
   },
   "author": "teamDreamStream",
   "license": "ISC",
@@ -15,7 +14,6 @@
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0",
     "babel": "^5.1.13",
-    "chai": "^3.5.0",
     "jsdom": "^2.0.0",
     "mocha": "^2.4.5",
     "react-tools": "^0.13.3"
@@ -29,13 +27,15 @@
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-1": "^6.1.18",
     "chai": "^3.5.0",
+    "expect": "^1.13.4",
     "jsdom": "^2.0.0",
     "jwt-decode": "^1.5.1",
     "lodash": "^3.10.1",
     "mocha": "^2.4.5",
-    "react": "^0.14.3",
+    "react": "^0.14.7",
+    "react-addons-test-utils": "^0.14.7",
     "react-bootstrap": "^0.28.2",
-    "react-dom": "^0.14.3",
+    "react-dom": "^0.14.7",
     "react-redux": "^4.0.0",
     "react-router": "^2.0.0-rc5",
     "react-tools": "^0.13.3",
