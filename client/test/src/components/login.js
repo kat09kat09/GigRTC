@@ -43,7 +43,7 @@ describe('components', () => {
     describe('LoginView', () => {
 
         it('should render correctly, clarify by className', () => {
-            expect(output.props.className).toBe('loganForm');
+            expect(output.props.className).toBe('loginForm');
         })
         it('should contain a form ', () => {
            var form= (output.props.children.type)
