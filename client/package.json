@@ -6,7 +6,7 @@
   "repository": "https://github.com/TeamDreamStream/GigRTC.git",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "test": "mocha --compilers js:babel-core/register --recursive  ./test",
+    "test-client": "mocha --compilers js:babel-core/register --recursive  ./test",
     "test:watch": "npm run test -- --watch"
   },
   "author": "teamDreamStream",
