@@ -4,7 +4,7 @@
   "description": "Twitch.TV for live performances",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --recursive",
+    "test": "mocha --compilers js:babel-core/register ./test",
     "postinstall": "cd client && npm install && bower install && webpack --config ./webpack.config.js",
     "start": "node server.js"
   },
@@ -24,7 +24,11 @@
   },
   "devDependencies": {
     "babel": "^6.3.26",
-    "babel-register": "^6.4.3",
+    "babel-core": "^6.2.1",
+    "babel-loader": "^6.2.0",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-react": "^6.1.18",
+    "babel-preset-stage-1": "^6.1.18",
     "chai": "^3.5.0",
     "mocha": "^2.4.5",
     "supertest": "^1.1.0"
