@@ -36,7 +36,7 @@ function setup() {
     let renderer = TestUtils.createRenderer()
     renderer.render(<ArtistContainer {...props} />)
     let output = renderer.getRenderOutput()
-    //console.log("ARTIST",output.props.children)
+    //console.log("ARTIST",output.props.children.props.children)
     return {
         props,
         output,
@@ -47,21 +47,21 @@ function setup() {
 describe('components', () => {
     const { output } = setup();
     describe('ArtistContainer', () => {
-
+        var element = output.props.children.props
         it('should render correctly, clarify by className', () => {
-            expect(output.props.className).toBe('streamYourself');
+            expect(element.className).toBe('streamYourself');
         })
         it('should contain a 2 children elements ', () => {
-            var form= (output.props.children)
+            var form= (element.children)
             expect( form.length).toBe(2)
         })
         it('should contain a  form element ', () => {
-            var form= (output.props.children[0])
+            var form= (element.children[0])
             expect( form.type).toBe('form')
         })
         it('should contain a videoContainer ', () => {
-            var form= (output.props.children[1])
-            expect( form.type.name).toBe('VideoContainer')
+            var form= (element.children[1])
+            expect( form.type).toBe(VideoContainer)
         })
 
     })
