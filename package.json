@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --compilers js:babel-core/register --recursive  ./test && cd tests && mocha circle-ci-true ",
-    "postinstall": "cd client && npm install && bower install && webpack --config ./webpack.config.js && npm test-client",
+    "postinstall": "cd client && npm install && bower install && webpack --config ./webpack.config.js && npm run test-client",
     "start": "node server.js"
   },
   "author": "team dream stream",
