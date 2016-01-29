@@ -5,15 +5,7 @@ import Login from './login';
 import {connect} from 'react-redux';
 import {logoutAndRedirect,fetchProtectedData} from '../actions';
 
-<<<<<<< HEAD
-export class Header extends Component {
 
-    componentDidMount() {
-
-        return{isAuthenticated : this.props.isAuthenticated}
-
-    }
-=======
 
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
@@ -24,15 +16,8 @@ import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 
-// let menuItems = [
-//   { route: '/', text: 'Home' },
-//   { route: 'streamYourself', text: 'Broadcast' },
-//   { route: 'contact', text: 'Contact' },
-// ];
- 
 
-class Header extends Component {
->>>>>>> Add Material UI to the header. Remove css from header, app, and artist container.
+export class Header extends Component {
 
     constructor(props) {
       super(props);
@@ -44,10 +29,11 @@ class Header extends Component {
 
     render() {
         return (
+
           <div>
             <AppBar
               title="GIGG.TV"
-              containerElement={<Link to="/" className="logoLink"></Link>}
+              containerElement={<Link to="/" className="logoLink">Gigg</Link>}
               iconElementLeft={<IconButton><NavigationClose /></IconButton>}
               iconElementRight={
                 <IconMenu
@@ -57,20 +43,20 @@ class Header extends Component {
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                  <MenuItem 
+                  <MenuItem
                     linkButton={true}
                     primaryText="Home"
-                    containerElement={<Link to="/" className="logoLink"></Link>} />
-                  <MenuItem 
+                    containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
+                  <MenuItem
                     linkButton={true}
                     primaryText="Broadcast"
-                    containerElement={<Link to="/streamYourself" ></Link>} />
+                    containerElement={<Link to="/streamYourself" >Stream Yourself</Link>} />
                   <MenuItem><a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a></MenuItem>
                   <MenuItem primaryText="Sign in" />
                   <MenuItem primaryText="Sign out" />
                 </IconMenu>
               }/>
-              <div> 
+              <div>
               {this.props.isAuthenticated
                 ? <li className="loginForm"><a href='#' onClick={() => this.props.logoutAndRedirect()}>Logout</a> </li>
                 : <Login />
