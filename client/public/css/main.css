@@ -8,15 +8,25 @@
 /* #B09EAC #7B0D0C #500000 #260000 #141414 */
 /* ELEMENT STYLES */
 
+
+.dark-primary-color    { background: #00796B; }
+.default-primary-color { background: #009688; }
+.light-primary-color   { background: #B2DFDB; }
+.text-primary-color    { color: #FFFFFF; }
+.accent-color          { background: #FFC107; }
+.primary-text-color    { color: #212121; }
+.secondary-text-color  { color: #727272; }
+.divider-color         { border-color: #B6B6B6; }
+
 body {
-  background-color: #BE5446;
+  background-color:  #FFFFFF;
   color: #141414;
 }
 
-h1 {
+/*h1 {
   font-size: 3rem;
   color: #FCF660;
-}
+}*/
 video {
   display: inline-block;
   font-size: 1rem;
@@ -59,7 +69,7 @@ video {
 /*.videoWrapper {
   max-width: 100%;
 }*/
-
+/*
 .header {
   width: 100%;
   height: 100px;
@@ -69,16 +79,16 @@ video {
   font-family: 'Chelsea Market', cursive;
   padding-left: 16px;
 }
-
-.logoLink {
+*/
+/*.logoLink {
   text-decoration: none;
 }
+*/
 
-
-.videoWrapper {
+/*.videoWrapper {
   background-image: url('../img/crowdVideo2.jpg');
   height: 900px;
-}
+}*/
 
 .hide {
   display: none;
@@ -117,16 +127,18 @@ video {
 }
 
 
-
+/*
 .navigation{
   float:right;
   display: inline-block;
 }
 
+
+
 .streamYourselfLink {
   text-decoration: none;
   position: relative;
-  /*top: -30px;*/
+
   float: left;
   display: inline-block;
   padding-right: 50px;
@@ -134,9 +146,10 @@ video {
 
  }
 
+
 .jsonLink{
   float: left;
-  /*top: -30px;*/
+
   display: inline-block;
   position: relative;
   padding-right: 50px;
@@ -156,4 +169,4 @@ video {
 
 .jsonLinkText{
  color: #FCF660;
-}
+}*/
