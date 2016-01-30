@@ -20,15 +20,15 @@ db.knex.schema.hasTable('users').then(function(exists) {
       users.string('username', 255);
       users.text('artist_info'); // maximum length is 64 K
       users.specificType('userimage', 'mediumblob'); // mediumblob is for binaries up to 16 M
-      users.date('banned_until');  // YYYY-MM-DD
-      users.boolean('protected');
-      users.boolean('18plus');
+      users.date('banned_until'); // YYYY-MM-DD
+      users.boolean('harassed'); // is this user the target of a troll campaign
+      users.boolean('over17');
       users.boolean('admin');
     })
     .then(function (table) {
       console.log('Created Table', table);
     })
-    .catch(function(error) {
+    .catch(function(error) { // I added these catch blocks, not sure if they're a benefit
     console.error('Error in users table creation: ', error);
     });
   }
