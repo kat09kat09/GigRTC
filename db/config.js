@@ -1,15 +1,29 @@
-var Bookshelf = require('bookshelf');
+/*
+  __MySQL steps required before this runs:__
 
-var db = Bookshelf.initialize({
+  mysql.server start
+
+  mysql -u root
+
+  CREATE USER 'vmak_user'@'localhost' IDENTIFIED BY 'vmak_password';
+
+  CREATE DATABASE gigg;
+
+  GRANT ALL ON gigg.* TO 'vmak_user'@'localhost';
+*/
+
+var knex = require('knex')({
   client: 'mysql',
   connection: {
-    host: '127.0.0.1', // FIXME make sure this works
-    user: 'vmak_database_user',
-    password: 'Dr34mstream',
+    host     : 'localhost',
+    user: 'vmak_user',
+    password: 'vmak_password',
     database: 'gigg',
-    charset: 'utf8',
+    charset: 'UTF8'
   }
 });
+
+var db = require('bookshelf')(knex);
 
 db.knex.schema.hasTable('users').then(function(exists) {
   if (!exists) {
@@ -27,9 +41,6 @@ db.knex.schema.hasTable('users').then(function(exists) {
     })
     .then(function (table) {
       console.log('Created Table', table);
-    })
-    .catch(function(error) { // I added these catch blocks, not sure if they're a benefit
-    console.error('Error in users table creation: ', error);
     });
   }
 });
@@ -38,17 +49,15 @@ db.knex.schema.hasTable('tags').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('tags', function (tags) {
       tags.increments('id').primary();
-      tags.timestamps();  // Adds a created_at and updated_at column on the database, setting these each to dateTime types.
+      tags.timestamps();
       tags.string('tagname', 255);
-      tags.string('created_by_user', 255); // FIXME how to make foriegn key?
+      // https://github.com/tgriesser/knex/issues/24  <-- possible foreign key troubles
+      tags.integer('user_id').unsigned().references('users.id'); // user who created this tag
       tags.boolean('forbidden'); // this tag is douchey and will never be applied, eg "dumb" or "fuck this"
       tags.boolean('needs_judgement'); // this tag will only be applied after a judgement call from a human, eg "racist"
     })
     .then(function (table) {
       console.log('Created Table', table);
-    })
-    .catch(function(error) {
-    console.error('Error in tags table creation: ', error);
     });
   }
 });

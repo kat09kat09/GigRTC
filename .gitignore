@@ -14,7 +14,6 @@ pids
 *.seed
 
 bundle.js
-*.sqlite
 
 # Dependency directories
 node_modules

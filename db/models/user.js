@@ -18,8 +18,8 @@ var User = db.Model.extend({
       // var shasum = crypto.createHash('sha1');
       // shasum.update(model.get('url'));
       // model.set('code', shasum.digest('hex').slice(0, 5));
-    }).catch(function(error) {
-      console.error('Error in uesr model creation: ', error);
+    }).catch(function(error) { // I added this, it may not be relevantly placed
+      console.error('Error in user model creation: ', error);
     });
   }
 });

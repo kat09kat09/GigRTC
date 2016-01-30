@@ -9,7 +9,7 @@ var Tag = db.Model.extend({
     needs_judgement: false
   },
   user: function() {
-    return this.belongsTo(User, 'user_id');
+    return this.belongsTo(User);  // Bookshelf uses table name to automatically set foreignkey to user_id
   }
 });
 
