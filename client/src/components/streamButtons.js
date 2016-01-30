@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StreamButtons = () => {
+const StreamButtons = (props) => {
   return (
     <div className="streamButtons">
       <button className="startBroadcast fa fa-youtube-play">Start Stream</button>
