@@ -7,10 +7,15 @@ var kurento = require('kurento-client');
 var fs    = require('fs');
 var https = require('https');
 var http = require('http');
-var CONFIG = require('./config.js')
+var CONFIG = require('./config.js');
 
 var favicon = require('serve-favicon');
 
+var db = require('./db/config');
+var Users = require('./db/collections/users');
+var User = require('./db/models/user');
+var Tags = require('./db/collections/tags');
+var Tag = require('./db/models/tag');
 
 
 var argv = minimist(process.argv.slice(2), {
