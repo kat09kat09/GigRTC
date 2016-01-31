@@ -1,5 +1,6 @@
 var db = require('../config');
 var Tag = require('./tag');
+var Performance = require('./performance');
 
 var User = db.Model.extend({
   tableName: 'users',
@@ -13,13 +14,14 @@ var User = db.Model.extend({
   tags: function() {
     return this.hasMany(Tag);
   },
+  performances: function() {
+    return this.hasMany(Performance);
+  },
   initialize: function(){
     this.on('creating', function(model, attrs, options){
       // var shasum = crypto.createHash('sha1');
       // shasum.update(model.get('url'));
       // model.set('code', shasum.digest('hex').slice(0, 5));
-    }).catch(function(error) { // I added this, it may not be relevantly placed
-      console.error('Error in user model creation: ', error);
     });
   }
 });

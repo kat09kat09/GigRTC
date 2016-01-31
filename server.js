@@ -16,7 +16,8 @@ var Users = require('./db/collections/users');
 var User = require('./db/models/user');
 var Tags = require('./db/collections/tags');
 var Tag = require('./db/models/tag');
-
+var Performances = require('./db/collections/performances');
+var Performance = require('./db/models/performance');
 
 var argv = minimist(process.argv.slice(2), {
     default: {
