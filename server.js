@@ -6,7 +6,7 @@ var https = require('https');
 var http = require('http');
 var path = require('path');
 
-var CONFIG = require('./config.js');
+var CONFIG = require('./config.js')
 
 var favicon = require('serve-favicon');
 
@@ -193,14 +193,47 @@ app.get('/auth/validateSocialToken',(req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+//******* Test  Chat **************
+//set env vars
+var mongoose= require('mongoose');
+process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat_dev';
+process.env.PORT = process.env.PORT || 3000;
+
+// connect our DB
+mongoose.connect(process.env.MONGOLAB_URI);
+
+//load routers
+var messageRouter = express.Router();
+// const usersRouter = express.Router();
+// const channelRouter = express.Router();
+require('./server/routes/message_routes.js')(messageRouter);
+// require('./routes/channel_routes')(channelRouter);
+// require('./routes/user_routes')(usersRouter, passport);
+app.use('/api', messageRouter);
+// app.use('/api', usersRouter);
+// app.use('/api', channelRouter);
+
+var SocketIo= require('socket.io').listen(server, {path: '/api/chat'});
+
+
+// var io = new SocketIo(server, {path: '/api/chat'}); 
+
+var socketEvents = require('./server/socketEvents')(SocketIo);
+
+
+//********* End Test Chat **********
+
 app.get('*', function (request, response){
     response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
 })
-
-
-
-
-
 
 
 module.exports.server = server;

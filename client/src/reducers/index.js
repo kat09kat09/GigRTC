@@ -2,6 +2,8 @@ import { combineReducers } from 'redux';
 import auth from '../reducers/auth'
 import data from '../reducers/data'
 import environment from '../reducers/environment'
+import messages from './messages';
+import activeChannel from './activeChannel';
 
 import {reducer as formReducer} from 'redux-form';
 
@@ -12,8 +14,16 @@ const rootReducer = combineReducers({
   data,
   broadcasts: BroadcastReducer,
   environment,
-  form : formReducer
+  form : formReducer,
 
+  messages,
+  // channels,
+  activeChannel
+  // auth,
+  // typers,
+  // welcomePage,
+  // userValidation,
+  // environment
 
 });
 
