@@ -36,8 +36,8 @@ db.knex.schema.hasTable('users').then(function(exists) {
     db.knex.schema.createTable('users', function (users) {
       users.increments('id').primary();
       users.timestamps();  // Adds a created_at and updated_at column on the database, setting these each to dateTime types.
-      users.string('oauth_id', 255); // what google.plus will hopefully give us
-      users.string('username', 255);
+      users.string('oauth_id', 255).unique(); // what google.plus will hopefully give us
+      users.string('username', 255).unique(); // listed here as unique as a backup in case our unique check fails
       users.text('artist_info'); // maximum length is 64 K
       users.specificType('userimage', 'mediumblob'); // mediumblob is for binaries up to 16 M
       users.date('banned_until'); // YYYY-MM-DD
@@ -81,7 +81,7 @@ db.knex.schema.hasTable('tags').then(function(exists) {
     db.knex.schema.createTable('tags', function (tags) {
       tags.increments('id').primary();
       tags.timestamps();
-      tags.string('tagname', 255);
+      tags.string('tagname', 255).unique();
       tags.boolean('forbidden'); // this tag is douchey and will never be applied, eg "dumb" or "fuck this"
       tags.boolean('needs_judgement'); // this tag will only be applied after a judgement call from a human, eg "racist"
       // https://github.com/tgriesser/knex/issues/24  <-- possible foreign key troubles
