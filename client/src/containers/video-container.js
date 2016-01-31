@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import StreamButtons from '../components/streamButtons';
 import {connect} from 'react-redux';
+import AuthenticateFacebook from '../components/auth/authenticatePage'
 
 export default class VideoContainer extends Component {
 

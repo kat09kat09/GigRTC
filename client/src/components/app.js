@@ -1,15 +1,13 @@
 import React from 'react';
-import { Component } from 'react';
+import { Component,PropTypes } from 'react';
 import SideBar from './sidebar';
 import Header from './header';
 
-import {determineEnvironment} from '../actions';
+import {determineEnvironment,refreshLoginState} from '../actions';
 import {connect} from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import mui from 'material-ui';
 import AppBar from 'material-ui/lib/app-bar';
-
-console.log(mui); 
 
 let ThemeManager = mui.Styles.ThemeManager;
 let Colors = mui.Styles.Colors;
@@ -20,15 +18,17 @@ injectTapEventPlugin();
 export class App extends Component {
 
   constructor(props) {
-    super(props); 
+    super(props);
   }
 
   componentWillMount(){
-      this.props.determineEnvironment()
+        const{dispatch,getState} = this.props
+      if(localStorage.getItem('token'))
+      dispatch(refreshLoginState())
 
   }
 
-  getChildContext() { 
+  getChildContext() {
     return {
       stores: this.props.stores,
       muiTheme: ThemeManager.getMuiTheme(Style)
@@ -55,8 +55,9 @@ App.childContextTypes = {
 
 function mapStateToProps(state){
     return {
-        environment : state.environment
+        environment : state.environment,
+        tokenState : state.auth
     }
 }
 
-export default connect(mapStateToProps,{determineEnvironment})(App)
+export default connect(mapStateToProps)(App)

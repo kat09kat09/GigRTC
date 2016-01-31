@@ -62,6 +62,7 @@ export class Header extends Component {
                 : <Login />
               }
             </div>
+              {this.props.children}
           </div>
         );
     }
