@@ -2,7 +2,8 @@ import React,{Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {reduxForm} from 'redux-form'
-import * as actionCreators from '../actions';
+import * as actionCreators from '../../actions';
+
 
 export class LoginView extends Component {
 
@@ -12,7 +13,7 @@ export class LoginView extends Component {
 
     login(props) {
 
-        this.props.actions.loginUser(props,this.props.environment)
+        this.props.actions.loginUser(props)
     }
 
 
@@ -29,6 +30,7 @@ export class LoginView extends Component {
                 </form>
             </div>
         )
+
     }
 }
 
