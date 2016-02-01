@@ -7,11 +7,17 @@ var kurento = require('kurento-client');
 var fs    = require('fs');
 var https = require('https');
 var http = require('http');
-var CONFIG = require('./config.js')
+var CONFIG = require('./config.js');
 
 var favicon = require('serve-favicon');
 
-
+var db = require('./db/config');
+var Users = require('./db/collections/users');
+var User = require('./db/models/user');
+var Tags = require('./db/collections/tags');
+var Tag = require('./db/models/tag');
+var Performances = require('./db/collections/performances');
+var Performance = require('./db/models/performance');
 
 var argv = minimist(process.argv.slice(2), {
     default: {
@@ -27,6 +33,60 @@ var options =
 };
 
 var app = express();
+
+// build a function that checks if a username/tagname/thing already exists
+
+app.get('/performances',
+function(req, res) {
+  Performances.fetch().then(function(performances) {
+    res.status(200).send(performances.models);
+  });
+  // https://github.com/tgriesser/bookshelf/issues/629 possible issue with getting tags
+  // res send in new then?  .attach(what in here)
+  // Performance.fetchAll()
+  // .then(function(performances) {
+  //   return performances.each(function(performance) {
+  //     return performance.load(['tags']); // look this up
+  //   });
+  // })
+  // .then(function(performances) {
+  //   performances.at(0).related('tags').attach(FTW); // waht in attach ()?
+  // })
+  // .then(function(performances) {
+  //   res.send(200, performances.models); // ok to call models on fetchall result?
+  // });
+});
+
+app.get('/test',
+  function(req, res) {
+
+    var testUser = new User({
+      username: 'Jane Bond',
+      admin: true
+    });
+
+    var testPerf = new Performance({
+      title: 'Jimbo sings the blues',
+      short_description: 'My blues are outta control',
+      long_description: 'Love life\'s sweetest reward Let it flow it floats back to you. Boy the way Glen Miller played. Songs that made the hit parade. Guys like us we had it made. Those were the days. All of them had hair of gold like their mother the youngest one in curls.; In 1972 a crack commando unit was sent to prison by a military court for a crime they didn\'t commit. These men promptly escaped from a maximum security stockade to the Los Angeles underground. We\'re gonna do it. On your mark get set and go now. Got a dream and we just know now we\'re gonna make our dream come true. These days are all Happy and Free. These days are all share them with me oh baby. You wanna be where you can see our troubles are all the same. You wanna be where everybody knows Your name. Space. The final frontier. These are the voyages of the Starship Enterprise. Here\'s the story of a man named Brady who was busy with three boys of his own. Fleeing from the Cylon tyranny the last Battlestar – Galactica - leads a rag-tag fugitive fleet on a lonely quest - a shining planet known as Earth. Knight Rider: A shadowy flight into the dangerous world of a man who does not exist. It\'s time to put on makeup. It\'s time to dress up right. It\'s time to raise the curtain on the Muppet Show tonight. Its mission - to explore strange new worlds to seek out new life and new civilizations to boldly go where no man has gone before.'
+    });
+
+    var testTag = new Tag({
+      tagname: 'doo wop'
+    });
+
+    testTag.save()
+    .then(function(newTag) {
+      Tags.add(newTag);
+      res.status(200).send(newTag);
+    })
+    .catch(function(err) {
+      console.error(err);
+    });
+  }
+);
+
+
 
 /*
  * Definition of global variables.
@@ -45,7 +105,7 @@ var asUrl;
 var port;
 var server;
 
-if (true) {  //set to process.env.ON_HEROKU for production set to false to test locally
+if (false) {  //set to process.env.ON_HEROKU for production set to false to test locally
   // run with http server
   port = process.env.PORT;
   server = http.createServer(app).listen(port, function() {
