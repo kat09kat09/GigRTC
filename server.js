@@ -45,9 +45,9 @@ var asUrl;
 var port;
 var server;
 
-if (true) {  //set to process.env.ON_HEROKU for production set to false to test locally
+if (false) {  //set to process.env.ON_HEROKU for production set to false to test locally
   // run with http server
-  port = process.env.PORT || 8080;
+  port = process.env.PORT;
   server = http.createServer(app).listen(port, function() {
     console.log('Running on port ' + port + ' on Heroku');
   });
