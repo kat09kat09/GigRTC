@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import { Navbar } from 'react-bootstrap';
 import { Link } from 'react-router';
-import Login from './login';
+import Login from './forms/login';
 import {connect} from 'react-redux';
 import {logoutAndRedirect,fetchProtectedData} from '../actions';
-
 
 
 import LeftNav from 'material-ui/lib/left-nav';
@@ -59,10 +58,11 @@ export class Header extends Component {
               <div>
               {this.props.isAuthenticated
                 ? <li className="loginForm"><a href='#' onClick={() => this.props.logoutAndRedirect()}>Logout</a> </li>
-                : <Login />
+                : <Login/>
               }
-            </div>
-              {this.props.children}
+              </div>
+
+
           </div>
         );
     }

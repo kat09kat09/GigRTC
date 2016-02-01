@@ -45,9 +45,9 @@ var asUrl;
 var port;
 var server;
 
-if (true) {  //set to process.env.ON_HEROKU for production set to false to test locally
+if (false) {  //set to process.env.ON_HEROKU for production set to false to test locally
   // run with http server
-  port = process.env.PORT || 8080;
+  port = process.env.PORT ;
   server = http.createServer(app).listen(port, function() {
     console.log('Running on port ' + port + ' on Heroku');
   });
@@ -379,6 +379,7 @@ function onIceCandidate(sessionId, _candidate) {
 
 ///////////////////////////////////////////////\
 
+
 var jwt = require('jsonwebtoken');
 var expressJWT = require('express-jwt')
 var bodyParser = require('body-parser');
@@ -391,9 +392,7 @@ app.use(favicon(__dirname + '/client/public/img/spinner.gif'));
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'client')));
-//app.get('*', function (request, response){
-//    response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
-//})
+
 app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook']}));
 
 app.post('/auth/getToken/', (req, res) => {
@@ -422,7 +421,8 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new FacebookStrategy({
         clientID: CONFIG.FB_CLIENT_ID,
         clientSecret: CONFIG.FB_APP_SECRET,
-        callbackURL: CONFIG.FB_CALL_BACK
+        callbackURL: CONFIG.FB_CALL_BACK,
+        profileFields: ['id', 'displayName', 'photos', 'email']
     },
     function(accessToken, refreshToken, profile, done) {
         //User.findOrCreate(..., function(err, user) {
@@ -447,7 +447,7 @@ app.get('/auth/facebook/callback/',
 
     function(req, res) {
         token = jwt.sign({userName:'tds@tds.com'},CONFIG.JWT_SECRET)
-        res.redirect('/#/authenticateFacebook')
+        res.redirect('/authenticateFacebook')
     }
 
 );
@@ -455,6 +455,17 @@ app.get('/auth/facebook/callback/',
 app.get('/auth/validateSocialToken',(req, res) => {
 
     res.json({token: token});
+})
+
+
+app.get('/banana',(req, res) => {
+
+    res.json("its a fruit");
+})
+
+
+app.get('*', function (request, response){
+    response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
 })
 
 module.exports.server = server;

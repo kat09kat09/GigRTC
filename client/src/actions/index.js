@@ -91,7 +91,7 @@ export function loginUser(creds,environment){
                 try {
                     let decoded = jwtDecode(response.token);
                     dispatch(loginUserSuccess(response.token));
-                    hashHistory.push('/')
+                    browserHistory.push('/')
                 } catch (e) {
                     dispatch(loginUserFailure({
                         response: {
@@ -177,7 +177,7 @@ export function getSocialToken(){
                 try {
                     let decoded = jwtDecode(response.token);
                     dispatch(loginUserSuccess(response.token));
-                    hashHistory.push('/#/')
+                    browserHistory.push('/')
                 } catch (e) {
                     dispatch(loginUserFailure({
                         response: {

@@ -15,6 +15,6 @@ const createStoreWithMiddleware = applyMiddleware(thunkMiddleware,ReduxPromise)(
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
-    <Router history={ hashHistory } routes={ Routes } />
+    <Router history={ browserHistory } routes={ Routes } />
   </Provider>
   , document.querySelector('.container'));
