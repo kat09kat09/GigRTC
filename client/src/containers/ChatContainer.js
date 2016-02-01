@@ -1,14 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import * as actions from '../actions/actions';
 // import {receiveAuth} from '../actions/authActions';
-import Chat from '../components/Chat';
+import {Chat} from '../components/Chat';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
 
 //we need to set up this route in express
-const socket = io('', { path: '/api/chat' });
-console.log('socket in ChatContainer', socket); 
+// const socket = io('', { path: '/api/chat' });
+// const socket = io.connect('https://127.0.0.1', {path: '/api/chat', reconnect: 'false'}); 
+// console.log('socket', socket); 
+const socket= io(); 
 
 //should set the initialChannel to the the artist's username + Broadcast... like "Mike's Broadcast"
 const initialChannel = 'Lobby'; // NOTE: I hard coded this value for my example.  Change this as you see fit
@@ -17,6 +19,7 @@ const initialUser= 'TestUser';
 class ChatContainer extends Component {
   componentWillMount() {
     const { dispatch, user } = this.props;
+    console.log('this.props', this.props); 
 
     //not necessary... just prevent message submission if the user isn't logged in
     //anyone can read the messages
@@ -29,7 +32,10 @@ class ChatContainer extends Component {
   }
   render() {
     return (
-      <Chat {...this.props} socket={socket} />
+      <div>Chat should be here
+        <Chat {...this.props} socket={socket} />
+      </div>
+      
     );
   }
 }

@@ -221,12 +221,19 @@ app.use('/api', messageRouter);
 // app.use('/api', usersRouter);
 // app.use('/api', channelRouter);
 
-var SocketIo= require('socket.io').listen(server, {path: '/api/chat'});
+var io= require('socket.io').listen(server, {path: '/api/chat'});
+
+// var io = require('socket.io')(server, {path: '/api/chat'}); 
+
+var socketioJwt= require('socketio-jwt');
+
+io.set('authorization', socketioJwt.authorize({
+  secret : CONFIG.JWT_SECRET,
+  handshake: true 
+}))
 
 
-// var io = new SocketIo(server, {path: '/api/chat'}); 
-
-var socketEvents = require('./server/socketEvents')(SocketIo);
+var socketEvents = require('./server/socketEvents')(io);
 
 
 //********* End Test Chat **********

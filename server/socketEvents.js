@@ -1,6 +1,7 @@
 exports = module.exports = function(io) {
   io.on('connection', function(socket) {
-    console.log('a user connected', socket);
+    console.log('a user connected');
+    console.log('socket.handshake.session', socket.handshake.decoded_token.userName); 
     socket.join('Lobby');
     socket.on('chat mounted', function(user) {
       console.log('gets here'); 

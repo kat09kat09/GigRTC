@@ -7,6 +7,7 @@ import * as actions from '../actions/actions';
 // import TypingListItem from './TypingListItem';
 import { Modal, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 const activeChannel='Lobby'; 
+const user= 'tds@tds.com'; 
 
 export default class Chat extends Component {
 
@@ -43,9 +44,10 @@ export default class Chat extends Component {
     // socket.on('new channel', channel =>
     //   dispatch(actions.receiveRawChannel(channel))
     // );
-    socket.on('receive socket', socketID =>
+    socket.on('receive socket', socketID =>{
+      console.log('received socket', socketID)
       dispatch(authActions.receiveSocket(socketID))
-    );
+    });
     // socket.on('receive private channel', channel =>
     //   dispatch(actions.receiveRawChannel(channel))
     // );
