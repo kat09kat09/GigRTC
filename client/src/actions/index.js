@@ -1,9 +1,9 @@
 import { checkHttpStatus, parseJSON } from '../utils';
 import CONSTANTS from '../constants/index';
 import axios from 'axios';
-const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA, SAVE_BROADCAST,CURRENT_ENVIRONMENT} = CONSTANTS
+const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA, SAVE_BROADCAST,CURRENT_ENVIRONMENT,PUBLIC_TOKEN} = CONSTANTS
 import jwtDecode from 'jwt-decode';
-import {browserHistory} from 'react-router';
+import {browserHistory,hashHistory} from 'react-router';
 
 export function loginUserSuccess(token){
     localStorage.setItem('token',token);
@@ -12,6 +12,17 @@ export function loginUserSuccess(token){
         type : LOGIN_USER_SUCCESS,
         payload : {
             token
+        }
+    }
+}
+
+export function refreshLoginState(){
+    const localToken = localStorage.getItem('token')
+    return {
+        type : PUBLIC_TOKEN,
+        payload : {
+            token : localToken,
+            isAuthenticated : !!localToken
         }
     }
 }
@@ -70,11 +81,13 @@ export function loginUser(creds,environment){
     return (dispatch) =>{
         //return fetch(location.host + '/auth/getToken/', config) -> initial approach
         dispatch(loginUserRequest());
-        console.log('login',`${environment}/auth/getToken/`)
+        //console.log('login',`${environment}/auth/getToken/`)
         return fetch(`/auth/getToken/`, config)
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
+                console.log("login respinse",response)
+
                 try {
                     let decoded = jwtDecode(response.token);
                     dispatch(loginUserSuccess(response.token));
@@ -142,7 +155,7 @@ export function determineEnvironment(){
         }
     };
     return (dispatch,state) => {
-       return fetch('https://localhost:1338/auth/getToken/', config)
+       return fetch('/auth/getToken/', config)
             .then(response=> {
                 dispatch(environmentLocation('https://localhost:1338'))
             }).catch((error)=> {
@@ -152,6 +165,34 @@ export function determineEnvironment(){
     }
 }
 
+export function getSocialToken(){
+
+    return (dispatch) =>{
+        //return fetch(location.host + '/auth/getToken/', config) -> initial approach
+        //console.log('login',`${environment}/auth/getToken/`)
+        return  fetch(`/auth/validateSocialToken`)
+            .then(checkHttpStatus)
+            .then(parseJSON)
+            .then(response => {
+                try {
+                    let decoded = jwtDecode(response.token);
+                    dispatch(loginUserSuccess(response.token));
+                    browserHistory.push('/')
+                } catch (e) {
+                    dispatch(loginUserFailure({
+                        response: {
+                            status: 403,
+                            statusText: 'Invalid token'
+                        }
+                    }));
+                }
+            })
+            .catch(error => {
+
+                dispatch(loginUserFailure(error));
+            })
+    }
+}
 
 
 //placeholder for post to /api/saveBroadcast endpoint

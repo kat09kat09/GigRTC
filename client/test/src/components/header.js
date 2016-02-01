@@ -1,7 +1,7 @@
 var React = require('react')
 import expect from 'expect'
 import {Header} from  '../../../src/components/header'
-import LoginView from  '../../../src/components/login'
+import LoginView from  '../../../src/components/forms/login'
 var  TestUtils = require('react-addons-test-utils');
 import AppBar from 'material-ui/lib/app-bar';
 

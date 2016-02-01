@@ -2,6 +2,8 @@ var ws = new WebSocket('wss://' + location.host + '/one2many');
 var video;
 var webRtcPeer; //gets assigned in presenter function
 
+console.log('FROM WBRTC CLIENT', location.host)
+
   video = document.getElementById('video');
 
   document.getElementsByClassName('startBroadcast')[0].addEventListener('click', function() { presenter(); } );

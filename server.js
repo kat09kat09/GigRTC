@@ -7,6 +7,8 @@ var kurento = require('kurento-client');
 var fs    = require('fs');
 var https = require('https');
 var http = require('http');
+var path = require('path')
+
 var CONFIG = require('./config.js');
 
 var favicon = require('serve-favicon');
@@ -31,7 +33,7 @@ var options =
   key:  fs.readFileSync('keys/server.key'),
   cert: fs.readFileSync('keys/server.crt')
 };
-
+//
 var app = express();
 
 // build a function that checks if a username/tagname/thing already exists
@@ -107,7 +109,7 @@ var server;
 
 if (false) {  //set to process.env.ON_HEROKU for production set to false to test locally
   // run with http server
-  port = process.env.PORT;
+  port = process.env.PORT ;
   server = http.createServer(app).listen(port, function() {
     console.log('Running on port ' + port + ' on Heroku');
   });
@@ -436,9 +438,15 @@ function onIceCandidate(sessionId, _candidate) {
     }
 }
 
+
+///////////////////////////////////////////////\
+
+
 var jwt = require('jsonwebtoken');
 var expressJWT = require('express-jwt')
 var bodyParser = require('body-parser');
+var passport = require('passport')
+    , FacebookStrategy = require('passport-facebook').Strategy;
 
 app.use(favicon(__dirname + '/client/public/img/spinner.gif'));
 
@@ -446,7 +454,8 @@ app.use(favicon(__dirname + '/client/public/img/spinner.gif'));
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'client')));
-app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/','/auth/getToken/']}));
+
+app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook']}));
 
 app.post('/auth/getToken/', (req, res) => {
     if (req.body.userName == 'tds@tds.com' && req.body.password == 'tds') {
@@ -463,6 +472,59 @@ app.get('/getData/', (req, res) => {
         .json({data: 'Valid JWT found! This protected data was fetched from the server.'});
 
 })
+passport.serializeUser(function(user, done) {
+    done(null, user);
+});
 
+passport.deserializeUser(function(obj, done) {
+    done(null, obj);
+});
+
+passport.use(new FacebookStrategy({
+        clientID: CONFIG.FB_CLIENT_ID,
+        clientSecret: CONFIG.FB_APP_SECRET,
+        callbackURL: CONFIG.FB_CALL_BACK,
+        profileFields: ['id', 'displayName', 'photos', 'email']
+    },
+    function(accessToken, refreshToken, profile, done) {
+        //User.findOrCreate(..., function(err, user) {
+        //    if (err) { return done(err); }
+        //    done(null, user);
+        //});
+        return done(null,{username : 'tds@tds.com'})
+    }
+));
+
+app.use(passport.initialize());
+
+
+app.get('/auth/facebook/',
+    passport.authenticate('facebook'));
+
+var token;
+
+app.get('/auth/facebook/callback/',
+
+    passport.authenticate('facebook', { failureRedirect: '/login' }),
+
+    function(req, res) {
+        token = jwt.sign({userName:'tds@tds.com'},CONFIG.JWT_SECRET)
+        res.redirect('/authenticateFacebook')
+    }
+
+);
+
+app.get('/auth/validateSocialToken',(req, res) => {
+
+    res.json({token: token});
+})
+
+
+
+app.get('*', function (request, response){
+    response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
+})
 
 module.exports.server = server;
+
+

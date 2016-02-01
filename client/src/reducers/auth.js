@@ -2,7 +2,7 @@ import {createReducer} from '../utils';
 import jwtDecode from 'jwt-decode';
 import CONSTANTS from '../constants/index';
 //import { pushState } from 'redux-router';
-const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER} = CONSTANTS
+const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER,PUBLIC_TOKEN} = CONSTANTS
 
 const initialState = {
     token: null,
@@ -23,6 +23,16 @@ export default createReducer(initialState, {
         return Object.assign({}, state, {
             'isAuthenticating': false,
             'isAuthenticated': true,
+            'token': payload.token,
+            'userName': jwtDecode(payload.token).userName,
+            'statusText': 'You have been successfully logged in.'
+        });
+
+    },
+    [PUBLIC_TOKEN]: (state, payload) => {
+        return Object.assign({}, state, {
+            'isAuthenticating': false,
+            'isAuthenticated': payload.isAuthenticated,
             'token': payload.token,
             'userName': jwtDecode(payload.token).userName,
             'statusText': 'You have been successfully logged in.'

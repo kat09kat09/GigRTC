@@ -47,7 +47,7 @@ describe('reducers', () => {
                 })
             ).toEqual(
 
-                {...initialState,'isAuthenticating': true,'statusText': null}
+                Object.assign({},initialState,{'isAuthenticating': true,'statusText': null})
 
             )
         })
@@ -61,7 +61,12 @@ describe('reducers', () => {
                     }
                 })
             ).toEqual(
-                {...initialState,'isAuthenticated': false,'isAuthenticating': false,'token': null,'userName': null,'statusText': `Authentication Error: 401 Login Unauthorized`}
+                Object.assign({},initialState,{
+                    'isAuthenticated': false,
+                    'isAuthenticating': false,
+                    'token': null,
+                    'userName': null,
+                    'statusText': `Authentication Error: 401 Login Unauthorized`})
 
             )
         })
@@ -74,7 +79,7 @@ describe('reducers', () => {
                     }
                 })
             ).toEqual(
-                ({...initialState,
+                Object.assign({},initialState,{
                     'isAuthenticating': false,
                     'isAuthenticated': true,
                     'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InRkc0B0ZHMuY29tIiwiaWF0IjoxNDU0MDY0MTQ2fQ.ArQkqa8Wgp9MTO7dPQ4aMIyfHS6eQxTBAUk4tyWOoMY',
@@ -89,7 +94,7 @@ describe('reducers', () => {
                     type: LOGOUT_USER
                 })
             ).toEqual(
-                ({...initialState,
+               Object.assign({},initialState,{
                     'isAuthenticated': false,
                     'token': null,
                     'userName': null,

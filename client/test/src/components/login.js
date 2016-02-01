@@ -2,7 +2,7 @@
 var React = require('react')
 
 //Component&Container imports
-import {LoginView} from  '../../../src/components/login'
+import {LoginView} from  '../../../src/components/forms/login'
 
 
 //Testing imports
