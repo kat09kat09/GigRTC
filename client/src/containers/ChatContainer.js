@@ -31,11 +31,9 @@ class ChatContainer extends Component {
     const { dispatch, user } = this.props;
     console.log('this.props', this.props); 
 
-    //not necessary... just prevent message submission if the user isn't logged in
-    //anyone can read the messages
-    // if(!user.username) {
-    //   dispatch(receiveAuth());
-    // }
+    if(!user.username) {
+      dispatch(receiveAuth());
+    }
     dispatch(actions.fetchMessages(initialChannel));
     // dispatch(actions.fetchChannels(user.username));
 
