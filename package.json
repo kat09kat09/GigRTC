@@ -4,8 +4,7 @@
   "description": "Twitch.TV for live performances",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register --recursive  ./test && cd tests && mocha circle-ci-true ",
-    "posttest": "cd .. && cd test && mocha db-test",
+    "test": "mocha --compilers js:babel-core/register --recursive  ./test ",
     "postinstall": "cd client && npm install && bower install && webpack --config ./webpack.config.js && npm test",
     "start": "node server.js"
   },
@@ -23,7 +22,6 @@
     "mysql": "^2.10.2",
     "passport": "^0.3.2",
     "passport-facebook": "^2.0.0",
-    "request": "^2.69.0",
     "serve-favicon": "^2.3.0",
     "webpack": "^1.12.12",
     "ws": "^1.0.1"
