@@ -1,7 +1,19 @@
 import { checkHttpStatus, parseJSON } from '../utils';
 import CONSTANTS from '../constants/index';
 import axios from 'axios';
-const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, FETCH_PROTECTED_DATA_REQUEST, RECEIVE_PROTECTED_DATA, SAVE_BROADCAST,CURRENT_ENVIRONMENT,PUBLIC_TOKEN} = CONSTANTS
+const {
+    LOGIN_USER_REQUEST,
+    LOGIN_USER_FAILURE,
+    LOGIN_USER_SUCCESS,
+    LOGOUT_USER,
+    FETCH_PROTECTED_DATA_REQUEST,
+    RECEIVE_PROTECTED_DATA,
+    SAVE_BROADCAST,
+    CURRENT_ENVIRONMENT,
+    PUBLIC_TOKEN,
+    FETCH_ACTIVE_STREAMS
+    } = CONSTANTS;
+
 import jwtDecode from 'jwt-decode';
 import {browserHistory,hashHistory} from 'react-router';
 
@@ -193,6 +205,16 @@ export function getSocialDetails(){
     }
 }
 
+export function getActivePerformances(){
+
+    var data = axios.get('/api/activeStreams')
+
+    return {
+        type : FETCH_ACTIVE_STREAMS,
+        payload : data
+    }
+
+}
 
 //placeholder for post to /api/saveBroadcast endpoint
 export function saveBroadcast(broadcastData) {

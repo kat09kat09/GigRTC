@@ -103,7 +103,7 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'client')));
 
-app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook']}));
+app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook',/^\/api\/.*/]}));
 
 app.post('/auth/getToken/', (req, res) => {
     if (req.body.userName == 'tds@tds.com' && req.body.password == 'tds') {
