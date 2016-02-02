@@ -10,13 +10,23 @@ import io from 'socket.io-client';
 // const socket = io('', { path: '/api/chat' });
 // const socket = io.connect('https://127.0.0.1', {path: '/api/chat', reconnect: 'false'}); 
 // console.log('socket', socket); 
-const socket= io(); 
+// const socket= io(); 
 
 //should set the initialChannel to the the artist's username + Broadcast... like "Mike's Broadcast"
 const initialChannel = 'Lobby'; // NOTE: I hard coded this value for my example.  Change this as you see fit
 const initialUser= 'TestUser'; 
 
 class ChatContainer extends Component {
+
+  constructor(props, context) {
+    super(props, context);
+    console.log('props in ChatContainer', props); 
+    // this.state = {
+    //   privateChannelModal: false,
+    //   targetedUser: ''
+    // }
+  }
+
   componentWillMount() {
     const { dispatch, user } = this.props;
     console.log('this.props', this.props); 
@@ -29,11 +39,14 @@ class ChatContainer extends Component {
     dispatch(actions.fetchMessages(initialChannel));
     // dispatch(actions.fetchChannels(user.username));
 
+    
+
   }
   render() {
     return (
       <div>Chat should be here
         <Chat {...this.props} socket={socket} />
+        
       </div>
       
     );

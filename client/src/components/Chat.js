@@ -30,6 +30,7 @@ export default class Chat extends Component {
   }
   componentDidMount() {
     const { socket, user, dispatch } = this.props;
+    console.log('socket exists in chat', socket); 
     console.log('user in Chat', user); 
     socket.emit('chat mounted', user);
     socket.on('new bc message', msg =>

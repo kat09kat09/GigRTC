@@ -56,10 +56,6 @@ export class Header extends Component {
                     linkButton={true}
                     primaryText="Broadcast"
                     containerElement={<Link to="/streamYourself" >Stream Yourself</Link>} />
-                   <MenuItem
-                    linkButton={true}
-                    primaryText="Chat"
-                    containerElement={<Link to="/chat" >Chat</Link>} />
                   <MenuItem><a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a></MenuItem>
                   <MenuItem primaryText="Sign in" />
                   <MenuItem primaryText="Sign out" />

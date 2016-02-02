@@ -16,6 +16,8 @@ const {
 
 import jwtDecode from 'jwt-decode';
 import {browserHistory,hashHistory} from 'react-router';
+import io from 'socket.io-client';
+
 
 export function loginUserSuccess(userObj){
     console.log("LOGIN USER SUCCESS",userObj)
@@ -101,6 +103,8 @@ export function loginUser(creds,environment){
 
                 try {
                     let decoded = jwtDecode(response.token);
+                    console.log('successful login', response.token); 
+                    connect_socket(response.token); 
                     dispatch(loginUserSuccess(response.token));
                     browserHistory.push('/')
                 } catch (e) {
@@ -143,11 +147,13 @@ export function fetchProtectedData(token,environment) {
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
+                console.log('response data after login', response.data);
                 dispatch(receiveProtectedData(response.data));
-                console.log(response.data)
+                
             })
             .catch(error => {
                 if(error.response.status === 401) {
+                    console.log('there was an error with logging in'); 
                     dispatch(loginUserFailure(error));
                     browserHistory.push('/');
                 }
@@ -176,7 +182,12 @@ export function determineEnvironment(){
     }
 }
 
-export function getSocialDetails(){
+
+// export function getSocialDetails(){
+
+
+export function getSocialToken(){
+
 
     return (dispatch) =>{
         //return fetch(location.host + '/auth/getToken/', config) -> initial approach
@@ -203,6 +214,27 @@ export function getSocialDetails(){
                 dispatch(loginUserFailure(error));
             })
     }
+
+function connect_socket(token){
+  console.log('connect socket fxn is called'); 
+  console.log('io exists', io)
+  console.log('token', token); 
+  // var socket= io(); 
+  // var socket= io.connect('https://localhost:1338', { path: '/api/chat' }); 
+  // var socket = io('https://localhost:1338', { path: '/api/chat' });
+  var socket = io.connect('https://localhost:1338'); 
+  console.log('socket on outer layer', socket)
+  // socket.on('connect', function () {
+  //   console.log('connect event')
+  //   console.log('socket', socket); 
+    socket.on('authenticated', function () {
+        //do things
+        console.log('socket has been authenticated')
+    })
+    .emit('authenticate', {token: token})
+  // })
+  return socket; 
+
 }
 
 export function getActivePerformances(){
