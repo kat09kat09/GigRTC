@@ -4,7 +4,7 @@ var express = require('express');
 var fs    = require('fs');
 var https = require('https');
 var http = require('http');
-var path = require('path')
+var path = require('path');
 
 var CONFIG = require('./config.js');
 
@@ -19,8 +19,7 @@ var Performances = require('./db/collections/performances');
 var Performance = require('./db/models/performance');
 
 
-var options =
-{
+var options = {
   key:  fs.readFileSync('keys/server.key'),
   cert: fs.readFileSync('keys/server.crt')
 };
@@ -29,13 +28,9 @@ var app = express();
 
 var port = 1338;
 
-
-
 var server = https.createServer(options, app).listen(port, function() {
-    console.log(`Running on port: ${port}`);
-  });
-
-
+  console.log('Running on port: ${port}');
+});
 
 
 
