@@ -18,7 +18,6 @@
   ],
   "dependencies": {
     "adapter.js": "*",
-    "kurento-utils": "~6.2.0",
     "reset-css": "~2.0.2011012602",
     "jquery": "~2.2.0"
   }
