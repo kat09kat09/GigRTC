@@ -3,7 +3,7 @@ import StreamButtons from '../components/streamButtons';
 import {connect} from 'react-redux';
 import AuthenticateFacebook from '../components/auth/authenticatePage'
 
-export default class VideoContainer extends Component {
+export class VideoContainer extends Component {
 
   componentWillMount(){
       //var script   = document.createElement("script");
@@ -24,3 +24,10 @@ export default class VideoContainer extends Component {
 }
 
 
+function mapStateToProps(state){
+    return {
+        environment : state.environment
+    }
+}
+
+export default connect(mapStateToProps)(VideoContainer)

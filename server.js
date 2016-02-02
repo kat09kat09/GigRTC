@@ -30,7 +30,7 @@ var app = express();
 var port = 1338;
 
 
- 
+
 var server = https.createServer(options, app).listen(port, function() {
     console.log(`Running on port: ${port}`);
   });
@@ -144,7 +144,7 @@ passport.use(new FacebookStrategy({
         //    if (err) { return done(err); }
         //    done(null, user);
         //});
-        return done(null,{username : 'tds@tds.com'})
+        return done(null,profile)
     }
 ));
 
@@ -161,6 +161,7 @@ app.get('/auth/facebook/callback/',
     passport.authenticate('facebook', { failureRedirect: '/login' }),
 
     function(req, res) {
+        console.log("response",req.user)
         token = jwt.sign({userName:'tds@tds.com'},CONFIG.JWT_SECRET)
         res.redirect('/authenticateFacebook')
     }
