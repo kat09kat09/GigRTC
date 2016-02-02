@@ -20,64 +20,64 @@ var  TestUtils = require('react-addons-test-utils');
 //// Create store
 //const createStoreWithMiddleware = applyMiddleware(thunkMiddleware)(createStore);
 
+//Creating local Storage
+GLOBAL.localStorage = {}
 
-//
-//function setup() {
-//    let props = {
-//        addTodo: expect.createSpy(),
-//        determineEnvironment : function(){
-//            return "currently in dev"
-//        },
-//        children : VideoContainer
-//    };
-//
-//    // Create Component
-//    const component  = (<App {...props} />)
-//
-//    let renderer = TestUtils.createRenderer()
-//    renderer.render(component)
-//    let output = renderer.getRenderOutput()
-//    //console.log("app",output.props.children[2]);
-//    return {
-//        props,
-//        output,
-//        renderer
-//    }
-//}
-//
-//(function () {
-//    var localStorage = {};
-//    localStorage.setItem = function (key, val) {
-//        this[key] = val + '';
-//    }
-//    localStorage.getItem = function (key) {
-//        return this[key];
-//    }
-//    Object.defineProperty(localStorage, 'length', {
-//        get: function () { return Object.keys(this).length - 2; }
-//    });
-//
-//    // Your tests here
-//
-//})();
+GLOBAL.localStorage.setItem = function (key, val) {
+    this[key] = val + '';
+}
+GLOBAL.localStorage.getItem = function (key) {
+    return this[key];
+}
 
-//xdescribe('components', () => {
-//    const { output } = setup();
-//    describe('MainApp', () => {
-//
-//        it('should render correctly, clarify by className', () => {
-//            expect(output.props.className).toBe('appComponentBody');
-//        })
-//        it('should contain a functional, "dumb" SideBar ', () => {
-//           var func= (output.props.children[1].type)
-//            expect( func).toBe(SideBar)
-//        })
-//        it('should contain a Header wrapped in redux connection ', () => {
-//            expect(output.props.children[0].type).toBe(HeaderConnect)
-//        })
-//        it('should contain a props.children container with VideoContainer  ', () => {
-//            expect(output.props.children[2].props.children).toBe(VideoContainer)
-//        })
-//
-//    })
-//});
+
+    function setup() {
+        let props = {
+            addTodo: expect.createSpy(),
+            determineEnvironment : function(){
+                return "currently in dev"
+            },
+            children : VideoContainer
+        };
+
+        // Create Component
+        const component  = (<App {...props} />)
+
+        let renderer = TestUtils.createRenderer()
+        renderer.render(component)
+        let output = renderer.getRenderOutput()
+        //console.log("app",output.props.children[2]);
+        return {
+            props,
+            output,
+            renderer
+        }
+    }
+
+    describe('components', () => {
+
+
+        const { output } = setup();
+        describe('MainApp', () => {
+
+
+            it('should render correctly, clarify by className', () => {
+                expect(output.props.className).toBe('appComponentBody');
+            })
+            it('should contain a functional, "dumb" SideBar ', () => {
+                var func= (output.props.children[1].type)
+                expect( func).toBe(SideBar)
+            })
+            it('should contain a Header wrapped in redux connection ', () => {
+                expect(output.props.children[0].type).toBe(HeaderConnect)
+            })
+            it('should contain a props.children container with VideoContainer  ', () => {
+                expect(output.props.children[2].props.children).toBe(VideoContainer)
+            })
+
+        })
+    });
+
+
+
+
