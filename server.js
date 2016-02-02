@@ -152,7 +152,7 @@ app.use(passport.initialize());
 
 
 app.get('/auth/facebook/',
-    passport.authenticate('facebook'));
+    passport.authenticate('facebook',{scope : 'email'}));
 
 var token;
 
