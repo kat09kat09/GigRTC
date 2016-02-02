@@ -41,7 +41,7 @@ db.knex.schema.hasTable('users').then(function(exists) {
       users.string('email_id', 255).unique(); // listed here as unique as a backup in case our unique check fails
       users.text('artist_info'); // maximum length is 64 K
       users.text('user_image'); // mediumblob is for binaries up to 16 M
-      user.text('display_name',255);
+      users.text('display_name');
       users.date('banned_until'); // YYYY-MM-DD
       users.boolean('harassed'); // is this user the target of a troll campaign
       users.boolean('over17');

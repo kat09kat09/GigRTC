@@ -5,14 +5,13 @@ const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER, 
 import jwtDecode from 'jwt-decode';
 import {browserHistory,hashHistory} from 'react-router';
 
-export function loginUserSuccess(token){
-    localStorage.setItem('token',token);
+export function loginUserSuccess(userObj){
+    console.log("LOGIN USER SUCCESS",userObj)
+    localStorage.setItem('token',userObj.token);
 
     return{
         type : LOGIN_USER_SUCCESS,
-        payload : {
-            token
-        }
+        payload : userObj
     }
 }
 
@@ -165,7 +164,7 @@ export function determineEnvironment(){
     }
 }
 
-export function getSocialToken(){
+export function getSocialDetails(){
 
     return (dispatch) =>{
         //return fetch(location.host + '/auth/getToken/', config) -> initial approach
@@ -175,8 +174,8 @@ export function getSocialToken(){
             .then(parseJSON)
             .then(response => {
                 try {
-                    let decoded = jwtDecode(response.token);
-                    dispatch(loginUserSuccess(response.token));
+                    //let decoded = jwtDecode(response.token);
+                    dispatch(loginUserSuccess({token : response.token, user_details:response.user_details._json}));
                     browserHistory.push('/')
                 } catch (e) {
                     dispatch(loginUserFailure({
