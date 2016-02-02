@@ -19,7 +19,7 @@ describe('reducers', () => {
 
         const initialState = {
             token: null,
-            userName: null,
+            userDetails: {},
             isAuthenticated: false,
             isAuthenticating: false,
             statusText: null
@@ -27,11 +27,11 @@ describe('reducers', () => {
 
         it('should return the initial state', () => {
             expect(
-                AuthReducer(undefined, {})
+                AuthReducer(initialState, {})
             ).toEqual(
                 {
                     token: null,
-                    userName: null,
+                    userDetails: {},
                     isAuthenticated: false,
                     isAuthenticating: false,
                     statusText: null
@@ -65,7 +65,7 @@ describe('reducers', () => {
                     'isAuthenticated': false,
                     'isAuthenticating': false,
                     'token': null,
-                    'userName': null,
+                    'userDetails': null,
                     'statusText': `Authentication Error: 401 Login Unauthorized`})
 
             )
@@ -75,7 +75,12 @@ describe('reducers', () => {
                 AuthReducer(initialState, {
                     type: LOGIN_USER_SUCCESS,
                     payload : {
-                        token : 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InRkc0B0ZHMuY29tIiwiaWF0IjoxNDU0MDY0MTQ2fQ.ArQkqa8Wgp9MTO7dPQ4aMIyfHS6eQxTBAUk4tyWOoMY'
+                        token : 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InRkc0B0ZHMuY29tIiwiaWF0IjoxNDU0MDY0MTQ2fQ.ArQkqa8Wgp9MTO7dPQ4aMIyfHS6eQxTBAUk4tyWOoMY',
+                        user_details : {
+                            name : 'bob',
+                            id: '123456',
+                            email : 'veebuv@gmail.com'
+                        }
                     }
                 })
             ).toEqual(
@@ -83,7 +88,11 @@ describe('reducers', () => {
                     'isAuthenticating': false,
                     'isAuthenticated': true,
                     'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6InRkc0B0ZHMuY29tIiwiaWF0IjoxNDU0MDY0MTQ2fQ.ArQkqa8Wgp9MTO7dPQ4aMIyfHS6eQxTBAUk4tyWOoMY',
-                    'userName': 'tds@tds.com',
+                     userDetails : {
+                        name : 'bob',
+                        id: '123456',
+                        email : 'veebuv@gmail.com'
+                     },
                     'statusText': 'You have been successfully logged in.'
                 })
             )
@@ -97,7 +106,7 @@ describe('reducers', () => {
                Object.assign({},initialState,{
                     'isAuthenticated': false,
                     'token': null,
-                    'userName': null,
+                    'userDetails': null,
                     'statusText': 'You have been successfully logged out.'
                 })
             )

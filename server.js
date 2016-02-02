@@ -30,7 +30,7 @@ var app = express();
 var port = 1338;
 
 
- 
+
 var server = https.createServer(options, app).listen(port, function() {
     console.log(`Running on port: ${port}`);
   });
@@ -140,11 +140,32 @@ passport.use(new FacebookStrategy({
         profileFields: ['id', 'displayName', 'photos', 'email']
     },
     function(accessToken, refreshToken, profile, done) {
+        new User({facebook_id : profile.id}).fetch().then(function(response){
+            if(response){
+                return done(null,profile)
+            }
+            else{
+                var facebookUser = new User({
+                    facebook_id : profile.id,
+                    email_id : profile.emails[0].value,
+                    display_name : profile.displayName,
+                    user_image : profile.photos[0].value
+                })
+
+                facebookUser.save().then(function(newfacebookUser) {
+                    Users.add(newfacebookUser);
+                    return done(null,newfacebookUser)
+                });
+            }
+        })
+
+
+
         //User.findOrCreate(..., function(err, user) {
         //    if (err) { return done(err); }
         //    done(null, user);
         //});
-        return done(null,{username : 'tds@tds.com'})
+        //return done(null,profile)
     }
 ));
 
@@ -154,14 +175,17 @@ app.use(passport.initialize());
 app.get('/auth/facebook/',
     passport.authenticate('facebook',{scope : 'email'}));
 
-var token;
+var current_token;
+var current_user;
 
 app.get('/auth/facebook/callback/',
 
     passport.authenticate('facebook', { failureRedirect: '/login' }),
 
     function(req, res) {
-        token = jwt.sign({userName:'tds@tds.com'},CONFIG.JWT_SECRET)
+        console.log("response",req.user);
+        current_user = req.user
+        current_token = jwt.sign({userName: req.user.emails[0].value },CONFIG.JWT_SECRET)
         res.redirect('/authenticateFacebook')
     }
 
@@ -169,7 +193,7 @@ app.get('/auth/facebook/callback/',
 
 app.get('/auth/validateSocialToken',(req, res) => {
 
-    res.json({token: token});
+    res.json({token: current_token, user_details : current_user});
 })
 
 

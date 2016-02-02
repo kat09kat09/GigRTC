@@ -9,6 +9,7 @@ import IconButton from 'material-ui/lib/icon-button';
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import FlatButton from 'material-ui/lib/flat-button'
 
 export default (props)=>{
     return (
@@ -17,7 +18,9 @@ export default (props)=>{
             containerElement={<Link to="/" className="logoLink">Gigg</Link>}
             iconElementLeft={<IconButton><NavigationClose /></IconButton>}
             iconElementRight={
-                <IconMenu
+                <div>
+                    <FlatButton label= {props.user_details.name} />
+                  <IconMenu
                   iconButtonElement={
                     <IconButton><MoreVertIcon /></IconButton>
                   }
@@ -35,6 +38,8 @@ export default (props)=>{
                   <MenuItem><a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a></MenuItem>
                   <MenuItem primaryText="Sign out" onClick={() => props.logoutAndRedirect()} />
                 </IconMenu>
+                </div>
+
               }/>
     )
 }

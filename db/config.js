@@ -36,10 +36,12 @@ db.knex.schema.hasTable('users').then(function(exists) {
     db.knex.schema.createTable('users', function (users) {
       users.increments('id').primary();
       users.timestamps();  // Adds a created_at and updated_at column on the database, setting these each to dateTime types.
-      users.string('oauth_id', 255).unique(); // what google.plus will hopefully give us
-      users.string('username', 255).unique(); // listed here as unique as a backup in case our unique check fails
+      users.string('google_id', 255).unique(); // what google.plus will hopefully give us
+      users.string('facebook_id', 255).unique(); // what facebook will hopefully give us
+      users.string('email_id', 255).unique(); // listed here as unique as a backup in case our unique check fails
       users.text('artist_info'); // maximum length is 64 K
-      users.specificType('userimage', 'mediumblob'); // mediumblob is for binaries up to 16 M
+      users.text('user_image'); // mediumblob is for binaries up to 16 M
+      users.text('display_name');
       users.date('banned_until'); // YYYY-MM-DD
       users.boolean('harassed'); // is this user the target of a troll campaign
       users.boolean('over17');

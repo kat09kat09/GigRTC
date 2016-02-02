@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 
-import {getSocialToken} from '../../actions';
+import {getSocialDetails} from '../../actions';
 import {connect} from 'react-redux';
 
 
@@ -12,11 +12,10 @@ export class AuthenticatePage extends Component {
     componentWillMount(){
         let tokenStatus = this.props.auth.token;
 
-            this.props.getSocialToken()
+            this.props.getSocialDetails().then(function(){
+                console.log(this.props.auth)
+            }.bind(this))
             console.log('Authentication Page being called',this.props)
-
-
-
 
     }
 
@@ -32,4 +31,4 @@ export class AuthenticatePage extends Component {
     }
 }
 
-export default connect(state=>state,{getSocialToken})(AuthenticatePage)
+export default connect(state=>state,{getSocialDetails})(AuthenticatePage)
