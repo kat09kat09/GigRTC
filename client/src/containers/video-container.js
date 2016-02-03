@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import AuthenticateFacebook from '../components/auth/authenticatePage'
 
 
-
 export class VideoContainer extends Component {
 
     render() {
@@ -17,6 +16,7 @@ export class VideoContainer extends Component {
                                endBroadcast={this.props.endBroadcast} currentRoom="gigg.tv"/>
                 {//isBroadcaster will be managed by state, is true when artist is logged in
                 }
+
             </div>
         );
 

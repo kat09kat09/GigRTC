@@ -28,7 +28,6 @@ export function loginUserSuccess(userObj){
     }
 }
 export function loginArtistSuccess(userObj){
-    console.log("LOGIN ARTIST SUCCESS",userObj)
     localStorage.setItem('token',userObj.token);
 
     return{
@@ -103,7 +102,7 @@ export function loginArtist(creds){
         //return fetch(location.host + '/auth/getToken/', config) -> initial approach
         dispatch(loginUserRequest());
         //console.log('login',`${environment}/auth/getToken/`)
-        return fetch(`/auth/getToken/`, config)
+        return fetch(`/auth/signIn/`, config)
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
@@ -127,7 +126,50 @@ export function loginArtist(creds){
             })
     }
 
-}export function receiveProtectedData(data) {
+}
+
+export function SignUpArtist(creds){
+    let config = {
+        method: 'post',
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(creds)
+    }
+
+    return (dispatch) =>{
+        //return fetch(location.host + '/auth/getToken/', config) -> initial approach
+        dispatch(loginUserRequest());
+        //console.log('login',`${environment}/auth/getToken/`)
+        return fetch(`/auth/signUp/`, config)
+            .then(checkHttpStatus)
+            .then(parseJSON)
+            .then(response => {
+                console.log("login response",response)
+
+                try {
+                    let decoded = jwtDecode(response.token);
+                    dispatch(loginArtistSuccess({token : response.token, artist_details:response.artist_details}));
+                    browserHistory.push('/')
+                } catch (e) {
+                    dispatch(loginUserFailure({
+                        response: {
+                            status: 403,
+                            statusText: 'Invalid token'
+                        }
+                    }));
+                }
+            })
+            .catch(error => {
+                dispatch(loginUserFailure(error));
+            })
+    }
+
+}
+
+export function receiveProtectedData(data) {
     return {
         type: RECEIVE_PROTECTED_DATA,
         payload: {

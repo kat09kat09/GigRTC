@@ -19,7 +19,8 @@ export default (props)=>{
             iconElementLeft={<IconButton><NavigationClose /></IconButton>}
             iconElementRight={
                 <div>
-                    <FlatButton label= {props.user_details.name} />
+                    {console.log(props.user_details)}
+                    <FlatButton label= {props.user_details.name || props.user_details.user_name  } />
                   <IconMenu
                   iconButtonElement={
                     <IconButton><MoreVertIcon /></IconButton>
@@ -35,7 +36,7 @@ export default (props)=>{
                     linkButton={true}
                     primaryText="Broadcast"
                     containerElement={<Link to="/streamYourself" >Stream Yourself</Link>} />
-                  <MenuItem><a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a></MenuItem>
+                  <MenuItem><a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token)}>FOR JSON</a></MenuItem>
                   <MenuItem primaryText="Sign out" onClick={() => props.logoutAndRedirect()} />
                 </IconMenu>
                 </div>

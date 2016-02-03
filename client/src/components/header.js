@@ -7,7 +7,7 @@ import {logoutAndRedirect,fetchProtectedData} from '../actions';
 
 
 import FBLoginBtn from './loginButtons/FBButton'
-import SignInModal from './modals/signinModal'
+import SignInModal from './modals/userSigninModal'
 
 import NotLoggedInHeader from './header-loginStatus/notLoggedIn'
 import LoggedInHeader from './header-loginStatus/loggedIn'

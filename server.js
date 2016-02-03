@@ -5,6 +5,8 @@ var fs    = require('fs');
 var https = require('https');
 var http = require('http');
 var path = require('path');
+var bcrypt = require('bcrypt-nodejs');
+
 
 var CONFIG = require('./config.js');
 
@@ -105,23 +107,44 @@ app.use(express.static(path.join(__dirname, 'client')));
 
 app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook',/^\/api\/.*/]}));
 
-app.post('/auth/getToken/', (req, res) => {
+app.post('/auth/signIn/', (req, res) => {
+    new Artist({user_name: req.body.user_name}).fetch().then(function(found){
+        if(found){
+
+            var check = bcrypt.compareSync(req.body.password, found.get('password'))
+            if (check){
+                console.log("IN SIGNIN and found and bycrypt check",check)
+
+                var myToken = jwt.sign({user_name:req.body.user_name},CONFIG.JWT_SECRET)
+                res.status(200).json({token: myToken, artist_details : found});
+            }
+            else {
+                res.sendStatus(403).json({status : 'Incorrect password'});
+            }
+        }
+        else {
+            res.sendStatus(403).json({status : 'User does not exist, please sign up'});
+        }
+    });
+
+});
+
+app.post('/auth/signUp/', (req, res) => {
 
     new Artist({user_name: req.body.user_name, password :req.body.password }).fetch().then(function(found){
         if(found){
-            var check = bcrypt.compareSync(req.body.password, found.get('password'))
-            if (check){
-                var myToken = jwt.sign({user_name:req.body.user_name},CONFIG.JWT_SECRET)
-                res.status(200).json({token: myToken, user_details : found});
-            }
-            else {
-                res.sendStatus(403);
-            }
+            res.sendStatus(403);
+
         }
         else {
             var newArtist = new Artist({
                 user_name : req.body.user_name,
-                password : req.body.password
+                password : req.body.password,
+                email_id : req.body.email_id,
+                brief_description : req.body.brief_description,
+                user_image : req.body.user_image,
+                display_name : req.body.display_name,
+                genre : req.body.genre,
             });
 
             newArtist.save().then(function (artist) {
