@@ -79,28 +79,30 @@ export class StreamsContainer extends Component {
   }
 
   renderEvents () {
-    return this.props.data.map((performance)=> {
-      return (
+    console.log(this.props.presentActiveStreams, 'in renderevents');
+    return <div>Result</div>
+    // return this.props.data.map((performance)=> {
+    //   return (
 
-        <Link to={`activeStream/${performance.id}`}>
-          <GridTile
-          key={performance.id}
-          title={performance.title}
-          subtitle={<span>by <b>{performance.user_id}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
-          >
-          <img src='../../public/img/crowd.jpg' />
-          </GridTile>
-        </Link>
-      )
-    })
+    //     <Link to={`activeStream/${performance.id}`}>
+    //       <GridTile
+    //       key={performance.id}
+    //       title={performance.title}
+    //       subtitle={<span>by <b>{performance.user_id}</b></span>}
+    //       actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
+    //       >
+    //       <img src='../../public/img/crowd.jpg' />
+    //       </GridTile>
+    //     </Link>
+    //   )
+    // })
   }
 
 }
 
 function mapStateToProps(state){
   return {
-    data : state.data.activeStreams
+    presentActiveStreams : state.data.data.activeStreams
   }
 }
 

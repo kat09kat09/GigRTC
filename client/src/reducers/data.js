@@ -24,10 +24,11 @@ export default createReducer(initialState, {
     //     });
     // },
     [FETCH_ACTIVE_STREAMS] : (state,payload) =>{
+      console.log(payload, 'payload in data reducer');
         return Object.assign({}, state, {
             'isFetching': true,
             'data' : {
-              activeStreams: payload
+              activeStreams: payload.data
             }
         });
     }
