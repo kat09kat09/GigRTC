@@ -77,7 +77,7 @@ class ArtistSignUp extends Component {
                         </div>
                     </div>
                     <div className={`form-group ${genre.touched && genre.invalid ? 'has-danger' : ''}`}>
-                        <label>What's your genre</label>
+                        <label>Whats your genre</label>
                         <input type="text" className="form-control"  {...genre} />
                         <div className="text-help">
                             {genre.touched ? genre.error : ''}
