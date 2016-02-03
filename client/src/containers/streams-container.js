@@ -22,44 +22,6 @@ const styles = {
   },
 };
 
-// var tilesData = [
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Honey and Cigarettes',
-  //   author: 'Peter, Paul, & Mary'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Honey Money',
-  //   author: 'Metallica'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Booze and Cigarettes',
-  //   author: 'Megadeath'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Honey Heart',
-  //   author: 'Metallica'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Cigarettes and Whiskey',
-  //   author: 'Peter, Paul, & Mary'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Water Honey',
-  //   author: 'Metallica'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Water Plant',
-  //   author: 'Megadeath'
-  // }
-// ];
-
 export class StreamsContainer extends Component {
   constructor(props){
     super(props)
