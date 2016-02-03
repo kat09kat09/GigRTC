@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getActivePerformances } from '../actions';
+import { Link } from 'react-router';
 
 import GridList from '../../node_modules/material-ui/lib/grid-list/grid-list';
 import GridTile from '../../node_modules/material-ui/lib/grid-list/grid-tile';
@@ -21,44 +22,6 @@ const styles = {
   },
 };
 
-// var tilesData = [
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Honey and Cigarettes',
-  //   author: 'Peter, Paul, & Mary'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Honey Money',
-  //   author: 'Metallica'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Booze and Cigarettes',
-  //   author: 'Megadeath'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Honey Heart',
-  //   author: 'Metallica'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Cigarettes and Whiskey',
-  //   author: 'Peter, Paul, & Mary'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Water Honey',
-  //   author: 'Metallica'
-  // },
-  // {
-  //   img: '../../public/img/crowd.jpg',
-  //   title: 'Water Plant',
-  //   author: 'Megadeath'
-  // }
-// ];
-
 export class StreamsContainer extends Component {
   constructor(props){
     super(props)
@@ -69,33 +32,37 @@ export class StreamsContainer extends Component {
   }
 
   render () {
-    return(
-      <div style={ styles.root }>
-        <GridList cellHeight={ 180 } style={ styles.gridList }>
-          { this.renderEvents() }
-        </GridList>
-      </div>
-    )
+    if (this.props.presentActiveStreams) {
+      return(
+        <div style={ styles.root }>
+          <GridList cellHeight={ 180 } style={ styles.gridList }>
+            { this.renderEvents() }
+          </GridList>
+        </div>
+      )
+    } else {
+      return <div>Welcome!</div>
+    }
   }
 
   renderEvents () {
     console.log(this.props.presentActiveStreams, 'in renderevents');
-    return <div>Result</div>
-    // return this.props.data.map((performance)=> {
-    //   return (
+    // return <div>Result</div>
+    return this.props.presentActiveStreams.map((performance)=> {
+      return (
 
-    //     <Link to={`activeStream/${performance.id}`}>
-    //       <GridTile
-    //       key={performance.id}
-    //       title={performance.title}
-    //       subtitle={<span>by <b>{performance.user_id}</b></span>}
-    //       actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
-    //       >
-    //       <img src='../../public/img/crowd.jpg' />
-    //       </GridTile>
-    //     </Link>
-    //   )
-    // })
+        <Link to={`activeStream/${performance.id}`}>
+          <GridTile
+          key={performance.id}
+          title={performance.title}
+          subtitle={<span>by <b>{performance.user_id}</b></span>}
+          actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
+          >
+            <img src='../../public/img/crowd.jpg' />
+          </GridTile>
+        </Link>
+      )
+    })
   }
 
 }
