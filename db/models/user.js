@@ -1,6 +1,7 @@
 var db = require('../config');
 var Tag = require('./tag');
 var Performance = require('./performance');
+var Artist = require('./artist')
 
 var User = db.Model.extend({
   tableName: 'users',
@@ -16,6 +17,9 @@ var User = db.Model.extend({
   },
   performances: function() {
     return this.hasMany(Performance);
+  },
+  artists: function() {
+    return this.belongsToMany(Artist);
   },
   initialize: function(){
     this.on('creating', function(model, attrs, options){

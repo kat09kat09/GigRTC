@@ -11,6 +11,8 @@
   "author": "team dream stream",
   "license": "MIT",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.2.1",
     "body-parser": "^1.14.2",
     "bookshelf": "^0.9.1",
     "bower": "^1.7.7",

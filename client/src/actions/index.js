@@ -11,7 +11,8 @@ const {
     SAVE_BROADCAST,
     CURRENT_ENVIRONMENT,
     PUBLIC_TOKEN,
-    FETCH_ACTIVE_STREAMS
+    FETCH_ACTIVE_STREAMS,
+    LOGIN_ARTIST_SUCCESS
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -23,6 +24,15 @@ export function loginUserSuccess(userObj){
 
     return{
         type : LOGIN_USER_SUCCESS,
+        payload : userObj
+    }
+}
+export function loginArtistSuccess(userObj){
+    console.log("LOGIN ARTIST SUCCESS",userObj)
+    localStorage.setItem('token',userObj.token);
+
+    return{
+        type : LOGIN_ARTIST_SUCCESS,
         payload : userObj
     }
 }
@@ -78,7 +88,7 @@ export function environmentLocation(data) {
 }
 
 
-export function loginUser(creds,environment){
+export function loginArtist(creds){
     let config = {
         method: 'post',
         credentials: 'include',
@@ -97,11 +107,11 @@ export function loginUser(creds,environment){
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
-                console.log("login respinse",response)
+                console.log("login response",response)
 
                 try {
                     let decoded = jwtDecode(response.token);
-                    dispatch(loginUserSuccess(response.token));
+                    dispatch(loginArtistSuccess({token : response.token, artist_details:response.artist_details}));
                     browserHistory.push('/')
                 } catch (e) {
                     dispatch(loginUserFailure({

@@ -13,6 +13,8 @@ var favicon = require('serve-favicon');
 var db = require('./db/config');
 var Users = require('./db/collections/users');
 var User = require('./db/models/user');
+var Artists = require('./db/collections/artists');
+var Artist = require('./db/models/artist');
 var Tags = require('./db/collections/tags');
 var Tag = require('./db/models/tag');
 var Performances = require('./db/collections/performances');
@@ -104,13 +106,33 @@ app.use(express.static(path.join(__dirname, 'client')));
 app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook',/^\/api\/.*/]}));
 
 app.post('/auth/getToken/', (req, res) => {
-    if (req.body.userName == 'tds@tds.com' && req.body.password == 'tds') {
-        var myToken = jwt.sign({userName:req.body.userName},CONFIG.JWT_SECRET)
-        res.status(200)
-            .json({token: myToken});
-    } else {
-        res.sendStatus(403);
-    }
+
+    new Artist({user_name: req.body.user_name, password :req.body.password }).fetch().then(function(found){
+        if(found){
+            var check = bcrypt.compareSync(req.body.password, found.get('password'))
+            if (check){
+                var myToken = jwt.sign({user_name:req.body.user_name},CONFIG.JWT_SECRET)
+                res.status(200).json({token: myToken, user_details : found});
+            }
+            else {
+                res.sendStatus(403);
+            }
+        }
+        else {
+            var newArtist = new Artist({
+                user_name : req.body.user_name,
+                password : req.body.password
+            });
+
+            newArtist.save().then(function (artist) {
+                Artists.add(artist);
+                var myToken = jwt.sign({user_name:req.body.user_name},CONFIG.JWT_SECRET)
+
+                res.status(200).json({token: myToken, artist_details : artist});
+            })
+        }
+    });
+
 });
 
 app.get('/getData/', (req, res) => {
@@ -150,15 +172,7 @@ passport.use(new FacebookStrategy({
                     return done(null,newfacebookUser)
                 });
             }
-        })
-
-
-
-        //User.findOrCreate(..., function(err, user) {
-        //    if (err) { return done(err); }
-        //    done(null, user);
-        //});
-        //return done(null,profile)
+        });
     }
 ));
 
@@ -177,8 +191,8 @@ app.get('/auth/facebook/callback/',
 
     function(req, res) {
         console.log("response",req.user);
-        current_user = req.user
-        current_token = jwt.sign({userName: req.user.emails[0].value },CONFIG.JWT_SECRET)
+        current_user = req.user;
+        current_token = jwt.sign({userName: req.user.emails[0].value },CONFIG.JWT_SECRET);
         res.redirect('/authenticateFacebook')
     }
 
@@ -187,19 +201,13 @@ app.get('/auth/facebook/callback/',
 app.get('/auth/validateSocialToken',(req, res) => {
 
     res.json({token: current_token, user_details : current_user});
-})
+});
 
 
 
 app.get('*', function (request, response){
     response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
-})
-
-
-
-
-
-
+});
 
 module.exports.server = server;
 

@@ -13,16 +13,16 @@ export class LoginView extends Component {
 
     login(props) {
 
-        this.props.actions.loginUser(props)
+        this.props.actions.loginArtist(props)
     }
 
 
     render(){
-        const { fields:{userName,password}, handleSubmit} = this.props;
+        const { fields:{user_name,password}, handleSubmit} = this.props;
         return (
             <div className="loginForm">
                 <form onSubmit={handleSubmit(this.login.bind(this))}>
-                        <input type="text"   {...userName} placeholder="Enter a userName" />
+                        <input type="text"   {...user_name} placeholder="Enter a userName" />
                     <br/>
                         <input type="password"  {...password} placeholder="Plis password" />
                     <br/>
@@ -49,8 +49,8 @@ const mapDispatchToProps = (dispatch) => ({
 function validate(values){
     const errors = {};
 
-    if(!values.userName){
-        errors.userName = 'Enter a username'
+    if(!values.user_name){
+        errors.user_name = 'Enter a username'
     }
     if(!values.password){
         errors.password = 'Enter a password'
@@ -61,6 +61,6 @@ function validate(values){
 
 export default reduxForm({
     form : 'loginForm',
-    fields : ['userName','password'],
+    fields : ['user_name','password'],
     validate
 },mapStateToProps,mapDispatchToProps)(LoginView)

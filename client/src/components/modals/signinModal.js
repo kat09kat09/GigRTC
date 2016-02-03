@@ -63,8 +63,9 @@ class SigninModal extends React.Component {
                     onRequestClose={this.handleClose}>
                     <LoginFBBtn />
                     OR
-                    <SigninForm />
+
                 </Dialog>
+                <SigninForm />
             </div>
         );
     }
