@@ -176,7 +176,6 @@ class Chat extends Component {
 
 
 function mapStateToProps(state) {
-  console.log(state); 
   return {
       messages: state.messages.data,
       activeChannel: state.activeChannel.name,
