@@ -26,12 +26,16 @@ export function videoHigherOrderFunction(Component) {
     };
 
     function endBroadcast(){
+        console.log(document.getElementById('video'))
         skylink.stopStream();
-        //Need to add poster when stram is stopped
+        var vid = document.getElementById('video');
+        vid.poster = "public/img/guitarist.jpg";
+        vid.src = '';
+        vid.style.background = ';'
     }
 
-    class VidContainer extends Component {
 
+    class VidContainer extends Component {
 
         render () {
             return (
