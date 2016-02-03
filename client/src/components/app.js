@@ -2,8 +2,9 @@ import React from 'react';
 import { Component,PropTypes } from 'react';
 import SideBar from './sidebar';
 import Header from './header';
-
-
+import MyRawTheme from '../../public/css/giggTheme';
+import ThemeManager from 'material-ui/lib/styles/theme-manager';
+import ThemeDecorator from 'material-ui/lib/styles/theme-decorator';
 import {determineEnvironment,refreshLoginState} from '../actions';
 import {connect} from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -11,9 +12,11 @@ import mui from 'material-ui';
 import AppBar from 'material-ui/lib/app-bar';
 import Chat from  './Chat'; 
 
-let ThemeManager = mui.Styles.ThemeManager;
-let Colors = mui.Styles.Colors;
-let Style= mui.Styles.LightRawTheme;
+//let ThemeManager = mui.Styles.ThemeManager;
+// let Colors = mui.Styles.Colors;
+// let Style= mui.Styles.LightRawTheme;
+
+
 
 injectTapEventPlugin();
 
@@ -33,7 +36,7 @@ export class App extends Component {
   getChildContext() {
     return {
       stores: this.props.stores,
-      muiTheme: ThemeManager.getMuiTheme(Style)
+      muiTheme: ThemeManager.getMuiTheme(MyRawTheme)
     };
   }
 
