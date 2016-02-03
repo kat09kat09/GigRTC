@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import mui from 'material-ui';
 import AppBar from 'material-ui/lib/app-bar';
-import ChatContainer from '../containers/ChatContainer'; 
+import Chat from  './Chat'; 
 
 let ThemeManager = mui.Styles.ThemeManager;
 let Colors = mui.Styles.Colors;
@@ -42,6 +42,7 @@ export class App extends Component {
       <div className="appComponentBody">
         <Header/>
         <SideBar/>
+        <Chat />
         <div className="videoWrapper">
           {this.props.children}
         </div>

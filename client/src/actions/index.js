@@ -18,7 +18,6 @@ const {
 import jwtDecode from 'jwt-decode';
 import {browserHistory,hashHistory} from 'react-router';
 import io from 'socket.io-client';
-//import authActions from './authActions';
 
 
 
