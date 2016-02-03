@@ -12,7 +12,7 @@ import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import FlatButton from 'material-ui/lib/flat-button'
 
 export default (props)=>{
-  console.log('PROPS FROM HEADER:' + props.userPrivelege);
+  console.log('PROPS FROM HEADER:' + props.userPrivelege + "  Details  " + props.user_details);
     return (
         <AppBar
             title="GIGG.TV"
@@ -27,6 +27,11 @@ export default (props)=>{
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
+                <MenuItem
+                    linkButton={true}
+                    primaryText={props.userPrivelege === 'artist' ? props.user_details.user_name : (props.userPrivelege === 'user' ?  props.user_details.name : 'Guest') }
+                    containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
+
                   <MenuItem
                     linkButton={true}
                     primaryText="Home"
