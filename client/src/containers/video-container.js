@@ -43,6 +43,10 @@ skylink.init({
 endBroadcast(){
   skylink.stopStream();
   //Need to add poster when stram is stopped
+  var vid = document.getElementById('video');
+  vid.poster = "public/img/guitarist.jpg";
+  vid.style.background = ';' 
+
 }
 
 }
