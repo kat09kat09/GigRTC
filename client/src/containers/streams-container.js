@@ -101,6 +101,7 @@ export class StreamsContainer extends Component {
         </Link>
       )
     })
+  }
 }
 
 function mapStateToProps(state){

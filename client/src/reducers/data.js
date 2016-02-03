@@ -35,7 +35,7 @@ export default createReducer(initialState, {
             'data' : payload
 =======
             'data' : {
-              activeStreams: payload
+              activeStreams: payload.data
             }
 >>>>>>> (FEAT) Move towards database-based list of streams on front page
         });
