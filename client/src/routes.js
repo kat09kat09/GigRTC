@@ -6,12 +6,13 @@ import Login from './components/forms/login';
 import {requireAuthentication} from './components/AuthenticatedComponent';
 import ArtistContainer from './containers/artist-container';
 import AuthenticationContainer from './components/auth/authenticatePage';
+import {videoHigherOrderFunction} from './containers/watchAndHost/watchingHigherOrder'
 
 export default (
 
     <Route path="/" component={ App } >
 
-        <IndexRoute component={VideoPlayer} />
+        <IndexRoute component={videoHigherOrderFunction(VideoPlayer)} />
         <Route path="streamYourself" component={requireAuthentication(ArtistContainer)} />
         <Route path="authenticateFacebook" component={AuthenticationContainer} />
     </Route>

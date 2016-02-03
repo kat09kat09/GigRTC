@@ -29,7 +29,7 @@ var app = express();
 var port = 1338;
 
 var server = https.createServer(options, app).listen(port, function() {
-  console.log('Running on port: ${port}');
+  console.log(`Running on port: ${port}`);
 });
 
 
@@ -83,8 +83,6 @@ app.get('/test',
     });
   }
 );
-
-
 
 
 ///////////////////////////////////////////////\
