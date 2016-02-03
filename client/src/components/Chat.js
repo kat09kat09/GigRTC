@@ -124,7 +124,6 @@ class Chat extends Component {
   render() {
 
     const {messages, dispatch,userDetails, activeChannel}= this.props; 
-    console.log('this.props in Chat.js', this.props); 
     const filteredMessages = messages.filter(message => message.channelID === activeChannel);
     
     return (
@@ -176,7 +175,6 @@ class Chat extends Component {
 
 
 function mapStateToProps(state) {
-  console.log(state); 
   return {
       messages: state.messages.data,
       activeChannel: state.activeChannel.name,
