@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Navbar } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { Link , Router} from 'react-router';
 import Login from './forms/login';
 import {connect} from 'react-redux';
 import {logoutAndRedirect,fetchProtectedData} from '../actions';
@@ -56,6 +56,14 @@ export class Header extends Component {
                     linkButton={true}
                     primaryText="Broadcast"
                     containerElement={<Link to="/streamYourself" >Stream Yourself</Link>} />
+                  <MenuItem
+                    linkButton={true}
+                    primaryText="Chat"
+                    containerElement={<Link to="/chat" >Chat</Link>} />
+                   <MenuItem
+                    linkButton={true}
+                    primaryText="Chat Test"
+                    containerElement={<Link to="/chatTest" >Chat Test</Link>} />
                   <MenuItem><a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token,this.props.environment)}>FOR JSON</a></MenuItem>
                   <MenuItem primaryText="Sign in" />
                   <MenuItem primaryText="Sign out" />

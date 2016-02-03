@@ -45,7 +45,6 @@ export class ArtistContainer extends Component {
           </form>
           <VideoContainer />
         </div>
-        <ChatContainer />
       </div>
     )
   }

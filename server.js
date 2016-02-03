@@ -461,7 +461,11 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'client')));
 
-app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook',/^\/api\/.*/]}));
+
+// app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook',/^\/api\/.*/]}));
+
+app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook', /^\/api\/.*/, /^\/api\/messages\/.*/ ]}));
+
 
 app.post('/auth/getToken/', (req, res) => {
     if (req.body.userName == 'tds@tds.com' && req.body.password == 'tds') {
@@ -469,7 +473,7 @@ app.post('/auth/getToken/', (req, res) => {
         console.log('token signed by', req.body.userName); 
         console.log('myToken', myToken);
         res.status(200)
-            .json({token: myToken});
+            .json({token: myToken, username: req.body.userName});
     } else {
         res.sendStatus(403);
     }
@@ -553,14 +557,6 @@ app.get('/auth/validateSocialToken',(req, res) => {
 
 
 
-
-
-
-
-
-
-
-
 //******* Test  Chat **************
 //set env vars
 var mongoose= require('mongoose');
@@ -569,6 +565,8 @@ process.env.PORT = process.env.PORT || 3000;
 
 // connect our DB
 mongoose.connect(process.env.MONGOLAB_URI);
+
+
 
 //load routers
 var messageRouter = express.Router();
@@ -600,7 +598,7 @@ io.on('connection', socketioJwt.authorize({
     // console.log('socket.handshake.session', socket.handshake.decoded_token.userName); 
     socket.join('Lobby');
     socket.on('chat mounted', function(user) {
-      console.log('gets here'); 
+      console.log('socket heard: chat mounted', user); 
       // TODO: Does the server need to know the user?
       socket.emit('receive socket', socket.id)
     })
@@ -627,15 +625,52 @@ io.on('connection', socketioJwt.authorize({
     // })
   });
 
+// io.on('connection',function(socket) {
+//     console.log('a user connected');
+//     // console.log('socket.handshake.session', socket.handshake.decoded_token.userName); 
+//     socket.join('Lobby');
+//     socket.on('chat mounted', function(user) {
+//       console.log('gets here'); 
+//       // TODO: Does the server need to know the user?
+//       socket.emit('receive socket', socket.id)
+//     })
+//     socket.on('leave channel', function(channel) {
+//       socket.leave(channel)
+//     })
+//     socket.on('join channel', function(channel) {
+//       socket.join(channel.name)
+//     })
+//     socket.on('new message', function(msg) {
+//       console.log('socket heard new message', msg)
+//       socket.broadcast.to(msg.channelID).emit('new bc message', msg);
+//     });
+//     socket.on('new channel', function(channel) {
+//       socket.broadcast.emit('new channel', channel)
+//     });
+//     socket.on('typing', function (data) {
+//       socket.broadcast.to(data.channel).emit('typing bc', data.user);
+//     });
+//     socket.on('stop typing', function (data) {
+//       console.log('socket heard stop typing', data); 
+//       socket.broadcast.to(data.channel).emit('stop typing bc', data.user);
+//     });
+//     // socket.on('new private channel', function(socketID, channel) {
+//     //   socket.broadcast.to(socketID).emit('receive private channel', channel);
+//     // })
+//   });
+
 
 // var socketEvents = require('./server/socketEvents')(io);
 
 
 //********* End Test Chat **********
 
+
+/*********** KEEP AT THE BOTTOM!!!!!! *****************/
 app.get('*', function (request, response){
     response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
 })
+/*********** KEEP AT THE BOTTOM!!!!!! *****************/
 
 
 module.exports.server = server;

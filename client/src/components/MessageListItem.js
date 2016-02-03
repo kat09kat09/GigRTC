@@ -14,6 +14,9 @@ export default class MessageListItem extends React.Component {
     //   typing: false
     // };
     console.log('this.props in MessageListItem', props)
+
+    
+
   }
   
 
@@ -22,8 +25,7 @@ export default class MessageListItem extends React.Component {
     return (
       <li>
         <span>
-          
-          <b style={{color: '#66c'}}>{message.user.username}</b>
+          <b style={{color: '#66c'}}>{message.user}</b>
           <i style={{color: '#aad', opacity: '0.8'}}>{message.time}</i>
         </span>
         <div style={{clear: 'both', paddingTop: '0.1em', marginTop: '-1px', paddingBottom: '0.3em'}}>{message.text}</div>

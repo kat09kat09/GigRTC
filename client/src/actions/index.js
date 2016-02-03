@@ -17,17 +17,27 @@ const {
 import jwtDecode from 'jwt-decode';
 import {browserHistory,hashHistory} from 'react-router';
 import io from 'socket.io-client';
+import authActions from './authActions'; 
+
 
 
 export function loginUserSuccess(userObj){
     console.log("LOGIN USER SUCCESS",userObj)
     localStorage.setItem('token',userObj.token);
-
     return{
         type : LOGIN_USER_SUCCESS,
         payload : userObj
     }
 }
+
+// export function loginUserSuccess(token){
+//     localStorage.setItem('token',token);
+//     console.log('login user sucess gets called'); 
+//     return{
+//         type : LOGIN_USER_SUCCESS,
+//         payload : token
+//     }
+// }
 
 export function refreshLoginState(){
     const localToken = localStorage.getItem('token')
@@ -104,7 +114,7 @@ export function loginUser(creds,environment){
                 try {
                     let decoded = jwtDecode(response.token);
                     console.log('successful login', response.token); 
-                    connect_socket(response.token); 
+                    console.log('login response looks like', response); 
                     dispatch(loginUserSuccess(response.token));
                     browserHistory.push('/')
                 } catch (e) {
@@ -121,7 +131,8 @@ export function loginUser(creds,environment){
             })
     }
 
-}export function receiveProtectedData(data) {
+}
+export function receiveProtectedData(data) {
     return {
         type: RECEIVE_PROTECTED_DATA,
         payload: {
@@ -214,27 +225,6 @@ export function getSocialToken(){
                 dispatch(loginUserFailure(error));
             })
     }
-
-function connect_socket(token){
-  console.log('connect socket fxn is called'); 
-  console.log('io exists', io)
-  console.log('token', token); 
-  // var socket= io(); 
-  // var socket= io.connect('https://localhost:1338', { path: '/api/chat' }); 
-  // var socket = io('https://localhost:1338', { path: '/api/chat' });
-  var socket = io.connect('https://localhost:1338'); 
-  console.log('socket on outer layer', socket)
-  // socket.on('connect', function () {
-  //   console.log('connect event')
-  //   console.log('socket', socket); 
-    socket.on('authenticated', function () {
-        //do things
-        console.log('socket has been authenticated')
-    })
-    .emit('authenticate', {token: token})
-  // })
-  return socket; 
-
 }
 
 export function getActivePerformances(){
@@ -257,3 +247,8 @@ export function saveBroadcast(broadcastData) {
     payload: broadcastData
   }
 }
+
+
+
+
+

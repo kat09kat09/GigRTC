@@ -1,7 +1,8 @@
 import * as types from '../constants/ActionTypes';
 import { browserHistory } from 'react-router';
-import fetch from 'isomorphic-fetch';
 import moment from 'moment';
+import { checkHttpStatus, parseJSON } from '../utils';
+import axios from 'axios'; 
 
 // NOTE:Chat actions
 
@@ -88,22 +89,37 @@ export function receiveRawChannel(channel) {
 // }
 
 function requestMessages() {
+  console.log('request messages action called'); 
   return {
     type: types.LOAD_MESSAGES
   }
 }
 
 export function fetchMessages(channel) {
-  return dispatch => {
+  console.log('fetch messages action called for :', channel); 
+  // var channel= 'SomeOtherChannel'; 
+  return (dispatch) => {
     dispatch(requestMessages())
-    return fetch(`/api/messages/${channel}`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveMessages(json, channel)))
-      .catch(error => {throw error});
+    console.log('will call fetch here at endpoint:', '/api/messages/'+channel)
+    return axios.get('/api/messages/'+ channel)
+      .then(function (response){
+        console.log('it gets here', response); 
+        dispatch(receiveMessages(response, channel))
+      })
+      // .then(response => response.json())
+      // .then(json => {
+      //   console.log('received messages: ', response); 
+      //   
+      // })
+      // .catch(error => {
+      //   console.log('there was an error ', error); 
+      //   throw error
+      // });
   }
 }
 
 function receiveMessages(json, channel) {
+  console.log('receiveMessages action called', json); 
   const date = moment().format('lll');
   return {
     type: types.LOAD_MESSAGES_SUCCESS,

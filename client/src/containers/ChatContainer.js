@@ -16,35 +16,96 @@ import io from 'socket.io-client';
 const initialChannel = 'Lobby'; // NOTE: I hard coded this value for my example.  Change this as you see fit
 const initialUser= 'TestUser'; 
 
+
+// function connect_socket(token){
+//   console.log('connect socket fxn is called'); 
+//   console.log('io exists', io)
+//   console.log('token', token); 
+//   // var socket= io(); 
+//   // var socket= io.connect('https://localhost:1338', { path: '/api/chat' }); 
+//   // var socket = io('https://localhost:1338', { path: '/api/chat' });
+//   var socket = io.connect('https://localhost:1338'); 
+//   console.log('socket on outer layer', socket)
+//   // socket.on('connect', function () {
+//   //   console.log('connect event')
+//   //   console.log('socket', socket); 
+//     socket.on('authenticated', function () {
+//         //do things
+//         console.log('socket has been authenticated')
+//         socket.on('receive socket', socketID =>{
+//             console.log('received socket id', socketID)
+//             dispatch(authActions.receiveSocket(socketID))
+//         }); 
+//     });
+
+//     socket.emit('authenticate', {token: token})
+//   // })
+//   return socket; 
+
+// }
+
+// function connect_socket(){
+//   console.log('connect socket fxn is called'); 
+//   console.log('io exists', io)
+  // var socket= io(); 
+  // var socket= io.connect('https://localhost:1338', { path: '/api/chat' }); 
+  // var socket = io('https://localhost:1338', { path: '/api/chat' });
+  // var socket = io.connect('https://localhost:1338'); 
+  // console.log('socket on outer layer', socket)
+  // socket.on('connect', function () {
+  //   console.log('connect event')
+  //   console.log('socket', socket); 
+    // socket.on('authenticated', function () {
+        //do things
+        // console.log('socket has been authenticated')
+        // socket.on('receive socket', socketID =>{
+        //     console.log('received socket id', socketID)
+        //     dispatch(authActions.receiveSocket(socketID))
+        // }); 
+    // });
+
+    // socket.emit('authenticate', {token: token})
+  // })
+//   return socket; 
+
+// }
+
+ // const socket= connect_socket(); 
+ // console.log('socket in chat container def', socket); 
+
 class ChatContainer extends Component {
 
   constructor(props, context) {
     super(props, context);
     console.log('props in ChatContainer', props); 
+   
     // this.state = {
     //   privateChannelModal: false,
     //   targetedUser: ''
     // }
+
   }
 
   componentWillMount() {
     const { dispatch, user } = this.props;
-    console.log('this.props', this.props); 
+    // console.log('this.props in chat container', this.props); 
 
-    if(!user.username) {
-      dispatch(receiveAuth());
-    }
-    dispatch(actions.fetchMessages(initialChannel));
-    // dispatch(actions.fetchChannels(user.username));
-
+    // if(!user.username) {
+    //   dispatch(receiveAuth());
+    // }
     
+
+    // dispatch(actions.fetchMessages(initialChannel));
+    // dispatch(actions.fetchChannels(user.username));
+    
+    //socket={socket}
+         // <Chat {...this.props} />
 
   }
   render() {
     return (
       <div>Chat should be here
-        <Chat {...this.props} socket={socket} />
-        
+   
       </div>
       
     );
@@ -60,12 +121,14 @@ class ChatContainer extends Component {
 // }
 
 function mapStateToProps(state) {
+  // console.log('state in Chat contianer', state); 
   return {
       messages: state.messages.data,
       // channels: state.channels.data,
-      activeChannel: state.activeChannel.name,
-      user: state.auth.user,
-      // typers: state.typers
+      activeChannel: state.activeChannel.name
+      // user: state.auth.userName,
+      // typers: state.typers,
+      // token: state.auth.token
   }
 }
-export default connect(mapStateToProps)(ChatContainer)
+export default connect(mapStateToProps,null)(ChatContainer)
