@@ -35,11 +35,13 @@ var port = 1338;
 
 var server = https.createServer(options, app)
 
+var io= require('socket.io').listen(server); 
+
 server.listen(port, function() {
   console.log(`Running on port: ${port}`);
 });
 
-var io= require('socket.io').listen(server, {path: '/api/chat'});
+
 
 
 app.get('/performances',
@@ -273,16 +275,18 @@ var socketioJwt= require('socketio-jwt');
 //   secret : CONFIG.JWT_SECRET,
 //   handshake: true
 // }));
+io.set('transports', ["websocket", "polling"]);
 
-
-io.on('connection', socketioJwt.authorize({
-  secret: CONFIG.JWT_SECRET
-})).on('authenticated', function(socket) {
+// io.on('connection', socketioJwt.authorize({
+//   secret: CONFIG.JWT_SECRET
+// }))
+// .on('authenticated', function(socket) {
+io.on('connection', function (socket){
     console.log('a user connected');
     // console.log('socket.handshake.session', socket.handshake.decoded_token.userName);
     socket.join('Lobby');
     socket.on('chat mounted', function(user) {
-      console.log('socket heard: chat mounted', user);
+      console.log('socket heard: chat mounted...user is: ', user);
       // TODO: Does the server need to know the user?
       socket.emit('receive socket', socket.id)
     })
