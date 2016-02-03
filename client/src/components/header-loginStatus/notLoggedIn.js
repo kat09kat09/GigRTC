@@ -19,7 +19,7 @@ export default (props)=>{
         <AppBar
             title="GIGG.TV"
             containerElement={<Link to="/" className="logoLink">Gigg</Link>}
-            iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+            iconElementLeft={<IconButton></IconButton>}
             iconElementRight={
                 <IconMenu
                   iconButtonElement={
