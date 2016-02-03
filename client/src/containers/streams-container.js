@@ -1,3 +1,4 @@
+<<<<<<< bc92e3c117c45e7b97f0d4bf549f41929a4378b8
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getActivePerformances } from '../actions';
