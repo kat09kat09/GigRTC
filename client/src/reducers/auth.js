@@ -6,6 +6,7 @@ const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER,P
 
 const initialState = {
     token: null,
+    userPrivilege : 'guest',
     userDetails: {},
     isAuthenticated: false,
     isAuthenticating: false,
@@ -23,6 +24,7 @@ export default createReducer(initialState, {
         return Object.assign({}, state, {
             'isAuthenticating': false,
             'isAuthenticated': true,
+            "userPrivilege" : 'user',
             'token': payload.token,
             'userDetails': payload.user_details,
             'statusText': 'You have been successfully logged in.'
@@ -33,6 +35,7 @@ export default createReducer(initialState, {
         return Object.assign({}, state, {
             'isAuthenticating': false,
             'isAuthenticated': true,
+            "userPrivilege" : 'artist',
             'token': payload.token,
             'userDetails': payload.artist_details,
             'statusText': 'You have been successfully logged in.'

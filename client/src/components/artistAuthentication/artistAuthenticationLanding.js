@@ -65,6 +65,7 @@ export default class artistAuthenticationLanding extends React.Component {
                     title="Sign In"
                     actions={actions}
                     modal={false}
+                    autoScrollBodyContent={true}
                     open={this.state.openSignIn}
                     contentStyle={customContentStyleSignIn}
                     onRequestClose={()=>this.handleClose('signin')}
