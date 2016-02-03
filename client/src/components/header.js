@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Navbar } from 'react-bootstrap';
-import { Link } from 'react-router';
+import { Link , Router} from 'react-router';
 import Login from './forms/login';
 import {connect} from 'react-redux';
 import {logoutAndRedirect,fetchProtectedData} from '../actions';
@@ -8,6 +8,16 @@ import {logoutAndRedirect,fetchProtectedData} from '../actions';
 
 import FBLoginBtn from './loginButtons/FBButton'
 import SignInModal from './modals/userSigninModal'
+
+import LeftNav from 'material-ui/lib/left-nav';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import RaisedButton from 'material-ui/lib/raised-button';
+import AppBar from 'material-ui/lib/app-bar';
+import IconButton from 'material-ui/lib/icon-button';
+import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
+import IconMenu from 'material-ui/lib/menus/icon-menu';
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+
 
 import NotLoggedInHeader from './header-loginStatus/notLoggedIn'
 import LoggedInHeader from './header-loginStatus/loggedIn'
@@ -18,7 +28,6 @@ export class Header extends Component {
       super(props);
       this.state = {open: false};
     }
-
 
     handleToggle = () => this.setState({open: !this.state.open});
 

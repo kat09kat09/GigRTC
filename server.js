@@ -8,7 +8,8 @@ var path = require('path');
 var bcrypt = require('bcrypt-nodejs');
 
 
-var CONFIG = require('./config.js');
+var CONFIG = require('./config.js')
+
 
 var favicon = require('serve-favicon');
 
@@ -32,10 +33,13 @@ var app = express();
 
 var port = 1338;
 
-var server = https.createServer(options, app).listen(port, function() {
+var server = https.createServer(options, app)
+
+server.listen(port, function() {
   console.log(`Running on port: ${port}`);
 });
 
+var io= require('socket.io').listen(server, {path: '/api/chat'});
 
 
 app.get('/performances',
@@ -100,12 +104,12 @@ var passport = require('passport')
 
 app.use(favicon(__dirname + '/client/public/img/spinner.gif'));
 
-
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'client')));
 
-app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook',/^\/api\/.*/]}));
+app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook', /^\/api\/.*/, /^\/api\/messages\/.*/ ]}));
+
 
 app.post('/auth/signIn/', (req, res) => {
     new Artist({user_name: req.body.user_name}).fetch().then(function(found){
@@ -113,7 +117,6 @@ app.post('/auth/signIn/', (req, res) => {
 
             var check = bcrypt.compareSync(req.body.password, found.get('password'))
             if (check){
-                console.log("IN SIGNIN and found and bycrypt check",check)
 
                 var myToken = jwt.sign({user_name:req.body.user_name},CONFIG.JWT_SECRET)
                 res.status(200).json({token: myToken, artist_details : found});
@@ -131,31 +134,42 @@ app.post('/auth/signIn/', (req, res) => {
 
 app.post('/auth/signUp/', (req, res) => {
 
-    new Artist({user_name: req.body.user_name, password :req.body.password }).fetch().then(function(found){
-        if(found){
+    new Artist({user_name: req.body.user_name, password: req.body.password}).fetch().then(function (found) {
+        if (found) {
             res.sendStatus(403);
 
         }
         else {
             var newArtist = new Artist({
-                user_name : req.body.user_name,
-                password : req.body.password,
-                email_id : req.body.email_id,
-                brief_description : req.body.brief_description,
-                user_image : req.body.user_image,
-                display_name : req.body.display_name,
-                genre : req.body.genre,
+                user_name: req.body.user_name,
+                password: req.body.password,
+                email_id: req.body.email_id,
+                brief_description: req.body.brief_description,
+                user_image: req.body.user_image,
+                display_name: req.body.display_name,
+                genre: req.body.genre,
             });
 
             newArtist.save().then(function (artist) {
                 Artists.add(artist);
-                var myToken = jwt.sign({user_name:req.body.user_name},CONFIG.JWT_SECRET)
+                var myToken = jwt.sign({user_name: req.body.user_name}, CONFIG.JWT_SECRET)
 
-                res.status(200).json({token: myToken, artist_details : artist});
+                res.status(200).json({token: myToken, artist_details: artist});
             })
         }
     });
+});
 
+app.post('/auth/getToken/', (req, res) => {
+    if (req.body.userName == 'tds@tds.com' && req.body.password == 'tds') {
+        var myToken = jwt.sign({userName:req.body.userName},CONFIG.JWT_SECRET)
+        console.log('token signed by', req.body.userName);
+        console.log('myToken', myToken);
+        res.status(200)
+            .json({token: myToken, username: req.body.userName});
+    } else {
+        res.sendStatus(403);
+    }
 });
 
 app.get('/getData/', (req, res) => {
@@ -227,10 +241,80 @@ app.get('/auth/validateSocialToken',(req, res) => {
 });
 
 
+//******* Test  Chat **************
+//set env vars
+var mongoose= require('mongoose');
+process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat_dev';
+process.env.PORT = process.env.PORT || 3000;
+
+// connect our DB
+mongoose.connect(process.env.MONGOLAB_URI);
+
+
+
+//load routers
+var messageRouter = express.Router();
+// const usersRouter = express.Router();
+// const channelRouter = express.Router();
+require('./server/routes/message_routes.js')(messageRouter);
+// require('./routes/channel_routes')(channelRouter);
+// require('./routes/user_routes')(usersRouter, passport);
+app.use('/api', messageRouter);
+// app.use('/api', usersRouter);
+// app.use('/api', channelRouter);
+
+
+
+ //var io = require('socket.io')(server, {path: '/api/chat'});
+
+var socketioJwt= require('socketio-jwt');
+
+// io.set('authorization', socketioJwt.authorize({
+//   secret : CONFIG.JWT_SECRET,
+//   handshake: true
+// }));
+
+
+io.on('connection', socketioJwt.authorize({
+  secret: CONFIG.JWT_SECRET
+})).on('authenticated', function(socket) {
+    console.log('a user connected');
+    // console.log('socket.handshake.session', socket.handshake.decoded_token.userName);
+    socket.join('Lobby');
+    socket.on('chat mounted', function(user) {
+      console.log('socket heard: chat mounted', user);
+      // TODO: Does the server need to know the user?
+      socket.emit('receive socket', socket.id)
+    })
+    socket.on('leave channel', function(channel) {
+      socket.leave(channel)
+    })
+    socket.on('join channel', function(channel) {
+      socket.join(channel.name)
+    })
+    socket.on('new message', function(msg) {
+      socket.broadcast.to(msg.channelID).emit('new bc message', msg);
+    });
+    socket.on('new channel', function(channel) {
+      socket.broadcast.emit('new channel', channel)
+    });
+    socket.on('typing', function (data) {
+      socket.broadcast.to(data.channel).emit('typing bc', data.user);
+    });
+    socket.on('stop typing', function (data) {
+      socket.broadcast.to(data.channel).emit('stop typing bc', data.user);
+    });
+    // socket.on('new private channel', function(socketID, channel) {
+    //   socket.broadcast.to(socketID).emit('receive private channel', channel);
+    // })
+  });
+
+//********* End Test Chat **********
+
 
 app.get('*', function (request, response){
     response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
-});
+})
 
 module.exports.server = server;
 

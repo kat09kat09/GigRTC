@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import mui from 'material-ui';
 import AppBar from 'material-ui/lib/app-bar';
+import ChatContainer from '../containers/ChatContainer'; 
 
 let ThemeManager = mui.Styles.ThemeManager;
 let Colors = mui.Styles.Colors;
