@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './components/app';
 import VideoPlayer from './containers/video-container';
-import GridListExampleSimple from './containers/streams-container';
+import StreamsContainer from './containers/streams-container';
 import Login from './components/forms/login';
 import {requireAuthentication} from './components/AuthenticatedComponent';
 import ArtistContainer from './containers/artist-container';
@@ -17,7 +17,7 @@ export default (
 
     <Route path="/" component={ App } >
 
-        <IndexRoute component={ GridListExampleSimple } />
+        <IndexRoute component={ StreamsContainer } />
         <Route path="streamYourself" component={videoHigherOrderFunction(VideoPlayer)} />
         <Route path="authenticateFacebook" component={AuthenticationContainer} />
         <Route path="artistSignIn" component={ArtistAuthenticationLanding} />
