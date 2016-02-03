@@ -12,6 +12,7 @@ import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import FlatButton from 'material-ui/lib/flat-button'
 
 export default (props)=>{
+  console.log('PROPS FROM HEADER:' + props.userPrivelege);
     return (
         <AppBar
             title="GIGG.TV"
@@ -30,10 +31,14 @@ export default (props)=>{
                     linkButton={true}
                     primaryText="Home"
                     containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
-                  <MenuItem
+                   {props.userPrivelege === 'artist' ? 
+                    <MenuItem
                     linkButton={true}
                     primaryText="Broadcast"
                     containerElement={<Link to="/streamYourself" >Stream Yourself</Link>} />
+                  :
+                   ""
+                  }
                   <MenuItem><a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token)}>FOR JSON</a></MenuItem>
                   <MenuItem primaryText="Sign out" onClick={() => props.logoutAndRedirect()} />
                 </IconMenu>

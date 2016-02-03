@@ -41,6 +41,7 @@ export class Header extends Component {
               {this.props.isAuthenticated
                 ? <LoggedInHeader user_details={this.props.userDetails}
                                   logoutAndRedirect={this.props.logoutAndRedirect.bind(this)}
+                                  userPrivelege={this.props.userPrivelege}
                   />
                 : <NotLoggedInHeader/>
               }
@@ -56,7 +57,8 @@ function mapStateToProps(state){
         isAuthenticated: state.auth.isAuthenticated,
         token: state.auth.token,
         environment : state.environment,
-        userDetails : state.auth.userDetails
+        userDetails : state.auth.userDetails,
+        userPrivelege: state.auth.userPrivelege
     }
 }
 

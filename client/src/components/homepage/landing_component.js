@@ -22,15 +22,16 @@ export class LandingComponent extends Component{
     }
 
     renderEvents(){
-        return this.props.data.map((activeStreams)=> {
-            return (
-                <li className="list-group-item" key={activeStreams.id}>
-                    <Link to={`activeStream/${activeStreams.id}`}>
+        // return this.props.data.map((activeStreams)=> {
+        //     return (
+        //         <li className="list-group-item" key={activeStreams.id}>
+        //             <Link to={`activeStream/${activeStreams.id}`}>
 
-                    </Link>
-                </li>
-            )
-        })
+        //             </Link>
+        //         </li>
+        //     )
+        // })
+      return (<div>RENDER ACTIVE</div>);
     }
 
 }
