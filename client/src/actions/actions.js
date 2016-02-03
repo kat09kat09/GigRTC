@@ -55,38 +55,7 @@ export function receiveRawChannel(channel) {
 //   };
 // }
 
-// NOTE:Data Fetching actions
 
-//we'll get our username from the auth we have implemented
-// export function welcomePage(username) {
-//   return {
-//     type: types.SAVE_USERNAME,
-//     username
-//   };
-// }
-
-// export function fetchChannels(user) {
-//   return dispatch => {
-//     dispatch(requestChannels())
-//     return fetch(`/api/channels/${user}`)
-//       .then(response => response.json())
-//       .then(json => dispatch(receiveChannels(json)))
-//       .catch(error => {throw error});
-//   }
-// }
-
-// function requestChannels() {
-//   return {
-//     type: types.LOAD_CHANNELS
-//   }
-// }
-
-// function receiveChannels(json) {
-//   return {
-//     type: types.LOAD_CHANNELS_SUCCESS,
-//     json
-//   }
-// }
 
 function requestMessages() {
   console.log('request messages action called'); 
@@ -97,7 +66,6 @@ function requestMessages() {
 
 export function fetchMessages(channel) {
   console.log('fetch messages action called for :', channel); 
-  // var channel= 'SomeOtherChannel'; 
   return (dispatch) => {
     dispatch(requestMessages())
     console.log('will call fetch here at endpoint:', '/api/messages/'+channel)
@@ -106,15 +74,6 @@ export function fetchMessages(channel) {
         console.log('it gets here', response); 
         dispatch(receiveMessages(response, channel))
       })
-      // .then(response => response.json())
-      // .then(json => {
-      //   console.log('received messages: ', response); 
-      //   
-      // })
-      // .catch(error => {
-      //   console.log('there was an error ', error); 
-      //   throw error
-      // });
   }
 }
 
@@ -144,32 +103,6 @@ export function fetchMessagesIfNeeded() {
   }
 }
 
-// function loadingValidationList() {
-//   return {
-//     type: types.LOAD_USERVALIDATION
-//   }
-// }
-
-// function receiveValidationList(json) {
-//   return {
-//     type: types.LOAD_USERVALIDATION_SUCCESS,
-//     json
-//   }
-// }
-
-// export function usernameValidationList() {
-//   return dispatch => {
-//     dispatch(loadingValidationList())
-//     return fetch('/api/all_usernames')
-//       .then(response => {
-//         return response.json()
-//     })
-//       .then(json => {
-//         return dispatch(receiveValidationList(json.map((item) => item.local.username)))
-//     })
-//       .catch(error => {throw error});
-//   }
-// }
 
 export function createMessage(message) {
   return dispatch => {
@@ -196,6 +129,13 @@ export function createMessage(message) {
 //       .catch(error => {throw error});
 //   }
 // }
+export function receiveSocket(socketID) {
+  return {
+    type: types.RECEIVE_SOCKET,
+    socketID
+  }
+}
+
 
 //the environment code is borrowed from Andrew Ngu, https://github.com/andrewngu/sound-redux
 
