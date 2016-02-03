@@ -7,16 +7,17 @@ export function videoHigherOrderFunction(Component) {
 
     const skylink = new Skylink();
 
+
     skylink.on('mediaAccessSuccess', function(stream){
         var vid = document.getElementById('video');
         attachMediaStream(vid, stream);
     });
 
-    function onBroadcast(){
-
+    function onBroadcast(room){
+        console.log("ON BROADCAST",room)
         skylink.init({
             apiKey: 'e8a678bc-e0e4-4605-aa76-cc857b7dbbd0',
-            defaultRoom: 'gigg.tv' //this will be managed by state at a later point
+            defaultRoom: room  //this will be managed by state at a later point
         }, () => {
             skylink.joinRoom({
                 audio: true,
@@ -37,10 +38,14 @@ export function videoHigherOrderFunction(Component) {
 
     class VidContainer extends Component {
 
+        onVideoBroadCast(){
+            onBroadcast(this.props.userDetails.user_name)
+        }
+
         render () {
             return (
                 <div>
-                    <Component startBroadcast={onBroadcast}
+                    <Component startBroadcast={this.onVideoBroadCast.bind(this)}
                                endBroadcast={endBroadcast}
                         {...this.state} {...this.props}/>
                 </div>
@@ -51,7 +56,7 @@ export function videoHigherOrderFunction(Component) {
 
     const mapStateToProps = (state) => ({
         token: state.auth.token,
-        userName: state.auth.userName,
+        userDetails: state.auth.userDetails,
         isAuthenticated: state.auth.isAuthenticated,
         environment: state.environment
     });

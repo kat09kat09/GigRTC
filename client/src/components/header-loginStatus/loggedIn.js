@@ -19,8 +19,8 @@ export default (props)=>{
             iconElementLeft={<IconButton><NavigationClose /></IconButton>}
             iconElementRight={
                 <div>
-                    {console.log(props.user_details)}
-                    <FlatButton label= {props.user_details.name || props.user_details.user_name  } />
+                    {console.log("IN LOGGED IN HEADER",props.user_details)}
+                   <FlatButton label= { props.user_details.name || props.user_details.user_name || 'Guest'} />
                   <IconMenu
                   iconButtonElement={
                     <IconButton><MoreVertIcon /></IconButton>
