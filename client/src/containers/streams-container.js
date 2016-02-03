@@ -1,4 +1,3 @@
-<<<<<<< bc92e3c117c45e7b97f0d4bf549f41929a4378b8
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getActivePerformances } from '../actions';
@@ -22,6 +21,44 @@ const styles = {
     marginBottom: 24,
   },
 };
+
+// var tilesData = [
+  // {
+  //   img: '../../public/img/crowd.jpg',
+  //   title: 'Honey and Cigarettes',
+  //   author: 'Peter, Paul, & Mary'
+  // },
+  // {
+  //   img: '../../public/img/crowd.jpg',
+  //   title: 'Honey Money',
+  //   author: 'Metallica'
+  // },
+  // {
+  //   img: '../../public/img/crowd.jpg',
+  //   title: 'Booze and Cigarettes',
+  //   author: 'Megadeath'
+  // },
+  // {
+  //   img: '../../public/img/crowd.jpg',
+  //   title: 'Honey Heart',
+  //   author: 'Metallica'
+  // },
+  // {
+  //   img: '../../public/img/crowd.jpg',
+  //   title: 'Cigarettes and Whiskey',
+  //   author: 'Peter, Paul, & Mary'
+  // },
+  // {
+  //   img: '../../public/img/crowd.jpg',
+  //   title: 'Water Honey',
+  //   author: 'Metallica'
+  // },
+  // {
+  //   img: '../../public/img/crowd.jpg',
+  //   title: 'Water Plant',
+  //   author: 'Megadeath'
+  // }
+// ];
 
 export class StreamsContainer extends Component {
   constructor(props){
@@ -64,8 +101,6 @@ export class StreamsContainer extends Component {
         </Link>
       )
     })
-  }
-
 }
 
 function mapStateToProps(state){

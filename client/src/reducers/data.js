@@ -27,9 +27,17 @@ export default createReducer(initialState, {
       console.log(payload, 'payload in data reducer');
         return Object.assign({}, state, {
             'isFetching': true,
+<<<<<<< 30d8f545b192c981a7ee28da705373c39ae15ad6
             'data' : {
               activeStreams: payload.data
             }
+||||||| merged common ancestors
+            'data' : payload
+=======
+            'data' : {
+              activeStreams: payload
+            }
+>>>>>>> (FEAT) Move towards database-based list of streams on front page
         });
     }
 });
