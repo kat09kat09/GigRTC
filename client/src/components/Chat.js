@@ -37,7 +37,9 @@ class Chat extends Component {
     if(!userDetails) {
       var userName= 'Guest'; 
     } else {
+
       var userName= userDetails.user_name; 
+
     }
     
     socket.on('receive socket', socketID =>{
@@ -176,6 +178,7 @@ class Chat extends Component {
 
 
 function mapStateToProps(state) {
+  console.log(state); 
   return {
       messages: state.messages.data,
       activeChannel: state.activeChannel.name,
