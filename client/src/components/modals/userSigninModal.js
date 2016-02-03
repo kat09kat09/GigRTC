@@ -36,35 +36,23 @@ class SigninModal extends React.Component {
     }
 
     render() {
-        const actions = [
-            <FlatButton
-                label="Log In"
-                primary={true}
-                onClick={() => this.handleClose()} />,
-            <FlatButton
-                label="Cancel"
-                secondary={true}
-                onClick={() => this.handleClose()} />
-        ];
 
         return (
             <div>
                 <FlatButton
-                    label = "Log In"
+                    label = "LogIn as User"
                     onClick = {() => this.handleOpen()}
                     style = {{color: '#53b3cb'}} />
                 <Dialog
-                    title = "Gigg.tv"
-                    actions = {actions}
-                    modal = {false}
-                    open = {this.state.open}
-                    contentStyle = {customContentStyle}
-                    titleStyle = {titleStyle}
-                    onRequestClose={this.handleClose}>
+                    title="Login"
+                    modal={false}
+                    open={this.state.open}
+                    onRequestClose={this.handleClose}
+                >
                     <LoginFBBtn />
-                    OR
-                    <SigninForm />
                 </Dialog>
+
+
             </div>
         );
     }

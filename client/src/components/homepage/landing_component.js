@@ -33,7 +33,6 @@ export class LandingComponent extends Component{
         })
     }
 
-
 }
 
 function mapStateToProps(state){

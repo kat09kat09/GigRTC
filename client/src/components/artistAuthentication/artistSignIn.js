@@ -23,9 +23,9 @@ export class LoginView extends Component {
         return (
             <div className="loginForm">
                 <form onSubmit={handleSubmit(this.login.bind(this))}>
-                        <TextField type="text"   {...user_name} placeholder="Enter a userName" />
+                    <TextField type="text"   {...user_name} placeholder="Enter a userName" />
                     <br/>
-                        <TextField type="password"  {...password} placeholder="Plis password" />
+                    <TextField type="password"  {...password} placeholder="Plis password" />
                     <br/>
                     <FlatButton label="Submit" type="submit" keyboardFocused={true}/>
                 </form>

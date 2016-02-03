@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 
-import {getSocialDetails} from '../../actions';
+import {getSocialDetails} from '../../actions/index.js';
 import {connect} from 'react-redux';
 
 

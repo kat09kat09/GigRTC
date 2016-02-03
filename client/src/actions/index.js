@@ -11,13 +11,14 @@ const {
     SAVE_BROADCAST,
     CURRENT_ENVIRONMENT,
     PUBLIC_TOKEN,
-    FETCH_ACTIVE_STREAMS
+    FETCH_ACTIVE_STREAMS,
+    LOGIN_ARTIST_SUCCESS
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
 import {browserHistory,hashHistory} from 'react-router';
 import io from 'socket.io-client';
-import authActions from './authActions'; 
+//import authActions from './authActions';
 
 
 
@@ -29,15 +30,15 @@ export function loginUserSuccess(userObj){
         payload : userObj
     }
 }
+export function loginArtistSuccess(userObj){
+    localStorage.setItem('token',userObj.token);
 
-// export function loginUserSuccess(token){
-//     localStorage.setItem('token',token);
-//     console.log('login user sucess gets called'); 
-//     return{
-//         type : LOGIN_USER_SUCCESS,
-//         payload : token
-//     }
-// }
+    return{
+        type : LOGIN_ARTIST_SUCCESS,
+        payload : userObj
+    }
+}
+
 
 export function refreshLoginState(){
     const localToken = localStorage.getItem('token')
@@ -90,7 +91,7 @@ export function environmentLocation(data) {
 }
 
 
-export function loginUser(creds,environment){
+export function loginArtist(creds){
     let config = {
         method: 'post',
         credentials: 'include',
@@ -105,17 +106,15 @@ export function loginUser(creds,environment){
         //return fetch(location.host + '/auth/getToken/', config) -> initial approach
         dispatch(loginUserRequest());
         //console.log('login',`${environment}/auth/getToken/`)
-        return fetch(`/auth/getToken/`, config)
+        return fetch(`/auth/signIn/`, config)
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
-                console.log("login respinse",response)
+                console.log("login response",response)
 
                 try {
                     let decoded = jwtDecode(response.token);
-                    console.log('successful login', response.token); 
-                    console.log('login response looks like', response); 
-                    dispatch(loginUserSuccess(response.token));
+                    dispatch(loginArtistSuccess({token : response.token, artist_details:response.artist_details}));
                     browserHistory.push('/')
                 } catch (e) {
                     dispatch(loginUserFailure({
@@ -132,6 +131,48 @@ export function loginUser(creds,environment){
     }
 
 }
+
+export function SignUpArtist(creds){
+    let config = {
+        method: 'post',
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(creds)
+    }
+
+    return (dispatch) =>{
+        //return fetch(location.host + '/auth/getToken/', config) -> initial approach
+        dispatch(loginUserRequest());
+        //console.log('login',`${environment}/auth/getToken/`)
+        return fetch(`/auth/signUp/`, config)
+            .then(checkHttpStatus)
+            .then(parseJSON)
+            .then(response => {
+                console.log("login response",response)
+
+                try {
+                    let decoded = jwtDecode(response.token);
+                    dispatch(loginArtistSuccess({token : response.token, artist_details:response.artist_details}));
+                    browserHistory.push('/')
+                } catch (e) {
+                    dispatch(loginUserFailure({
+                        response: {
+                            status: 403,
+                            statusText: 'Invalid token'
+                        }
+                    }));
+                }
+            })
+            .catch(error => {
+                dispatch(loginUserFailure(error));
+            })
+    }
+
+}
+
 export function receiveProtectedData(data) {
     return {
         type: RECEIVE_PROTECTED_DATA,
@@ -194,10 +235,10 @@ export function determineEnvironment(){
 }
 
 
-// export function getSocialDetails(){
+ export function getSocialDetails(){
 
 
-export function getSocialToken(){
+//export function getSocialToken(){
 
 
     return (dispatch) =>{

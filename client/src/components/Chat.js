@@ -3,7 +3,7 @@ import MessageComposer from './MessageComposer';
 import MessageListItem from './MessageListItem';
 // import Channels from './Channels';
 import * as actions from '../actions/actions';
-import * as authActions from '../actions/authActions';
+//import * as authActions from '../actions/authActions';
 // import TypingListItem from './TypingListItem';
 import { Modal, DropdownButton, MenuItem, Button } from 'react-bootstrap';
 // const activeChannel='Lobby'; 

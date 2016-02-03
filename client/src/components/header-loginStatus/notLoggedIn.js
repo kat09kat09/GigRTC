@@ -9,8 +9,9 @@ import IconButton from 'material-ui/lib/icon-button';
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import TestModal from '../../components/test_modal'
 
-import SignInModal from '../modals/signinModal'
+import SignInModal from '../modals/userSigninModal'
 
 
 export default (props)=>{
@@ -35,7 +36,11 @@ export default (props)=>{
                     linkButton={true}
                     primaryText="Broadcast"
                     containerElement={<Link to="/streamYourself" >Stream Yourself</Link>} />
-                  <MenuItem primaryText="Sign in" containerElement={<SignInModal />} />
+                  <MenuItem primaryText="Sign in" containerElement={ <SignInModal/>} />
+                  <MenuItem
+                    linkButton={true}
+                    primaryText="Login as Artist"
+                    containerElement={<Link to="/artistSignIn" >Sign in/Up </Link>} />
                 </IconMenu>
               }/>
     )

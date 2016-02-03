@@ -53,6 +53,25 @@ db.knex.schema.hasTable('users').then(function(exists) {
   }
 });
 
+db.knex.schema.hasTable('artists').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('artists', function (artists) {
+          artists.increments('id').primary();
+          artists.timestamps();  // Adds a created_at and updated_at column on the database, setting these each to dateTime types.
+          artists.string('user_name', 255).unique(); // what google.plus will hopefully give us
+          artists.string('password', 255).unique(); // what facebook will hopefully give us
+          artists.string('email_id', 255).unique(); // listed here as unique as a backup in case our unique check fails
+          artists.text('brief_description'); // maximum length is 64 K
+          artists.specificType('user_image','mediumblob'); // mediumblob is for binaries up to 16 M
+          artists.text('display_name');
+          artists.text('genre'); //
+        })
+        .then(function (table) {
+          console.log('Created Table', table);
+        });
+  }
+});
+
 /*
   Other columns that we may need will be:
   Chatlog (not included since it may end up as a reference to a chats table)
@@ -106,6 +125,21 @@ db.knex.schema.hasTable('performances_tags').then(function(exists) {
     .then(function (table) {
       console.log('Created Table', table);
     });
+  }
+});
+
+//a join table for artists and users under the subscription technique
+
+db.knex.schema.hasTable('artists_users').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('artists_users', function (artists_users) {
+          artists_users.increments('id').primary();
+          artists_users.integer('artist_id').unsigned().references('id').inTable('artists');
+          artists_users.integer('user_id').unsigned().references('id').inTable('users');
+        })
+        .then(function (table) {
+          console.log('Created Table', table);
+        });
   }
 });
 

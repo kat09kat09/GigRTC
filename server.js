@@ -5,11 +5,10 @@ var fs    = require('fs');
 var https = require('https');
 var http = require('http');
 var path = require('path');
+var bcrypt = require('bcrypt-nodejs');
+
 
 var CONFIG = require('./config.js')
-
-
-// var io= require('socket.io').listen(server, {path: '/api/chat'});
 
 
 var favicon = require('serve-favicon');
@@ -17,6 +16,8 @@ var favicon = require('serve-favicon');
 var db = require('./db/config');
 var Users = require('./db/collections/users');
 var User = require('./db/models/user');
+var Artists = require('./db/collections/artists');
+var Artist = require('./db/models/artist');
 var Tags = require('./db/collections/tags');
 var Tag = require('./db/models/tag');
 var Performances = require('./db/collections/performances');
@@ -32,10 +33,13 @@ var app = express();
 
 var port = 1338;
 
-var server = https.createServer(options, app).listen(port, function() {
-  console.log('Running on port: ${port}');
+var server = https.createServer(options, app)
+
+server.listen(port, function() {
+  console.log(`Running on port: ${port}`);
 });
 
+var io= require('socket.io').listen(server, {path: '/api/chat'});
 
 
 app.get('/performances',
@@ -89,362 +93,6 @@ app.get('/test',
 );
 
 
-
-
-/*
- * Definition of global variables.
- */
-var idCounter = 0;
-var candidatesQueue = {};
-var kurentoClient = null;
-var presenter = null;
-var viewers = [];
-var noPresenterMessage = 'No active presenter. Try again later...';
-
-/*
- * Server startup
- */
-var asUrl;
-var port;
-var server;
-
-if (false) {  //set to process.env.ON_HEROKU for production set to false to test locally
-  // run with http server
-  port = process.env.PORT ;
-  server = http.createServer(app).listen(port, function() {
-    console.log('Running on port ' + port + ' on Heroku');
-  });
-} else {
-  asUrl = url.parse(argv.as_uri);
-  port = asUrl.port;
-  server = https.createServer(options, app)
-  var io= require('socket.io').listen(server); 
-  server.listen(port, function() {
-    console.log('Open ' + url.format(asUrl) + ' with a WebRTC capable browser');
-  });
-
-}
-
-
-// uses the web server created above
-var wss = new ws.Server({
-    server : server,
-    path : '/one2many'
-});
-
-function nextUniqueId() {
-  idCounter++;
-  return idCounter.toString();
-}
-
-/*
- * Management of WebSocket messages
- */
-wss.on('connection', function(ws) {
-
-  var sessionId = nextUniqueId();
-  console.log('Connection received with sessionId ' + sessionId);
-
-    ws.on('error', function(error) {
-        console.log('Connection ' + sessionId + ' error');
-        stop(sessionId);
-    });
-
-    ws.on('close', function() {
-        console.log('Connection ' + sessionId + ' closed');
-        stop(sessionId);
-    });
-
-    ws.on('message', function(_message) {
-        var message = JSON.parse(_message);
-        console.log('Connection ' + sessionId + ' received message ', message);
-
-        switch (message.id) {
-        case 'presenter':
-      startPresenter(sessionId, ws, message.sdpOffer, function(error, sdpAnswer) {
-        if (error) {
-          return ws.send(JSON.stringify({
-            id : 'presenterResponse',
-            response : 'rejected',
-            message : error
-          }));
-        }
-        ws.send(JSON.stringify({
-          id : 'presenterResponse',
-          response : 'accepted',
-          sdpAnswer : sdpAnswer
-        }));
-      });
-      break;
-
-        case 'viewer':
-      startViewer(sessionId, ws, message.sdpOffer, function(error, sdpAnswer) {
-        if (error) {
-          return ws.send(JSON.stringify({
-            id : 'viewerResponse',
-            response : 'rejected',
-            message : error
-          }));
-        }
-
-        ws.send(JSON.stringify({
-          id : 'viewerResponse',
-          response : 'accepted',
-          sdpAnswer : sdpAnswer
-        }));
-      });
-      break;
-
-        case 'stop':
-            stop(sessionId);
-            break;
-
-        case 'onIceCandidate':
-            onIceCandidate(sessionId, message.candidate);
-            break;
-
-        default:
-            ws.send(JSON.stringify({
-                id : 'error',
-                message : 'Invalid message ' + message
-            }));
-            break;
-        }
-    });
-});
-
-/*
- * Definition of functions
- */
-
-// Recover kurentoClient for the first time.
-function getKurentoClient(callback) {
-    if (kurentoClient !== null) {
-        return callback(null, kurentoClient);
-    }
-
-    kurento(argv.ws_uri, function(error, _kurentoClient) {
-        if (error) {
-            console.log("Could not find media server at address " + argv.ws_uri);
-            return callback("Could not find media server at address" + argv.ws_uri
-                    + ". Exiting with error " + error);
-        }
-
-        kurentoClient = _kurentoClient;
-        callback(null, kurentoClient);
-    });
-}
-
-function startPresenter(sessionId, ws, sdpOffer, callback) {
-  clearCandidatesQueue(sessionId);
-
-  if (presenter !== null) {
-    stop(sessionId);
-    return callback("Another user is currently acting as presenter. Try again later ...");
-  }
-
-  presenter = {
-    id : sessionId,
-    pipeline : null,
-    webRtcEndpoint : null
-  }
-
-  getKurentoClient(function(error, kurentoClient) {
-    if (error) {
-      stop(sessionId);
-      return callback(error);
-    }
-
-    if (presenter === null) {
-      stop(sessionId);
-      return callback(noPresenterMessage);
-    }
-
-    kurentoClient.create('MediaPipeline', function(error, pipeline) {
-      if (error) {
-        stop(sessionId);
-        return callback(error);
-      }
-
-      if (presenter === null) {
-        stop(sessionId);
-        return callback(noPresenterMessage);
-      }
-
-      presenter.pipeline = pipeline;
-      pipeline.create('WebRtcEndpoint', function(error, webRtcEndpoint) {
-        if (error) {
-          stop(sessionId);
-          return callback(error);
-        }
-
-        if (presenter === null) {
-          stop(sessionId);
-          return callback(noPresenterMessage);
-        }
-
-        presenter.webRtcEndpoint = webRtcEndpoint;
-
-                if (candidatesQueue[sessionId]) {
-                    while(candidatesQueue[sessionId].length) {
-                        var candidate = candidatesQueue[sessionId].shift();
-                        webRtcEndpoint.addIceCandidate(candidate);
-                    }
-                }
-
-                webRtcEndpoint.on('OnIceCandidate', function(event) {
-                    var candidate = kurento.register.complexTypes.IceCandidate(event.candidate);
-                    ws.send(JSON.stringify({
-                        id : 'iceCandidate',
-                        candidate : candidate
-                    }));
-                });
-
-        webRtcEndpoint.processOffer(sdpOffer, function(error, sdpAnswer) {
-          if (error) {
-            stop(sessionId);
-            return callback(error);
-          }
-
-          if (presenter === null) {
-            stop(sessionId);
-            return callback(noPresenterMessage);
-          }
-
-          callback(null, sdpAnswer);
-        });
-
-                webRtcEndpoint.gatherCandidates(function(error) {
-                    if (error) {
-                        stop(sessionId);
-                        return callback(error);
-                    }
-                });
-            });
-        });
-  });
-}
-
-function startViewer(sessionId, ws, sdpOffer, callback) {
-  clearCandidatesQueue(sessionId);
-
-  if (presenter === null) {
-    stop(sessionId);
-    return callback(noPresenterMessage);
-  }
-
-  presenter.pipeline.create('WebRtcEndpoint', function(error, webRtcEndpoint) {
-    if (error) {
-      stop(sessionId);
-      return callback(error);
-    }
-    viewers[sessionId] = {
-      "webRtcEndpoint" : webRtcEndpoint,
-      "ws" : ws
-    }
-
-    if (presenter === null) {
-      stop(sessionId);
-      return callback(noPresenterMessage);
-    }
-
-    if (candidatesQueue[sessionId]) {
-      while(candidatesQueue[sessionId].length) {
-        var candidate = candidatesQueue[sessionId].shift();
-        webRtcEndpoint.addIceCandidate(candidate);
-      }
-    }
-
-        webRtcEndpoint.on('OnIceCandidate', function(event) {
-            var candidate = kurento.register.complexTypes.IceCandidate(event.candidate);
-            ws.send(JSON.stringify({
-                id : 'iceCandidate',
-                candidate : candidate
-            }));
-        });
-
-    webRtcEndpoint.processOffer(sdpOffer, function(error, sdpAnswer) {
-      if (error) {
-        stop(sessionId);
-        return callback(error);
-      }
-      if (presenter === null) {
-        stop(sessionId);
-        return callback(noPresenterMessage);
-      }
-
-      presenter.webRtcEndpoint.connect(webRtcEndpoint, function(error) {
-        if (error) {
-          stop(sessionId);
-          return callback(error);
-        }
-        if (presenter === null) {
-          stop(sessionId);
-          return callback(noPresenterMessage);
-        }
-
-        callback(null, sdpAnswer);
-            webRtcEndpoint.gatherCandidates(function(error) {
-                if (error) {
-                  stop(sessionId);
-                  return callback(error);
-                }
-            });
-        });
-      });
-  });
-}
-
-function clearCandidatesQueue(sessionId) {
-  if (candidatesQueue[sessionId]) {
-    delete candidatesQueue[sessionId];
-  }
-}
-
-function stop(sessionId) {
-  if (presenter !== null && presenter.id == sessionId) {
-    for (var i in viewers) {
-      var viewer = viewers[i];
-      if (viewer.ws) {
-        viewer.ws.send(JSON.stringify({
-          id : 'stopCommunication'
-        }));
-      }
-    }
-    presenter.pipeline.release();
-    presenter = null;
-    viewers = [];
-
-  } else if (viewers[sessionId]) {
-    viewers[sessionId].webRtcEndpoint.release();
-    delete viewers[sessionId];
-  }
-
-  clearCandidatesQueue(sessionId);
-}
-
-function onIceCandidate(sessionId, _candidate) {
-    var candidate = kurento.register.complexTypes.IceCandidate(_candidate);
-
-    if (presenter && presenter.id === sessionId && presenter.webRtcEndpoint) {
-        console.info('Sending presenter candidate');
-        presenter.webRtcEndpoint.addIceCandidate(candidate);
-    }
-    else if (viewers[sessionId] && viewers[sessionId].webRtcEndpoint) {
-        console.info('Sending viewer candidate');
-        viewers[sessionId].webRtcEndpoint.addIceCandidate(candidate);
-    }
-    else {
-        console.info('Queueing candidate');
-        if (!candidatesQueue[sessionId]) {
-            candidatesQueue[sessionId] = [];
-        }
-        candidatesQueue[sessionId].push(candidate);
-    }
-}
-
-
-
 ///////////////////////////////////////////////\
 
 
@@ -456,21 +104,66 @@ var passport = require('passport')
 
 app.use(favicon(__dirname + '/client/public/img/spinner.gif'));
 
-
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'client')));
 
-
-// app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook',/^\/api\/.*/]}));
-
 app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook', /^\/api\/.*/, /^\/api\/messages\/.*/ ]}));
 
+
+app.post('/auth/signIn/', (req, res) => {
+    new Artist({user_name: req.body.user_name}).fetch().then(function(found){
+        if(found){
+
+            var check = bcrypt.compareSync(req.body.password, found.get('password'))
+            if (check){
+
+                var myToken = jwt.sign({user_name:req.body.user_name},CONFIG.JWT_SECRET)
+                res.status(200).json({token: myToken, artist_details : found});
+            }
+            else {
+                res.sendStatus(403).json({status : 'Incorrect password'});
+            }
+        }
+        else {
+            res.sendStatus(403).json({status : 'User does not exist, please sign up'});
+        }
+    });
+
+});
+
+app.post('/auth/signUp/', (req, res) => {
+
+    new Artist({user_name: req.body.user_name, password: req.body.password}).fetch().then(function (found) {
+        if (found) {
+            res.sendStatus(403);
+
+        }
+        else {
+            var newArtist = new Artist({
+                user_name: req.body.user_name,
+                password: req.body.password,
+                email_id: req.body.email_id,
+                brief_description: req.body.brief_description,
+                user_image: req.body.user_image,
+                display_name: req.body.display_name,
+                genre: req.body.genre,
+            });
+
+            newArtist.save().then(function (artist) {
+                Artists.add(artist);
+                var myToken = jwt.sign({user_name: req.body.user_name}, CONFIG.JWT_SECRET)
+
+                res.status(200).json({token: myToken, artist_details: artist});
+            })
+        }
+    });
+});
 
 app.post('/auth/getToken/', (req, res) => {
     if (req.body.userName == 'tds@tds.com' && req.body.password == 'tds') {
         var myToken = jwt.sign({userName:req.body.userName},CONFIG.JWT_SECRET)
-        console.log('token signed by', req.body.userName); 
+        console.log('token signed by', req.body.userName);
         console.log('myToken', myToken);
         res.status(200)
             .json({token: myToken, username: req.body.userName});
@@ -516,15 +209,7 @@ passport.use(new FacebookStrategy({
                     return done(null,newfacebookUser)
                 });
             }
-        })
-
-
-
-        //User.findOrCreate(..., function(err, user) {
-        //    if (err) { return done(err); }
-        //    done(null, user);
-        //});
-        //return done(null,profile)
+        });
     }
 ));
 
@@ -543,8 +228,8 @@ app.get('/auth/facebook/callback/',
 
     function(req, res) {
         console.log("response",req.user);
-        current_user = req.user
-        current_token = jwt.sign({userName: req.user.emails[0].value },CONFIG.JWT_SECRET)
+        current_user = req.user;
+        current_token = jwt.sign({userName: req.user.emails[0].value },CONFIG.JWT_SECRET);
         res.redirect('/authenticateFacebook')
     }
 
@@ -553,8 +238,7 @@ app.get('/auth/facebook/callback/',
 app.get('/auth/validateSocialToken',(req, res) => {
 
     res.json({token: current_token, user_details : current_user});
-})
-
+});
 
 
 //******* Test  Chat **************
@@ -581,24 +265,24 @@ app.use('/api', messageRouter);
 
 
 
-// var io = require('socket.io')(server, {path: '/api/chat'}); 
+ //var io = require('socket.io')(server, {path: '/api/chat'});
 
 var socketioJwt= require('socketio-jwt');
 
 // io.set('authorization', socketioJwt.authorize({
 //   secret : CONFIG.JWT_SECRET,
-//   handshake: true 
-// })); 
+//   handshake: true
+// }));
 
 
 io.on('connection', socketioJwt.authorize({
   secret: CONFIG.JWT_SECRET
 })).on('authenticated', function(socket) {
     console.log('a user connected');
-    // console.log('socket.handshake.session', socket.handshake.decoded_token.userName); 
+    // console.log('socket.handshake.session', socket.handshake.decoded_token.userName);
     socket.join('Lobby');
     socket.on('chat mounted', function(user) {
-      console.log('socket heard: chat mounted', user); 
+      console.log('socket heard: chat mounted', user);
       // TODO: Does the server need to know the user?
       socket.emit('receive socket', socket.id)
     })
@@ -625,53 +309,12 @@ io.on('connection', socketioJwt.authorize({
     // })
   });
 
-// io.on('connection',function(socket) {
-//     console.log('a user connected');
-//     // console.log('socket.handshake.session', socket.handshake.decoded_token.userName); 
-//     socket.join('Lobby');
-//     socket.on('chat mounted', function(user) {
-//       console.log('gets here'); 
-//       // TODO: Does the server need to know the user?
-//       socket.emit('receive socket', socket.id)
-//     })
-//     socket.on('leave channel', function(channel) {
-//       socket.leave(channel)
-//     })
-//     socket.on('join channel', function(channel) {
-//       socket.join(channel.name)
-//     })
-//     socket.on('new message', function(msg) {
-//       console.log('socket heard new message', msg)
-//       socket.broadcast.to(msg.channelID).emit('new bc message', msg);
-//     });
-//     socket.on('new channel', function(channel) {
-//       socket.broadcast.emit('new channel', channel)
-//     });
-//     socket.on('typing', function (data) {
-//       socket.broadcast.to(data.channel).emit('typing bc', data.user);
-//     });
-//     socket.on('stop typing', function (data) {
-//       console.log('socket heard stop typing', data); 
-//       socket.broadcast.to(data.channel).emit('stop typing bc', data.user);
-//     });
-//     // socket.on('new private channel', function(socketID, channel) {
-//     //   socket.broadcast.to(socketID).emit('receive private channel', channel);
-//     // })
-//   });
-
-
-// var socketEvents = require('./server/socketEvents')(io);
-
-
 //********* End Test Chat **********
 
 
-/*********** KEEP AT THE BOTTOM!!!!!! *****************/
 app.get('*', function (request, response){
     response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
 })
-/*********** KEEP AT THE BOTTOM!!!!!! *****************/
-
 
 module.exports.server = server;
 
