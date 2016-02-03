@@ -16,11 +16,13 @@ export default (props)=>{
     return (
         <AppBar
             title="GIGG.TV"
-            containerElement={<Link to="/" className="logoLink">Gigg</Link>}
-            iconElementLeft={<IconButton><NavigationClose /></IconButton>}
+            className="header"
+            // containerElement={<Link to="/" className="logoLink">Gigg</Link>}
+            iconElementLeft={<IconButton></IconButton>}
             iconElementRight={
                 <div>
-                  <IconMenu
+
+                     <IconMenu
                   iconButtonElement={
                     <IconButton><MoreVertIcon /></IconButton>
                   }

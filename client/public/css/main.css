@@ -38,6 +38,10 @@ video {
   margin-top: 20px;
 }
 
+.header{
+  background-color: #212121;
+}
+
 #videoBig {
   width: 640px;
   height: 480px;
@@ -92,6 +96,17 @@ video {
 
 .hide {
   display: none;
+}
+.logoLink{
+  color: #FCF660;
+}
+h1 {
+  
+  /*font-family: 'Chelsea Market', cursive;*/
+  font-family: 'Changa One', cursive;
+ /* font-family: 'Hind Vadodara', sans-serif;*/
+  /*font-family: 'Iceland', cursive;*/
+
 }
 
 .streamYourself {
