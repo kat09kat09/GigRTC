@@ -10,14 +10,15 @@ import {videoHigherOrderFunction} from './containers/watchAndHost/watchingHigher
 import ArtistAuthenticationLanding from './components/artistAuthentication/artistAuthenticationLanding'
 import ChatContainer from './containers/ChatContainer';
 import Chat from './components/Chat'; 
+import land from './components/homepage/landing_component';
 
 export default (
 
 
     <Route path="/" component={ App } >
 
-        <IndexRoute component={videoHigherOrderFunction(VideoPlayer)} />
-        <Route path="streamYourself" component={requireAuthentication(ArtistContainer)} />
+        <IndexRoute component={land} />
+        <Route path="streamYourself" component={videoHigherOrderFunction(VideoPlayer)} />
         <Route path="authenticateFacebook" component={AuthenticationContainer} />
         <Route path="artistSignIn" component={ArtistAuthenticationLanding} />
         <Route path="chat" component= {ChatContainer} />

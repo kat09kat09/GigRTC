@@ -32,10 +32,7 @@ export default (props)=>{
                     linkButton={true}
                     primaryText="Home"
                     containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
-                  <MenuItem
-                    linkButton={true}
-                    primaryText="Broadcast"
-                    containerElement={<Link to="/streamYourself" >Stream Yourself</Link>} />
+                  
                   <MenuItem primaryText="Sign in" containerElement={ <SignInModal/>} />
                   <MenuItem
                     linkButton={true}

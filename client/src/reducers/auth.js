@@ -7,7 +7,7 @@ const {LOGIN_USER_REQUEST, LOGIN_USER_FAILURE, LOGIN_USER_SUCCESS, LOGOUT_USER,P
 
 const initialState = {
     token: null,
-    userPrivilege : 'guest',
+    userPrivelege : 'guest',
     userDetails: {},
     userName: null,
     isAuthenticated: false,
@@ -27,7 +27,7 @@ export default createReducer(initialState, {
         return Object.assign({}, state, {
             'isAuthenticating': false,
             'isAuthenticated': true,
-            "userPrivilege" : 'user',
+            "userPrivelege" : 'user',
             'token': payload.token,
             'userDetails': payload.user_details,
             'userName': jwtDecode(payload.token).userName,
@@ -39,7 +39,7 @@ export default createReducer(initialState, {
         return Object.assign({}, state, {
             'isAuthenticating': false,
             'isAuthenticated': true,
-            "userPrivilege" : 'artist',
+            "userPrivelege" : 'artist',
             'token': payload.token,
             'userDetails': payload.artist_details,
             'statusText': 'You have been successfully logged in.'
