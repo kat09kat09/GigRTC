@@ -16,16 +16,28 @@ const {
 
 import jwtDecode from 'jwt-decode';
 import {browserHistory,hashHistory} from 'react-router';
+import io from 'socket.io-client';
+import authActions from './authActions'; 
+
+
 
 export function loginUserSuccess(userObj){
     console.log("LOGIN USER SUCCESS",userObj)
     localStorage.setItem('token',userObj.token);
-
     return{
         type : LOGIN_USER_SUCCESS,
         payload : userObj
     }
 }
+
+// export function loginUserSuccess(token){
+//     localStorage.setItem('token',token);
+//     console.log('login user sucess gets called'); 
+//     return{
+//         type : LOGIN_USER_SUCCESS,
+//         payload : token
+//     }
+// }
 
 export function refreshLoginState(){
     const localToken = localStorage.getItem('token')
@@ -101,6 +113,8 @@ export function loginUser(creds,environment){
 
                 try {
                     let decoded = jwtDecode(response.token);
+                    console.log('successful login', response.token); 
+                    console.log('login response looks like', response); 
                     dispatch(loginUserSuccess(response.token));
                     browserHistory.push('/')
                 } catch (e) {
@@ -117,7 +131,8 @@ export function loginUser(creds,environment){
             })
     }
 
-}export function receiveProtectedData(data) {
+}
+export function receiveProtectedData(data) {
     return {
         type: RECEIVE_PROTECTED_DATA,
         payload: {
@@ -143,11 +158,13 @@ export function fetchProtectedData(token,environment) {
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
+                console.log('response data after login', response.data);
                 dispatch(receiveProtectedData(response.data));
-                console.log(response.data)
+                
             })
             .catch(error => {
                 if(error.response.status === 401) {
+                    console.log('there was an error with logging in'); 
                     dispatch(loginUserFailure(error));
                     browserHistory.push('/');
                 }
@@ -176,7 +193,12 @@ export function determineEnvironment(){
     }
 }
 
-export function getSocialDetails(){
+
+// export function getSocialDetails(){
+
+
+export function getSocialToken(){
+
 
     return (dispatch) =>{
         //return fetch(location.host + '/auth/getToken/', config) -> initial approach
@@ -225,3 +247,8 @@ export function saveBroadcast(broadcastData) {
     payload: broadcastData
   }
 }
+
+
+
+
+

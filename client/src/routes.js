@@ -6,14 +6,21 @@ import Login from './components/forms/login';
 import {requireAuthentication} from './components/AuthenticatedComponent';
 import ArtistContainer from './containers/artist-container';
 import AuthenticationContainer from './components/auth/authenticatePage';
+import ChatContainer from './containers/ChatContainer';
+import Chat from './components/Chat'; 
+
+console.log('chatcontainer', ChatContainer); 
 
 export default (
+
 
     <Route path="/" component={ App } >
 
         <IndexRoute component={VideoPlayer} />
         <Route path="streamYourself" component={requireAuthentication(ArtistContainer)} />
         <Route path="authenticateFacebook" component={AuthenticationContainer} />
+        <Route path="chat" component= {ChatContainer} />
+        <Route path='chatTest' component= {requireAuthentication(Chat)} />
     </Route>
 
 );

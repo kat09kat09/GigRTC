@@ -5,11 +5,12 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import VideoContainer from './video-container';
 import StreamButtons from '../components/streamButtons';
 import saveBroadcast from '../actions/index';
+import ChatContainer from './ChatContainer'; 
 
 export class ArtistContainer extends Component {
 
   componentWillMount(){
-    console.log('PROPS FROM ARTIST CONTAINER SEE IF JSON TOKEN IS HERE')
+    console.log('PROPS FROM ARTIST CONTAINER SEE IF JSON TOKEN IS HERE', this.props); 
   }
 
   onSubmit(props){
