@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {browserHistory} from 'react-router'
 import {performanceActive} from '../../actions';
 import Chat from  '../../components/Chat';
+import CONFIG from '../../../../config'
 
 export function videoHigherOrderFunction(Component) {
 
@@ -17,7 +18,7 @@ export function videoHigherOrderFunction(Component) {
 
     function onBroadcast(room){
         skylink.init({
-            apiKey: 'e8a678bc-e0e4-4605-aa76-cc857b7dbbd0',
+            apiKey: CONFIG.SKYLINK_KEY,
             defaultRoom: room  //this will be managed by state at a later point
         }, () => {
             skylink.joinRoom({

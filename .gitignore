@@ -23,3 +23,6 @@ bower_components
 .floo
 .flooignore
 .floobit
+
+# Credentials
+config.js
