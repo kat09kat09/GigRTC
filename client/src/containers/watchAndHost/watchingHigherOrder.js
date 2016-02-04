@@ -42,14 +42,19 @@ export function videoHigherOrderFunction(Component) {
 
         onVideoBroadCast(){
             onBroadcast(this.props.userDetails.user_name);
-            performanceActive({room:this.props.userDetails.user_name});
+            performanceActive({room:this.props.userDetails.user_name, active : true});
+        }
+
+        onVideoBroadCastEnd(){
+            endBroadcast();
+            performanceActive({room:this.props.userDetails.user_name, active : false});
         }
 
         render () {
             return (
                 <div>
                     <Component startBroadcast={this.onVideoBroadCast.bind(this)}
-                               endBroadcast={endBroadcast}
+                               endBroadcast={this.onVideoBroadCastEnd.bind(this)}
                                currentPrivelege={this.props.userPrivelege}
                                watchMode={!!this.props.params.room}
                         {...this.state} {...this.props}/>

@@ -83,7 +83,7 @@ db.knex.schema.hasTable('performances').then(function(exists) {
       performances.increments('id').primary();
       performances.timestamps();
       performances.boolean('active');
-      performances.string('room',255);
+      performances.string('room',255).unique();;
       performances.timestamp('went_live'); // timestamp is seconds since 1-1-1970, will not change with time zones
       performances.timestamp('ended');
       performances.string('title', 255);
@@ -91,6 +91,7 @@ db.knex.schema.hasTable('performances').then(function(exists) {
       performances.text('long_description'); // maximum length is 64 K
       performances.specificType('performance_image', 'mediumblob'); // mediumblob is for binaries up to 16 M
       performances.boolean('rated_r');
+      performances.integer('number_of_viewers');
       performances.integer('user_id').unsigned().references('id').inTable('users'); // artist
     })
     .then(function (table) {

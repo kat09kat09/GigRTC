@@ -143,9 +143,7 @@ export function SignUpArtist(creds){
     }
 
     return (dispatch) =>{
-        //return fetch(location.host + '/auth/getToken/', config) -> initial approach
         dispatch(loginUserRequest());
-        //console.log('login',`${environment}/auth/getToken/`)
         return fetch(`/auth/signUp/`, config)
             .then(checkHttpStatus)
             .then(parseJSON)
@@ -241,8 +239,6 @@ export function determineEnvironment(){
 
 
     return (dispatch) =>{
-        //return fetch(location.host + '/auth/getToken/', config) -> initial approach
-        //console.log('login',`${environment}/auth/getToken/`)
         return  fetch(`/auth/validateSocialToken`)
             .then(checkHttpStatus)
             .then(parseJSON)
@@ -290,7 +286,7 @@ export function saveBroadcast(broadcastData) {
 
 //CHANGE THIS TO POINT TO THE SERVER END POINT AND THIS FUNCTION IS BEING CALLED PREFIXED WITH activeStreams as i'm trying to start a stream, which should be prevented for users as they will only have watch buttons
 export function performanceActive(room){
-    const data = axios.post('api/activeStreams', room);
+    const data = axios.put('api/activeStreams', room);
 }
 
 
