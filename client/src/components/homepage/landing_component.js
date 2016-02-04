@@ -1,6 +1,6 @@
 import React , {Component} from 'react';
 import {connect} from 'react-redux';
-import {getActivePerformances} from '../../actions'
+import {getActivePerformances} from '../../actions';
 
 export class LandingComponent extends Component{
 
@@ -22,16 +22,16 @@ export class LandingComponent extends Component{
     }
 
     renderEvents(){
-        // return this.props.data.map((activeStreams)=> {
-        //     return (
-        //         <li className="list-group-item" key={activeStreams.id}>
-        //             <Link to={`activeStream/${activeStreams.id}`}>
+        return this.props.data.map((activeStreams)=> {
+            return (
+                <li className="list-group-item" key={activeStreams.id}>
+                    <Link to={`activeStream/${activeStreams.id}`}>
 
-        //             </Link>
-        //         </li>
-        //     )
-        // })
-      return (<div>RENDER ACTIVE</div>);
+                    </Link>
+                </li>
+            )
+        })
+
     }
 
 }
