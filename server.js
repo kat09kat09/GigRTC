@@ -41,26 +41,6 @@ server.listen(port, function() {
   console.log(`Running on port: ${port}`);
 });
 
-app.get('/api/activeStreams',
-function(req, res) {
-  Performances.fetch().then(function(performances) {
-    res.status(200).send(performances.models);
-  });
-  // https://github.com/tgriesser/bookshelf/issues/629 possible issue with getting tags
-  // res send in new then?  .attach(what in here)
-  // Performance.fetchAll()
-  // .then(function(performances) {
-  //   return performances.each(function(performance) {
-  //     return performance.load(['tags']); // look this up
-  //   });
-  // })
-  // .then(function(performances) {
-  //   performances.at(0).related('tags').attach(FTW); // waht in attach ()?
-  // })
-  // .then(function(performances) {
-  //   res.send(200, performances.models); // ok to call models on fetchall result?
-  // });
-});
 
 app.get('/test',
   function(req, res) {
@@ -264,7 +244,26 @@ app.post('/api/activeStreams', function(req, res){
   })
 });
 
-
+app.get('/api/activeStreams',
+    function(req, res) {
+        Performances.fetch().then(function(performances) {
+            res.status(200).send(performances.models);
+        });
+        // https://github.com/tgriesser/bookshelf/issues/629 possible issue with getting tags
+        // res send in new then?  .attach(what in here)
+        // Performance.fetchAll()
+        // .then(function(performances) {
+        //   return performances.each(function(performance) {
+        //     return performance.load(['tags']); // look this up
+        //   });
+        // })
+        // .then(function(performances) {
+        //   performances.at(0).related('tags').attach(FTW); // waht in attach ()?
+        // })
+        // .then(function(performances) {
+        //   res.send(200, performances.models); // ok to call models on fetchall result?
+        // });
+    });
 
 
 
