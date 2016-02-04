@@ -15,15 +15,6 @@ var socket = io.connect('https://localhost:1338');
 
 class Chat extends Component {
 
-  // static propTypes = {
-  //   messages: PropTypes.array.isRequired,
-  //   user: PropTypes.object.isRequired,
-  //   dispatch: PropTypes.func.isRequired,
-  //   // channels: PropTypes.array.isRequired,
-  //   activeChannel: PropTypes.string.isRequired, //this should simply be the artist's username
-  //   // typers: PropTypes.array.isRequired,
-  //   socket: PropTypes.object.isRequired
-  // };
   constructor(props, context) {
     super(props, context);
     console.log('props in Chat', props); 
@@ -37,12 +28,19 @@ class Chat extends Component {
 
   }
   componentWillMount() {
-    const { dispatch, activeChannel } = this.props;
+    const {userDetails, dispatch, activeChannel } = this.props;
     dispatch(actions.fetchMessages(activeChannel));
     
   }
   componentDidMount() {
-    const {userName, dispatch, activeChannel}= this.props; 
+    const {userDetails, dispatch, activeChannel}= this.props; 
+    if(!userDetails) {
+      var userName= 'Guest'; 
+    } else {
+      var userName= userDetails.user_name; 
+
+    }
+    
     socket.on('receive socket', socketID =>{
       console.log('received socket id', socketID)
       dispatch(actions.receiveSocket(socketID))
@@ -79,10 +77,15 @@ class Chat extends Component {
   
   handleSubmit(event) {
      
-    const { userName, activeChannel} = this.props;
+    const { userDetails, activeChannel} = this.props;
+    if(!userDetails) {
+      var userName= 'Guest'; 
+    } else {
+      var userName= userDetails.user_name; 
+    }
+    
     const text = event.target.value.trim();
     if (event.which === 13) { //carriage return
-      console.log('sumbit message called');
       event.preventDefault();
       var newMessage = {
         id: `${Date.now()}${uuid.v4()}`,
@@ -99,7 +102,13 @@ class Chat extends Component {
     }
   }
   handleChange(event) {
-    const { userName, activeChannel } = this.props;
+    const { userDetails, activeChannel } = this.props;
+    if(!userDetails) {
+      var userName= 'Guest'; 
+    } else {
+      userName= userDetails.user_name; 
+    }
+    
     this.setState({ text: event.target.value });
     if (event.target.value.length > 0 && !this.state.typing) {
       socket.emit('typing', { user: userName, channel: activeChannel });
@@ -113,10 +122,11 @@ class Chat extends Component {
 
 
   render() {
-    // const { messages, socket, channels, activeChannel, typers, dispatch, user} = this.props;
-    // const { messages, socket, dispatch, user} = this.props;
-    const {messages, dispatch,user, activeChannel}= this.props; 
+
+
+    const {messages, dispatch,userDetails, activeChannel}= this.props; 
     console.log('this.props in Chat.js', this.props); 
+
     const filteredMessages = messages.filter(message => message.channelID === activeChannel);
     
     return (
@@ -168,10 +178,11 @@ class Chat extends Component {
 
 
 function mapStateToProps(state) {
+  console.log(state); 
   return {
       messages: state.messages.data,
       activeChannel: state.activeChannel.name,
-      userName: state.auth.userName,
+      userDetails: state.auth.userDetails,
       token: state.auth.token
   }
 }
