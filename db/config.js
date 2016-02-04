@@ -145,4 +145,22 @@ db.knex.schema.hasTable('artists_users').then(function(exists) {
   }
 });
 
+//Chat messages
+db.knex.schema.hasTable('messages').then(function(exists) {
+  if (!exists) {
+    db.knex.schema.createTable('messages', function (messages) {
+          messages.increments('id').primary();
+          messages.timestamps();  // Adds a created_at and updated_at column on the database, setting these each to dateTime types.
+          messages.string('user_name', 255); // the user's display name (this field needs to be unique in the users schema)
+          messages.string('channelID', 255); // this will be the artist username (could be display_name, but it would need to be unique in the artists schema)
+          messages.string('time', 255); // the time at which the message is created (on the client side)
+          messages.integer('performance_id').unsigned().references('id').inTable('performances'); // the particular performance this message is attached to
+          messages.text('text'); 
+        })
+        .then(function (table) {
+          console.log('Created Table (messages)', table);
+        });
+  }
+});
+
 module.exports = db;
