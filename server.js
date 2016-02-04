@@ -246,20 +246,22 @@ app.get('/auth/validateSocialToken',(req, res) => {
 
 /////////////////ACTIVE STREAM//////////
 app.post('/api/activeStreams', function(req, res){
-  new Performance({title: req.body.room})
+    var newStream;
+  new Performance({room: req.body.room})
   .fetch()
   .then((found)=>{
     if(found){
-      var newStream = new Performance({active: true});
+      newStream = new Performance({active: true});
       newStream.save()
       .then((performance)=>{
         res.end(performance);
       })
     }else{
-      var newStream = new Performance({active: true, title: req.body.room});
+      newStream = new Performance({active: true, room: req.body.room});
       newStream.save()
       .then((performance)=>{
-        res.end(performance);
+          console.log("NEW PERFORMANCE CREATED",performance)
+        res.status(200).json(performance);
       })
     }
   })
