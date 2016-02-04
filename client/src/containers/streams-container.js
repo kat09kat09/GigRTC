@@ -59,6 +59,7 @@ export class StreamsContainer extends Component {
         <Link to={`activeStream/${performance.room}`}>
           <GridTile
           key={performance.id}
+
           title={performance.title}
           subtitle={<span>by <b>{performance.room}</b></span>}
           actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
