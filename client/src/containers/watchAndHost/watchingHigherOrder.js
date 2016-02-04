@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 //import {pushState} from 'redux-router';
 import {browserHistory} from 'react-router'
 import {performanceActive} from '../../actions';
+import {updatePerformanceViewCount} from '../../actions'
+import {showTotalViewersWatching} from '../../actions'
 import Chat from  '../../components/Chat';
 import CONFIG from '../../../../config'
 
@@ -50,6 +52,14 @@ export function videoHigherOrderFunction(Component) {
             performanceActive({room:this.props.userDetails.user_name, active : false});
         }
 
+        onWatchVideoBroadcast(){
+            updatePerformanceViewCount({room:this.props.params.room})
+        }
+
+        //numberOfViewers(){
+        //    showTotalViewersWatching()
+        //}
+
         render () {
             return (
                 <div>
@@ -57,6 +67,7 @@ export function videoHigherOrderFunction(Component) {
                                endBroadcast={this.onVideoBroadCastEnd.bind(this)}
                                currentPrivelege={this.props.userPrivelege}
                                watchMode={!!this.props.params.room}
+                               watchVideo={this.onWatchVideoBroadcast.bind(this)}
                         {...this.state} {...this.props}/>
                     <Chat/>
                 </div>
@@ -66,7 +77,9 @@ export function videoHigherOrderFunction(Component) {
     }
 
     const mapDispatchToProps = {
-        performanceActive
+        performanceActive,
+        updatePerformanceViewCount,
+        showTotalViewersWatching
     };
 
     const mapStateToProps = (state) => ({

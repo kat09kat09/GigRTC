@@ -7,7 +7,8 @@ var Performance = db.Model.extend({
   hasTimestamps: true,
   defaults: {
     rated_r: false,
-    active : false
+    active : false,
+    number_of_viewers : 0
 
   },
   user: function() {

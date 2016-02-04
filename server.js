@@ -234,12 +234,24 @@ app.put('/api/activeStreams', function(req, res){
 app.get('/api/activeStreams',
     function(req, res) {
         Performances.query({where : {active : true}}).fetch().then(function(performances) {
-            console.log("PERFORMANCES",performances)
             res.status(200).send(performances.models);
         });
 
     });
 
+
+app.put('/api/updatePerformanceViewCount', function(req, res) {
+    console.log("SERVER FOR UPDATE IS BEING HIT");
+    Performance.forge({room: req.body.room})
+        .fetch({require: true})
+        .then((performance)=>{
+            performance.save({
+                number_of_viewers : performance.get('number_of_viewers') + 1
+            })
+            res.json({views : (performance.get('number_of_viewers') + 1)})
+        })
+
+});
 
 
 

@@ -12,7 +12,8 @@ const {
     CURRENT_ENVIRONMENT,
     PUBLIC_TOKEN,
     FETCH_ACTIVE_STREAMS,
-    LOGIN_ARTIST_SUCCESS
+    LOGIN_ARTIST_SUCCESS,
+    VIEW_COUNT_UPDATE
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -113,6 +114,7 @@ export function loginArtist(creds){
 
                 try {
                     let decoded = jwtDecode(response.token);
+                    console.log("TOKEN DECOED",decoded)
                     dispatch(loginArtistSuccess({token : response.token, artist_details:response.artist_details}));
                     browserHistory.push('/')
                 } catch (e) {
@@ -274,6 +276,8 @@ export function getActivePerformances(){
 
 }
 
+
+
 //placeholder for post to /api/saveBroadcast endpoint
 export function saveBroadcast(broadcastData) {
   axios.post('api/saveBroadcast', broadcastData);
@@ -289,4 +293,29 @@ export function performanceActive(room){
     const data = axios.put('api/activeStreams', room);
 }
 
+
+
+export function updatePerformanceViewCount(room){
+    console.log("updatePerformanceViewCount", room)
+
+    return (dispatch) => {
+        dispatch(showTotalViewersWatching(15));
+        return axios.put('/api/updatePerformanceViewCount', room)
+        .then(function (response) {
+            dispatch(showTotalViewersWatching(response.data.views))
+        }).catch((error)=> {
+            console.log("AXIOS ERROR", error);
+        })
+    }
+
+}
+
+export function showTotalViewersWatching(count){
+    console.log("SHOW TOTALVIEWS WATCHING INVOKED")
+    return {
+        type : VIEW_COUNT_UPDATE,
+        payload : count
+    }
+
+}
 
