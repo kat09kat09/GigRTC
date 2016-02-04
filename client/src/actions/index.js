@@ -288,7 +288,7 @@ export function saveBroadcast(broadcastData) {
   }
 }
 
-
+//CHANGE THIS TO POINT TO THE SERVER END POINT AND THIS FUNCTION IS BEING CALLED PREFIXED WITH activeStreams as i'm trying to start a stream, which should be prevented for users as they will only have watch buttons
 export function performanceActive(room){
     const data = axios.post('api/activeStreams', room);
 }

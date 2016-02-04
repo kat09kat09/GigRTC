@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 //import {pushState} from 'redux-router';
 import {browserHistory} from 'react-router'
 import {performanceActive} from '../../actions';
+import Chat from  '../../components/Chat';
 
 export function videoHigherOrderFunction(Component) {
 
@@ -15,7 +16,6 @@ export function videoHigherOrderFunction(Component) {
     });
 
     function onBroadcast(room){
-        console.log("ON BROADCAST",room)
         skylink.init({
             apiKey: 'e8a678bc-e0e4-4605-aa76-cc857b7dbbd0',
             defaultRoom: room  //this will be managed by state at a later point
@@ -29,10 +29,9 @@ export function videoHigherOrderFunction(Component) {
     };
 
     function endBroadcast(){
-        console.log(document.getElementById('video'))
         skylink.stopStream();
         var vid = document.getElementById('video');
-        vid.poster = "public/img/guitarist.jpg";
+        vid.poster = "../../../public/img/guitarist.jpg";
         vid.src = '';
         vid.style.background = ';'
     }
@@ -50,7 +49,10 @@ export function videoHigherOrderFunction(Component) {
                 <div>
                     <Component startBroadcast={this.onVideoBroadCast.bind(this)}
                                endBroadcast={endBroadcast}
+                               currentPrivelege={this.props.userPrivelege}
+                               watchMode={!!this.props.params.room}
                         {...this.state} {...this.props}/>
+                    <Chat/>
                 </div>
             )
 
@@ -64,6 +66,7 @@ export function videoHigherOrderFunction(Component) {
     const mapStateToProps = (state) => ({
         token: state.auth.token,
         userDetails: state.auth.userDetails,
+        userPrivelege : state.auth.userPrivelege,
         isAuthenticated: state.auth.isAuthenticated,
         environment: state.environment
     });
