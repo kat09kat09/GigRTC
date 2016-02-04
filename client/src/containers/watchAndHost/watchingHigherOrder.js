@@ -33,6 +33,7 @@ export function videoHigherOrderFunction(Component) {
     };
     
     function onStream(room){
+        console.log("FROM SKYLINK WATCHING HIGHER ORDER WATCH STREAM",room)
         skylink.init({
             apiKey: CONFIG.SKYLINK_KEY,
             defaultRoom: room
@@ -72,7 +73,7 @@ export function videoHigherOrderFunction(Component) {
             this.props.updatePerformanceViewCount({room:this.props.params.room})
              onStream(this.props.params.room);//this section needs the room of the clicked stream
 
-    }
+        }
 
         //numberOfViewers(){
         //    showTotalViewersWatching()

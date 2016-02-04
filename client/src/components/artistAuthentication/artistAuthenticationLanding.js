@@ -54,8 +54,8 @@ export default class artistAuthenticationLanding extends React.Component {
             <FlatButton
                 label="Close"
                 secondary={true}
-                onTouchTap={()=>this.handleClose('signin')}
-            />,
+                onTouchTap={this.handleClose}
+            />
         ];
 
         return (
@@ -64,11 +64,11 @@ export default class artistAuthenticationLanding extends React.Component {
                 <Dialog
                     title="Sign In"
                     actions={actions}
-                    modal={false}
+                    modal={true}
                     autoScrollBodyContent={true}
+                    autoDetectWindowHeight={true}
                     open={this.state.openSignIn}
                     contentStyle={customContentStyleSignIn}
-                    onRequestClose={()=>this.handleClose('signin')}
                 >
                     <SigninForm />
                 </Dialog>
@@ -76,12 +76,11 @@ export default class artistAuthenticationLanding extends React.Component {
                 <Dialog
                     title="Sign Up"
                     actions={actions}
-                    modal={false}
+                    modal={true}
                     autoScrollBodyContent={true}
                     autoDetectWindowHeight={true}
                     open={this.state.openSignUp}
                     contentStyle={customContentStyleSignUp}
-                    onRequestClose={()=>this.handleClose('signup')}
                 >
                     <SignUpForm />
 
