@@ -24,7 +24,8 @@ export default (props)=>{
         <AppBar
             title={<span style={styles.title}><Link to="/" className="logoLink">GIGG.TV</Link></span>}
             className="header"
-            iconElementLeft={<IconButton></IconButton>}
+            iconElementLeft={<img src='../../public/img/rocket.svg' height='40' width='40' alt='' />}
+            // showMenuIconButton={false}
             iconElementRight={
                 <IconMenu
                   iconButtonElement={
