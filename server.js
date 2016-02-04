@@ -207,9 +207,9 @@ passport.use(new FacebookStrategy({
                     user_image : profile.photos[0].value
                 })
 
-                facebookUser.save().then(function(newfacebookUser) {
-                    Users.add(newfacebookUser);
-                    return done(null,newfacebookUser)
+                facebookUser.save().then(function(newFacebookUser) {
+                    Users.add(newFacebookUser);
+                    return done(null,newFacebookUser)
                 });
             }
         });
