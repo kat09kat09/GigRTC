@@ -42,7 +42,8 @@ server.listen(port, function() {
 });
 
 
-app.get('/test',
+
+app.get('/populateDatabase',
   function(req, res) {
 
     var testUser = new User({
@@ -51,19 +52,21 @@ app.get('/test',
     });
 
     var testPerf = new Performance({
+      room: 'Jim Bob Burshea',
       title: 'Jimbo sings the blues',
-      short_description: 'My blues are outta control',
-      long_description: 'Love life\'s sweetest reward Let it flow it floats back to you. Boy the way Glen Miller played. Songs that made the hit parade. Guys like us we had it made. Those were the days. All of them had hair of gold like their mother the youngest one in curls.; In 1972 a crack commando unit was sent to prison by a military court for a crime they didn\'t commit. These men promptly escaped from a maximum security stockade to the Los Angeles underground. We\'re gonna do it. On your mark get set and go now. Got a dream and we just know now we\'re gonna make our dream come true. These days are all Happy and Free. These days are all share them with me oh baby. You wanna be where you can see our troubles are all the same. You wanna be where everybody knows Your name. Space. The final frontier. These are the voyages of the Starship Enterprise. Here\'s the story of a man named Brady who was busy with three boys of his own. Fleeing from the Cylon tyranny the last Battlestar – Galactica - leads a rag-tag fugitive fleet on a lonely quest - a shining planet known as Earth. Knight Rider: A shadowy flight into the dangerous world of a man who does not exist. It\'s time to put on makeup. It\'s time to dress up right. It\'s time to raise the curtain on the Muppet Show tonight. Its mission - to explore strange new worlds to seek out new life and new civilizations to boldly go where no man has gone before.'
+      short_description: 'My blues are outta control'
     });
 
     var testTag = new Tag({
       tagname: 'doo wop'
     });
 
-    testTag.save()
-    .then(function(newTag) {
-      Tags.add(newTag);
-      res.status(200).send(newTag);
+    // change testPerf to whatever database table you want to add a row to each time you go to /populateDatabase
+    testPerf.save()
+    .then(function(newEntry) {
+      // change Performances to the table you want to populate
+      Performances.add(newEntry);
+      res.status(200).send(newEntry);
     })
     .catch(function(err) {
       console.error(err);

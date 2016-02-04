@@ -55,7 +55,7 @@ export class StreamsContainer extends Component {
           <GridTile
           key={performance.id}
           title={performance.title}
-          subtitle={<span>by <b>{performance.user_id}</b></span>}
+          subtitle={<span>by <b>{performance.room}</b></span>}
           actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
           >
             <img src='../../public/img/crowd.jpg' />
