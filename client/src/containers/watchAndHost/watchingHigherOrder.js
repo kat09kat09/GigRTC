@@ -5,6 +5,7 @@ import {browserHistory} from 'react-router'
 import {performanceActive} from '../../actions';
 import {updatePerformanceViewCount} from '../../actions'
 import {showTotalViewersWatching} from '../../actions'
+import { bindActionCreators } from 'redux';
 import Chat from  '../../components/Chat';
 import CONFIG from '../../../../config'
 
@@ -44,16 +45,16 @@ export function videoHigherOrderFunction(Component) {
 
         onVideoBroadCast(){
             onBroadcast(this.props.userDetails.user_name);
-            performanceActive({room:this.props.userDetails.user_name, active : true});
+            this.props.performanceActive({room:this.props.userDetails.user_name, active : true});
         }
 
         onVideoBroadCastEnd(){
             endBroadcast();
-            performanceActive({room:this.props.userDetails.user_name, active : false});
+            this.props.performanceActive({room:this.props.userDetails.user_name, active : false});
         }
 
         onWatchVideoBroadcast(){
-            updatePerformanceViewCount({room:this.props.params.room})
+            this.props.updatePerformanceViewCount({room:this.props.params.room})
         }
 
         //numberOfViewers(){
@@ -76,11 +77,16 @@ export function videoHigherOrderFunction(Component) {
         }
     }
 
-    const mapDispatchToProps = {
-        performanceActive,
-        updatePerformanceViewCount,
-        showTotalViewersWatching
-    };
+
+
+    function mapDispatchToProps(dispatch) {
+        return bindActionCreators({
+            performanceActive,
+            updatePerformanceViewCount,
+            showTotalViewersWatching
+        },
+            dispatch)
+    }
 
     const mapStateToProps = (state) => ({
         token: state.auth.token,

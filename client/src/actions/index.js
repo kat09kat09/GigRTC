@@ -298,10 +298,12 @@ export function performanceActive(room){
 export function updatePerformanceViewCount(room){
     console.log("updatePerformanceViewCount", room)
 
-    return (dispatch) => {
-        dispatch(showTotalViewersWatching(15));
-        return axios.put('/api/updatePerformanceViewCount', room)
+    return function(dispatch){
+        //dispatch(showTotalViewersWatching(15));
+        console.log("DISPATCH CURRY FUNCTION BEING ENETERED IN ACTIONS");
+         axios.put('/api/updatePerformanceViewCount', room)
         .then(function (response) {
+            console.log("DEFINITION OF DISPATCH",dispatch)
             dispatch(showTotalViewersWatching(response.data.views))
         }).catch((error)=> {
             console.log("AXIOS ERROR", error);
