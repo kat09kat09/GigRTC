@@ -6,7 +6,8 @@ var Performance = db.Model.extend({
   tableName: 'performances',
   hasTimestamps: true,
   defaults: {
-    rated_r: false
+    rated_r: false,
+    active : false
   },
   user: function() {
     return this.belongsTo(User);

@@ -82,6 +82,7 @@ db.knex.schema.hasTable('performances').then(function(exists) {
     db.knex.schema.createTable('performances', function (performances) {
       performances.increments('id').primary();
       performances.timestamps();
+      performances.boolean('active');
       performances.timestamp('went_live'); // timestamp is seconds since 1-1-1970, will not change with time zones
       performances.timestamp('ended');
       performances.string('title', 255);

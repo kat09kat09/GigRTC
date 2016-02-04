@@ -35,7 +35,7 @@ var port = 1338;
 
 var server = https.createServer(options, app)
 
-var io= require('socket.io').listen(server); 
+var io= require('socket.io').listen(server);
 
 server.listen(port, function() {
   console.log(`Running on port: ${port}`);
@@ -102,7 +102,8 @@ var jwt = require('jsonwebtoken');
 var expressJWT = require('express-jwt')
 var bodyParser = require('body-parser');
 var passport = require('passport')
-    , FacebookStrategy = require('passport-facebook').Strategy;
+    , FacebookStrategy = require('passport-facebook').Strategy
+    ,   GoogleStrategy = require('passport-google').Strategy;
 
 app.use(favicon(__dirname + '/client/public/img/spinner.gif'));
 
@@ -206,9 +207,9 @@ passport.use(new FacebookStrategy({
                     user_image : profile.photos[0].value
                 })
 
-                facebookUser.save().then(function(newfacebookUser) {
-                    Users.add(newfacebookUser);
-                    return done(null,newfacebookUser)
+                facebookUser.save().then(function(newFacebookUser) {
+                    Users.add(newFacebookUser);
+                    return done(null,newFacebookUser)
                 });
             }
         });
@@ -256,34 +257,19 @@ mongoose.connect(process.env.MONGOLAB_URI);
 
 //load routers
 var messageRouter = express.Router();
-// const usersRouter = express.Router();
-// const channelRouter = express.Router();
 require('./server/routes/message_routes.js')(messageRouter);
-// require('./routes/channel_routes')(channelRouter);
-// require('./routes/user_routes')(usersRouter, passport);
+
 app.use('/api', messageRouter);
-// app.use('/api', usersRouter);
-// app.use('/api', channelRouter);
 
-
-
- //var io = require('socket.io')(server, {path: '/api/chat'});
 
 var socketioJwt= require('socketio-jwt');
 
-// io.set('authorization', socketioJwt.authorize({
-//   secret : CONFIG.JWT_SECRET,
-//   handshake: true
-// }));
+
 io.set('transports', ["websocket", "polling"]);
 
-// io.on('connection', socketioJwt.authorize({
-//   secret: CONFIG.JWT_SECRET
-// }))
-// .on('authenticated', function(socket) {
+
 io.on('connection', function (socket){
     console.log('a user connected');
-    // console.log('socket.handshake.session', socket.handshake.decoded_token.userName);
     socket.join('Lobby');
     socket.on('chat mounted', function(user) {
       console.log('socket heard: chat mounted...user is: ', user);
@@ -308,9 +294,7 @@ io.on('connection', function (socket){
     socket.on('stop typing', function (data) {
       socket.broadcast.to(data.channel).emit('stop typing bc', data.user);
     });
-    // socket.on('new private channel', function(socketID, channel) {
-    //   socket.broadcast.to(socketID).emit('receive private channel', channel);
-    // })
+
   });
 
 //********* End Test Chat **********
