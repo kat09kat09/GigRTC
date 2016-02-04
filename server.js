@@ -257,12 +257,12 @@ app.put('/api/updatePerformanceViewCount', function(req, res) {
 
 //******* Test  Chat **************
 //set env vars
-var mongoose= require('mongoose');
-process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat_dev';
-process.env.PORT = process.env.PORT || 3000;
+// var mongoose= require('mongoose');
+// process.env.MONGOLAB_URI = process.env.MONGOLAB_URI || 'mongodb://localhost/chat_dev';
+// process.env.PORT = process.env.PORT || 3000;
 
 // connect our DB
-mongoose.connect(process.env.MONGOLAB_URI);
+// mongoose.connect(process.env.MONGOLAB_URI);
 
 
 
