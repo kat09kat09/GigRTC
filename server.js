@@ -239,7 +239,6 @@ app.get('/api/activeStreams', function(req, res) {
 });
 
 app.put('/api/updatePerformanceViewCount', function(req, res) {
-    console.log("SERVER FOR UPDATE IS BEING HIT");
     Performance.forge({room: req.body.room})
         .fetch({require: true})
         .then((performance)=>{

@@ -42,7 +42,8 @@ export function videoHigherOrderFunction(Component) {
         });
 
         skylink.on('incomingStream', function(peerId, stream, isSelf){
-            if(isSelf) return;
+            //if(isSelf) return;
+            console.log("ROOM FROM INCOMING STREAM EVENT LISTENER",room)
             var vid = document.getElementById('video');
             attachMediaStream(vid, stream);
         });
@@ -70,8 +71,8 @@ export function videoHigherOrderFunction(Component) {
         }
 
         onWatchVideoBroadcast(){
+            onStream(this.props.params.room);//this section needs the room of the clicked stream
             this.props.updatePerformanceViewCount({room:this.props.params.room})
-             onStream(this.props.params.room);//this section needs the room of the clicked stream
 
         }
 
