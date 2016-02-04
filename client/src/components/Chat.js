@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import uuid from 'node-uuid';
 import moment from 'moment';
 
-var socket = io.connect('https://localhost:1338'); 
+var socket = io.connect('https://gigg.tv');
 
 
 class Chat extends Component {

@@ -142,18 +142,12 @@ app.post('/auth/signUp/', (req, res) => {
             })
         }
     });
-});
 
-app.post('/auth/getToken/', (req, res) => {
-    if (req.body.userName == 'tds@tds.com' && req.body.password == 'tds') {
-        var myToken = jwt.sign({userName:req.body.userName},CONFIG.JWT_SECRET)
-        console.log('token signed by', req.body.userName);
-        console.log('myToken', myToken);
-        res.status(200)
-            .json({token: myToken, username: req.body.userName});
-    } else {
-        res.sendStatus(403);
-    }
+       new Performance({active: false, room: req.body.user_name})
+        .save().then((performance)=>{
+            console.log("NEW PERFORMANCE CREATED",performance)
+        })
+
 });
 
 app.get('/getData/', (req, res) => {
@@ -213,7 +207,7 @@ app.get('/auth/facebook/callback/',
     function(req, res) {
         console.log("response",req.user);
         current_user = req.user;
-        current_token = jwt.sign({userName: req.user.emails[0].value },CONFIG.JWT_SECRET);
+        current_token = jwt.sign({user_name: req.user.emails[0].value },CONFIG.JWT_SECRET);
         res.redirect('/authenticateFacebook')
     }
 
@@ -225,36 +219,36 @@ app.get('/auth/validateSocialToken',(req, res) => {
 });
 
 /////////////////ACTIVE STREAM//////////
-app.post('/api/activeStreams', function(req, res){
-    var newStream;
-  new Performance({room: req.body.room})
-  .fetch()
-  .then((found)=>{
-    if(found){
-      newStream = new Performance({active: true});
-      newStream.save()
-      .then((performance)=>{
-        res.end(performance);
-      })
-    }else{
-      newStream = new Performance({active: true, room: req.body.room});
-      newStream.save()
-      .then((performance)=>{
-          console.log("NEW PERFORMANCE CREATED",performance)
-        res.status(200).json(performance);
-      })
-    }
-  })
+app.put('/api/activeStreams', function(req, res){
+
+  Performance.forge({room: req.body.room})
+      .fetch({require: true})
+    .then((performance)=>{
+        performance.save({
+            active : req.body.active
+        })
+    })
+
 });
 
-app.get('/api/activeStreams',
-    function(req, res) {
-        Performances.fetch().then(function(performances) {
-            res.status(200).send(performances.models);
-        });
-        
+app.get('/api/activeStreams', function(req, res) {
+    Performances.query({where: {active: true}}).fetch().then(function (performances) {
+        res.status(200).send(performances.models);
     });
 
+});
+
+app.put('/api/updatePerformanceViewCount', function(req, res) {
+    Performance.forge({room: req.body.room})
+        .fetch({require: true})
+        .then((performance)=>{
+            performance.save({
+                number_of_viewers : performance.get('number_of_viewers') + 1
+            })
+            res.json({views : (performance.get('number_of_viewers') + 1)})
+        })
+
+});
 
 
 

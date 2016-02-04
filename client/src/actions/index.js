@@ -12,7 +12,8 @@ const {
     CURRENT_ENVIRONMENT,
     PUBLIC_TOKEN,
     FETCH_ACTIVE_STREAMS,
-    LOGIN_ARTIST_SUCCESS
+    LOGIN_ARTIST_SUCCESS,
+    VIEW_COUNT_UPDATE
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -113,6 +114,7 @@ export function loginArtist(creds){
 
                 try {
                     let decoded = jwtDecode(response.token);
+                    console.log("TOKEN DECOED",decoded)
                     dispatch(loginArtistSuccess({token : response.token, artist_details:response.artist_details}));
                     browserHistory.push('/')
                 } catch (e) {
@@ -143,9 +145,7 @@ export function SignUpArtist(creds){
     }
 
     return (dispatch) =>{
-        //return fetch(location.host + '/auth/getToken/', config) -> initial approach
         dispatch(loginUserRequest());
-        //console.log('login',`${environment}/auth/getToken/`)
         return fetch(`/auth/signUp/`, config)
             .then(checkHttpStatus)
             .then(parseJSON)
@@ -241,8 +241,6 @@ export function determineEnvironment(){
 
 
     return (dispatch) =>{
-        //return fetch(location.host + '/auth/getToken/', config) -> initial approach
-        //console.log('login',`${environment}/auth/getToken/`)
         return  fetch(`/auth/validateSocialToken`)
             .then(checkHttpStatus)
             .then(parseJSON)
@@ -278,6 +276,8 @@ export function getActivePerformances(){
 
 }
 
+
+
 //placeholder for post to /api/saveBroadcast endpoint
 export function saveBroadcast(broadcastData) {
   axios.post('api/saveBroadcast', broadcastData);
@@ -290,7 +290,34 @@ export function saveBroadcast(broadcastData) {
 
 //CHANGE THIS TO POINT TO THE SERVER END POINT AND THIS FUNCTION IS BEING CALLED PREFIXED WITH activeStreams as i'm trying to start a stream, which should be prevented for users as they will only have watch buttons
 export function performanceActive(room){
-    const data = axios.post('api/activeStreams', room);
+    const data = axios.put('api/activeStreams', room);
 }
 
+
+
+export function updatePerformanceViewCount(room){
+    console.log("updatePerformanceViewCount", room)
+
+    return function(dispatch){
+        //dispatch(showTotalViewersWatching(15));
+        console.log("DISPATCH CURRY FUNCTION BEING ENETERED IN ACTIONS");
+         axios.put('/api/updatePerformanceViewCount', room)
+        .then(function (response) {
+            console.log("DEFINITION OF DISPATCH",dispatch)
+            dispatch(showTotalViewersWatching(response.data.views))
+        }).catch((error)=> {
+            console.log("AXIOS ERROR", error);
+        })
+    }
+
+}
+
+export function showTotalViewersWatching(count){
+    console.log("SHOW TOTALVIEWS WATCHING INVOKED")
+    return {
+        type : VIEW_COUNT_UPDATE,
+        payload : count
+    }
+
+}
 

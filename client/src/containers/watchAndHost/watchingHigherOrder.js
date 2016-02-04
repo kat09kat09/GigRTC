@@ -3,6 +3,9 @@ import {connect} from 'react-redux';
 //import {pushState} from 'redux-router';
 import {browserHistory} from 'react-router'
 import {performanceActive} from '../../actions';
+import {updatePerformanceViewCount} from '../../actions'
+import {showTotalViewersWatching} from '../../actions'
+import { bindActionCreators } from 'redux';
 import Chat from  '../../components/Chat';
 import CONFIG from '../../../../config'
 
@@ -30,6 +33,7 @@ export function videoHigherOrderFunction(Component) {
     };
     
     function onStream(room){
+        console.log("FROM SKYLINK WATCHING HIGHER ORDER WATCH STREAM",room)
         skylink.init({
             apiKey: CONFIG.SKYLINK_KEY,
             defaultRoom: room
@@ -38,7 +42,8 @@ export function videoHigherOrderFunction(Component) {
         });
 
         skylink.on('incomingStream', function(peerId, stream, isSelf){
-            if(isSelf) return;
+            //if(isSelf) return;
+            console.log("ROOM FROM INCOMING STREAM EVENT LISTENER",room)
             var vid = document.getElementById('video');
             attachMediaStream(vid, stream);
         });
@@ -57,24 +62,33 @@ export function videoHigherOrderFunction(Component) {
 
         onVideoBroadCast(){
             onBroadcast(this.props.userDetails.user_name);
-            performanceActive({room:this.props.userDetails.user_name});
+            this.props.performanceActive({room:this.props.userDetails.user_name, active : true});
         }
 
-        onVideoStream(){
-            var room = window.location.href;
-            //NEEDS TO BE ALTERED FOR SERVER DON'T OVERLOOK
-            var re = /https\:\/\/localhost\:1338\/activeStream\//gi;//THIS NEEDS TO BE CHANGED TO WORK ON SERVER
-            onStream(room.replace(re,""));//this section needs the room of the clicked stream
+        onVideoBroadCastEnd(){
+            endBroadcast();
+            this.props.performanceActive({room:this.props.userDetails.user_name, active : false});
         }
+
+        onWatchVideoBroadcast(){
+            onStream(this.props.params.room);//this section needs the room of the clicked stream
+            this.props.updatePerformanceViewCount({room:this.props.params.room})
+
+        }
+
+        //numberOfViewers(){
+        //    showTotalViewersWatching()
+        //}
 
         render () {
             return (
                 <div>
                     <Component startBroadcast={this.onVideoBroadCast.bind(this)}
-                               endBroadcast={endBroadcast}
-                               startStream={this.onVideoStream.bind(this)}
+                               endBroadcast={this.onVideoBroadCastEnd.bind(this)}
+
                                currentPrivelege={this.props.userPrivelege}
                                watchMode={!!this.props.params.room}
+                               watchVideo={this.onWatchVideoBroadcast.bind(this)}
                         {...this.state} {...this.props}/>
                     <Chat/>
                 </div>
@@ -83,9 +97,16 @@ export function videoHigherOrderFunction(Component) {
         }
     }
 
-    const mapDispatchToProps = {
-        performanceActive
-    };
+
+
+    function mapDispatchToProps(dispatch) {
+        return bindActionCreators({
+            performanceActive,
+            updatePerformanceViewCount,
+            showTotalViewersWatching
+        },
+            dispatch)
+    }
 
     const mapStateToProps = (state) => ({
         token: state.auth.token,

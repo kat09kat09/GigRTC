@@ -17,9 +17,13 @@ export class VideoContainer extends Component {
                                startStream={this.props.startStream}
                                currentPrivelege={this.props.currentPrivelege}
                                watchMode={this.props.watchMode}
+                               watchVideo={this.props.watchVideo}
                 />
                 {//isBroadcaster will be managed by state, is true when artist is logged in
                 }
+
+                <div>{this.props.view_count}</div>
+
 
             </div>
         );
@@ -29,7 +33,7 @@ export class VideoContainer extends Component {
 
 function mapStateToProps(state){
     return {
-        environment : state.environment
+        view_count : state.performance.view_count
     }
 }
 
