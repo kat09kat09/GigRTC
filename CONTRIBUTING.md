@@ -56,12 +56,13 @@ git checkout -b `your-branch-name`
 ### Make commits to your feature branch. 
 
 Prefix each commit like so
-  - (feat) Added a new feature
-  - (fix) Fixed inconsistent tests [Fixes #0]
-  - (refactor) ...
-  - (cleanup) ...
-  - (test) ...
-  - (doc) ...
+  - (FEAT) Added a new feature
+  - (FIX) Fixed inconsistent tests [Fixes #0]
+  - (REFACT) ...
+  - (CLEANUP) ...
+  - (TEST) ...
+  - (DOC) ...
+  - (ENHANCE) Use when adding to a current feature, but not quite refactoring
 
 Make changes and commits on your branch, and make sure that you
 only make changes that are relevant to this branch. If you find
@@ -122,6 +123,9 @@ you get here again and nothing is broken and all the tests pass.
 
 ### Make a pull request
 
+Before you make a pull request, you must first rebase. No exceptions.
+Manage your own merge conflicts before pushing to master. Don't be a 
+jerk and push up conflicts. 
 Make a clear pull request from your fork and branch to the upstream master
 branch, detailing exactly what changes you made and what feature this
 should add. The clearer your pull request is the faster you can get
