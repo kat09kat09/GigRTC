@@ -231,14 +231,12 @@ app.put('/api/activeStreams', function(req, res){
 
 });
 
-app.get('/api/activeStreams',
-    function(req, res) {
-        Performances.query({where : {active : true}}).fetch().then(function(performances) {
-            res.status(200).send(performances.models);
-        });
-
+app.get('/api/activeStreams', function(req, res) {
+    Performances.query({where: {active: true}}).fetch().then(function (performances) {
+        res.status(200).send(performances.models);
     });
 
+});
 
 app.put('/api/updatePerformanceViewCount', function(req, res) {
     console.log("SERVER FOR UPDATE IS BEING HIT");

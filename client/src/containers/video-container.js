@@ -14,6 +14,7 @@ export class VideoContainer extends Component {
                 <div className="video-overlay"></div>
                 <StreamButtons startBroadcast={this.props.startBroadcast}
                                endBroadcast={this.props.endBroadcast}
+                               startStream={this.props.startStream}
                                currentPrivelege={this.props.currentPrivelege}
                                watchMode={this.props.watchMode}
                                watchVideo={this.props.watchVideo}

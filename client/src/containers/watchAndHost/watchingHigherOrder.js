@@ -31,6 +31,21 @@ export function videoHigherOrderFunction(Component) {
         });
 
     };
+    
+    function onStream(room){
+        skylink.init({
+            apiKey: CONFIG.SKYLINK_KEY,
+            defaultRoom: room
+        }, () => {
+            skylink.joinRoom({});
+        });
+
+        skylink.on('incomingStream', function(peerId, stream, isSelf){
+            if(isSelf) return;
+            var vid = document.getElementById('video');
+            attachMediaStream(vid, stream);
+        });
+    };
 
     function endBroadcast(){
         skylink.stopStream();
@@ -55,7 +70,9 @@ export function videoHigherOrderFunction(Component) {
 
         onWatchVideoBroadcast(){
             this.props.updatePerformanceViewCount({room:this.props.params.room})
-        }
+             onStream(this.props.params.room);//this section needs the room of the clicked stream
+
+    }
 
         //numberOfViewers(){
         //    showTotalViewersWatching()
@@ -66,6 +83,7 @@ export function videoHigherOrderFunction(Component) {
                 <div>
                     <Component startBroadcast={this.onVideoBroadCast.bind(this)}
                                endBroadcast={this.onVideoBroadCastEnd.bind(this)}
+
                                currentPrivelege={this.props.userPrivelege}
                                watchMode={!!this.props.params.room}
                                watchVideo={this.onWatchVideoBroadcast.bind(this)}
