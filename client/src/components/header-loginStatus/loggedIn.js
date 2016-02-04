@@ -11,11 +11,17 @@ import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import FlatButton from 'material-ui/lib/flat-button'
 
+const styles = {
+  title: {
+    cursor: 'pointer',
+  },
+};
+
 export default (props)=>{
   console.log('PROPS FROM HEADER:' + props.userPrivelege + "  Details  " + props.user_details);
     return (
         <AppBar
-            title="GIGG.TV"
+            title={<span style={styles.title}><Link to="/" className="logoLink">GIGG.TV</Link></span>}
             className="header"
             // containerElement={<Link to="/" className="logoLink">Gigg</Link>}
             iconElementLeft={<IconButton></IconButton>}
@@ -38,7 +44,7 @@ export default (props)=>{
                     linkButton={true}
                     primaryText="Home"
                     containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
-                   {props.userPrivelege === 'artist' ? 
+                   {props.userPrivelege === 'artist' ?
                     <MenuItem
                     linkButton={true}
                     primaryText="Broadcast"
