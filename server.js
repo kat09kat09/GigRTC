@@ -41,10 +41,7 @@ server.listen(port, function() {
   console.log(`Running on port: ${port}`);
 });
 
-
-
-
-app.get('/performances',
+app.get('/api/activeStreams',
 function(req, res) {
   Performances.fetch().then(function(performances) {
     res.status(200).send(performances.models);
