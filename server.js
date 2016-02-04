@@ -143,6 +143,7 @@ app.post('/auth/signUp/', (req, res) => {
 
         }
         else {
+          console.log(`creating new user${req.body}`);
             var newArtist = new Artist({
                 user_name: req.body.user_name,
                 password: req.body.password,
@@ -242,6 +243,33 @@ app.get('/auth/validateSocialToken',(req, res) => {
 
     res.json({token: current_token, user_details : current_user});
 });
+
+/////////////////ACTIVE STREAM//////////
+app.post('/api/activeStreams', function(req, res){
+  new Performance({title: req.body.room})
+  .fetch()
+  .then((found)=>{
+    if(found){
+      var newStream = new Performance({active: true});
+      newStream.save()
+      .then((performance)=>{
+        res.end(performance);
+      })
+    }else{
+      var newStream = new Performance({active: true, title: req.body.room});
+      newStream.save()
+      .then((performance)=>{
+        res.end(performance);
+      })
+    }
+  })
+});
+
+
+
+
+
+
 
 
 //******* Test  Chat **************
