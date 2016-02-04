@@ -8,6 +8,7 @@ var Performance = db.Model.extend({
   defaults: {
     rated_r: false,
     active : false
+
   },
   user: function() {
     return this.belongsTo(User);

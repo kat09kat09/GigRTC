@@ -289,6 +289,8 @@ export function saveBroadcast(broadcastData) {
 }
 
 
-
+export function performanceActive(room){
+    const data = axios.post('api/activeStreams', room);
+}
 
 

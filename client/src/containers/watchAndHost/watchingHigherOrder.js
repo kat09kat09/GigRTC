@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 //import {pushState} from 'redux-router';
 import {browserHistory} from 'react-router'
+import {performanceActive} from '../../actions';
 
 export function videoHigherOrderFunction(Component) {
 
@@ -24,6 +25,7 @@ export function videoHigherOrderFunction(Component) {
                 video: true
             });
         });
+
     };
 
     function endBroadcast(){
@@ -39,7 +41,8 @@ export function videoHigherOrderFunction(Component) {
     class VidContainer extends Component {
 
         onVideoBroadCast(){
-            onBroadcast(this.props.userDetails.user_name)
+            onBroadcast(this.props.userDetails.user_name);
+            performanceActive({room:this.props.userDetails.user_name});
         }
 
         render () {
@@ -54,6 +57,10 @@ export function videoHigherOrderFunction(Component) {
         }
     }
 
+    const mapDispatchToProps = {
+        performanceActive
+    };
+
     const mapStateToProps = (state) => ({
         token: state.auth.token,
         userDetails: state.auth.userDetails,
@@ -61,6 +68,6 @@ export function videoHigherOrderFunction(Component) {
         environment: state.environment
     });
 
-    return connect(mapStateToProps)(VidContainer);
+    return connect(mapStateToProps, mapDispatchToProps)(VidContainer);
 
 }
