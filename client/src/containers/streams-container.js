@@ -32,7 +32,8 @@ export class StreamsContainer extends Component {
   }
 
   render () {
-    if (this.props.presentActiveStreams) {
+    console.log(this.props.presentActiveStreams, 'in render');
+    if (this.props.presentActiveStreams && this.props.presentActiveStreams.length) {
       return(
         <div style={ styles.root }>
           <GridList cellHeight={ 180 } style={ styles.gridList }>
@@ -41,12 +42,16 @@ export class StreamsContainer extends Component {
         </div>
       )
     } else {
-      return <div>Welcome!</div>
+      return (
+        <div>
+          <div>Welcome!</div>
+          <img src='../../public/img/crowd.jpg' width='800' height='600' />
+        </div>
+      )
     }
   }
 
   renderEvents () {
-    console.log(this.props.presentActiveStreams, 'in renderevents');
     // return <div>Result</div>
     return this.props.presentActiveStreams.map((performance)=> {
       return (
@@ -54,8 +59,9 @@ export class StreamsContainer extends Component {
         <Link to={`activeStream/${performance.room}`}>
           <GridTile
           key={performance.id}
-          title={performance.room}
-          subtitle={<span>by <b>{performance.user_id}</b></span>}
+
+          title={performance.title}
+          subtitle={<span>by <b>{performance.room}</b></span>}
           actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
           >
             <img src='../../public/img/crowd.jpg' />
