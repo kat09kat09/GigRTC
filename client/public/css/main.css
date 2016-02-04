@@ -18,6 +18,10 @@
 .secondary-text-color  { color: #727272; }
 .divider-color         { border-color: #B6B6B6; }
 
+a {
+  text-decoration: none;
+}
+
 body {
   background-color:  #FFFFFF;
   color: #141414;
@@ -101,7 +105,7 @@ video {
   color: #FCF660;
 }
 h1 {
-  
+
   /*font-family: 'Chelsea Market', cursive;*/
   font-family: 'Changa One', cursive;
  /* font-family: 'Hind Vadodara', sans-serif;*/

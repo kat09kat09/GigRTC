@@ -13,12 +13,17 @@ import TestModal from '../../components/test_modal'
 
 import SignInModal from '../modals/userSigninModal'
 
+const styles = {
+  title: {
+    cursor: 'pointer',
+  },
+};
 
 export default (props)=>{
     return (
         <AppBar
-            title="GIGG.TV"
-            containerElement={<Link to="/" className="logoLink">Gigg</Link>}
+            title={<span style={styles.title}><Link to="/" className="logoLink">GIGG.TV</Link></span>}
+            className="header"
             iconElementLeft={<IconButton></IconButton>}
             iconElementRight={
                 <IconMenu
@@ -32,7 +37,7 @@ export default (props)=>{
                     linkButton={true}
                     primaryText="Home"
                     containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
-                  
+
                   <MenuItem primaryText="Sign in" containerElement={ <SignInModal/>} />
                   <MenuItem
                     linkButton={true}
