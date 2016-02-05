@@ -151,6 +151,13 @@ h1 {
 
 
 /*About page helper classes*/
+.avatar {
+  display: inline-block;
+}
+.avatars {
+  margin: 0 auto;
+}
+
 .wrapper {
   width: 100%;
 }
