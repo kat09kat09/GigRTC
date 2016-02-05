@@ -20,6 +20,8 @@ export function videoHigherOrderFunction(Component) {
     });
 
     function onBroadcast(room){
+        console.log("FROM SKYLINK BROADCASTIG HIGHER ORDER WATCH STREAM",room)
+
         skylink.init({
             apiKey: CONFIG.SKYLINK_KEY,
             defaultRoom: room  //this will be managed by state at a later point
@@ -76,11 +78,17 @@ export function videoHigherOrderFunction(Component) {
 
         }
 
-        //numberOfViewers(){
-        //    showTotalViewersWatching()
-        //}
+        componentDidMount(){
+                var self = this;
+                if(this.props.params.room === self.props.userDetails.user_name) {
+                    setInterval(function () {
+                        showTotalViewersWatching(self.props.userDetails.user_name);
+                    }, 1000)
+                }
+        }
 
         render () {
+
             return (
                 <div>
                     <Component startBroadcast={this.onVideoBroadCast.bind(this)}

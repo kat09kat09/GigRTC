@@ -13,7 +13,7 @@ export class AuthenticatePage extends Component {
         let tokenStatus = this.props.auth.token;
 
             this.props.getSocialDetails().then(function(){
-                console.log(this.props.auth)
+                console.log("SOCIAL LOGIN",this.props.auth)
             }.bind(this))
             console.log('Authentication Page being called',this.props)
 

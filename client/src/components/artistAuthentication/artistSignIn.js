@@ -27,7 +27,7 @@ export class LoginView extends Component {
                     <br/>
                     <TextField type="password"  {...password} placeholder="Plis password" />
                     <br/>
-                    <FlatButton label="Submit" type="submit" keyboardFocused={true}/>
+                    <FlatButton label="Submit" type="submit" />
                 </form>
             </div>
         )

@@ -2,6 +2,8 @@ import React from 'react';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 import LoginFBBtn from '../loginButtons/FBButton';
+import LoginGBtn from '../loginButtons/GButton';
+
 import SigninForm from '../forms/login'
 
 const customContentStyle = {
@@ -50,6 +52,7 @@ class SigninModal extends React.Component {
                     onRequestClose={this.handleClose}
                 >
                     <LoginFBBtn />
+                    <LoginGBtn/>
                 </Dialog>
 
 
