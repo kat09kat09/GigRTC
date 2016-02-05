@@ -34,6 +34,8 @@ export default class About extends Component {
             </div>
           </div>
 
+          
+
           <div className="stack">
             <h1> Our Tech Stack </h1>
             <div className="tech">

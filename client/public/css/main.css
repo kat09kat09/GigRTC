@@ -200,7 +200,7 @@ h1 {
 
 .tech{
   max-width: 95%;
-  margin: 0 7%;
+  margin: 0 8%;
 }
 
 .stack-icon {
@@ -212,15 +212,43 @@ h1 {
   fill: #00ace9;
 }
 
+
+
+
+
+
+
+
+
 /*MEDIA QUERIES*/
-@media (min-width: 1600px) { 
+@media (min-width: 1800px) { 
     .avatar > img { 
       margin: 0 31%;
     }
 }
 
-@media (min-width: 800px){
+@media (max-width: 1600px){
     .avatar > img { 
-      margin: 0 25%%;
+      margin: 0 25%;
+    }
+    
+    .avatars {
+      margin-top: 5%;
+    }
+    .stack {
+      margin-top: 10%;
+    }
+
+    .stack-icon {
+      display: inline-block;
+      margin: 3rem 3rem;
+    }
+
+    .tech {
+      margin-left: 15%;
+    }
+  
+    .wrapper {
+      margin-top: 7%;
     }
 }
