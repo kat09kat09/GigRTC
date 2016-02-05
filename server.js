@@ -131,7 +131,7 @@ app.post('/auth/signUp/', (req, res) => {
                 brief_description: req.body.brief_description,
                 user_image: req.body.user_image,
                 display_name: req.body.display_name,
-                genre: req.body.genre,
+                genre: req.body.genre
             });
 
             newArtist.save().then(function (artist) {
@@ -167,17 +167,18 @@ passport.use(new FacebookStrategy({
         clientID: CONFIG.FB_CLIENT_ID,
         clientSecret: CONFIG.FB_APP_SECRET,
         callbackURL: CONFIG.FB_CALL_BACK,
-        profileFields: ['id', 'displayName', 'photos', 'email']
+        profileFields: ['id','emails', 'displayName', 'photos']
     },
     function(accessToken, refreshToken, profile, done) {
         new User({facebook_id : profile.id}).fetch().then(function(response){
             if(response){
+                console.log("PRFILE",profile)
                 return done(null,profile)
             }
             else{
                 var facebookUser = new User({
                     facebook_id : profile.id,
-                    email_id : profile.emails[0].value,
+                    email_id : profile.emails[0].value || null,
                     display_name : profile.displayName,
                     user_image : profile.photos[0].value
                 })
@@ -250,7 +251,14 @@ app.put('/api/updatePerformanceViewCount', function(req, res) {
 
 });
 
+app.get('/api/currentViewers', function(req, res) {
 
+    Performances.query({where: {room: req.body.room}}).fetch().then(function (performance) {
+
+        res.status(200).json({views : performance.get('number_of_viewers')});
+    });
+
+});
 
 
 

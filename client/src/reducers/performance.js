@@ -13,7 +13,7 @@ export default createReducer(initialState, {
     [VIEW_COUNT_UPDATE]: (state, payload) => {
         console.log("CREATE REDUCER FOR PERFORMANCE",payload)
         return Object.assign({}, state, {
-            view_count : payload
+            view_count : payload.views
         });
     }
 });

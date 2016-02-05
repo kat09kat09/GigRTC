@@ -76,11 +76,16 @@ export function videoHigherOrderFunction(Component) {
 
         }
 
-        //numberOfViewers(){
-        //    showTotalViewersWatching()
-        //}
+        componentDidMount(){
+
+            setInterval(function(){
+                showTotalViewersWatching(this.props.params.room);
+            },1000)
+
+        }
 
         render () {
+
             return (
                 <div>
                     <Component startBroadcast={this.onVideoBroadCast.bind(this)}

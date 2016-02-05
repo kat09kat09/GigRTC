@@ -296,25 +296,24 @@ export function performanceActive(room){
 
 
 export function updatePerformanceViewCount(room){
-    console.log("updatePerformanceViewCount", room)
 
-    return function(dispatch){
          axios.put('/api/updatePerformanceViewCount', room)
         .then(function (response) {
-            console.log("DEFINITION OF DISPATCH",dispatch)
-            dispatch(showTotalViewersWatching(response.data.views))
+            //console.log("DEFINITION OF DISPATCH",dispatch)
+            //dispatch(showTotalViewersWatching(response.data.views))
         }).catch((error)=> {
-            console.log("AXIOS ERROR", error);
+            //console.log("AXIOS ERROR", error);
         })
-    }
+
 
 }
 
-export function showTotalViewersWatching(count){
-    console.log("SHOW TOTALVIEWS WATCHING INVOKED")
+export function showTotalViewersWatching(room){
+    var data = axios.put('/api/currentViewers', room);
+
     return {
         type : VIEW_COUNT_UPDATE,
-        payload : count
+        payload : data
     }
 
 }
