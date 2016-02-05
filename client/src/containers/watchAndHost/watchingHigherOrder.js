@@ -101,7 +101,6 @@ export function videoHigherOrderFunction(Component) {
                                watchVideo={this.onWatchVideoBroadcast.bind(this)}
                         {...this.state} {...this.props}/>
                     <Chat/>
-                    <DropZone/>
                 </div>
             )
 
