@@ -38,6 +38,10 @@ export default (props)=>{
                     linkButton={true}
                     primaryText="Home"
                     containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
+                  <MenuItem 
+                    linkButton={true}
+                    primaryText="About"
+                    containerElement={<Link to="/about" className="logoLink">About</Link>} />
 
                   <MenuItem primaryText="Sign in" containerElement={ <SignInModal/>} />
                   <MenuItem

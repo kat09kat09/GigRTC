@@ -10,7 +10,7 @@ import AuthenticationContainer from './components/auth/authenticatePage';
 import {videoHigherOrderFunction} from './containers/watchAndHost/watchingHigherOrder'
 import ArtistAuthenticationLanding from './components/artistAuthentication/artistAuthenticationLanding'
 import Chat from './components/Chat';
-import land from './components/homepage/landing_component';
+
 
 export default (
 

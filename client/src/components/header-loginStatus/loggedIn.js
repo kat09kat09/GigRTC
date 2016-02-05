@@ -52,6 +52,10 @@ export default (props)=>{
                   :
                    ""
                   }
+                <MenuItem 
+                    linkButton={true}
+                    primaryText="About"
+                    containerElement={<Link to="/about" className="logoLink">About</Link>} />
                   <MenuItem><a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token)}>FOR JSON</a></MenuItem>
                   <MenuItem primaryText="Sign out" onClick={() => props.logoutAndRedirect()} />
                 </IconMenu>
