@@ -123,13 +123,13 @@ app.post('/auth/signUp/', (req, res) => {
 
         }
         else {
-          console.log(`creating new user${req.body}`);
+          console.log('creating new user',req.body);
             var newArtist = new Artist({
                 user_name: req.body.user_name,
                 password: req.body.password,
                 email_id: req.body.email_id,
                 brief_description: req.body.brief_description,
-                user_image: req.body.user_image,
+                user_image: req.body.user_image['0'].preview,
                 display_name: req.body.display_name,
                 genre: req.body.genre
             });
@@ -318,6 +318,26 @@ app.get('/api/currentViewers', function(req, res) {
 
 });
 
+
+//**************UPLOAD IMAGE************************
+var cloudinary = require('cloudinary');
+
+cloudinary.config({
+ cloud_name: CONFIG.CLOUD_NAME,
+ api_key: CONFIG.CLOUD_API_KEY,
+ api_secret: CONFIG.CLOUD_API_SECRET
+ });
+
+app.post('/api/uploadImage',function(req,res){
+    console.log("IMAGE TO SERVER",req.body)
+
+    cloudinary.uploader.upload(req.body.image,{tags:'basic_sample'})
+    .then(function(image){
+        console.log("OPEN IMAGE",image)
+        res.json({url : image.url})
+    })
+
+});
 
 
 //******* Test  Chat **************

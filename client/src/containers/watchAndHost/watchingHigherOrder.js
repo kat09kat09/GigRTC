@@ -8,6 +8,8 @@ import {showTotalViewersWatching} from '../../actions'
 import { bindActionCreators } from 'redux';
 import Chat from  '../../components/Chat';
 import CONFIG from '../../../../config'
+import DropZone from '../../components/dropzone/dropzone.js'
+
 
 export function videoHigherOrderFunction(Component) {
 
@@ -99,6 +101,7 @@ export function videoHigherOrderFunction(Component) {
                                watchVideo={this.onWatchVideoBroadcast.bind(this)}
                         {...this.state} {...this.props}/>
                     <Chat/>
+                    <DropZone/>
                 </div>
             )
 

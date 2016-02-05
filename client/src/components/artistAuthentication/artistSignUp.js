@@ -9,6 +9,7 @@ import RadioButton from 'material-ui/lib/radio-button'
 import RadioButtonGroup from 'material-ui/lib/radio-button-group'
 import {SignUpArtist}  from '../../actions';
 import {Link} from 'react-router'
+import Dropzone from 'react-dropzone';
 
 class ArtistSignUp extends Component {
 
@@ -26,7 +27,7 @@ class ArtistSignUp extends Component {
             handleSubmit,
             fields: {
                 user_name, password, email_id, brief_description,
-                user_image, display_name, genre}
+                user_image, display_name,genre}
             } = this.props
 
         return (
@@ -62,13 +63,7 @@ class ArtistSignUp extends Component {
                             {brief_description.touched ? brief_description.error : ''}
                         </div>
                     </div>
-                    <div className={`form-group ${user_image.touched && user_image.invalid ? 'has-danger' : ''}`}>
-                        <label>Your image</label>
-                        <input type="text" className="form-control"  {...user_image} />
-                        <div className="text-help">
-                            {user_image.touched ? user_image.error : ''}
-                        </div>
-                    </div>
+
                     <div className={`form-group ${display_name.touched && display_name.invalid ? 'has-danger' : ''}`}>
                         <label>A preferrable display name</label>
                         <input type="text" className="form-control"  {...display_name} />
@@ -83,6 +78,19 @@ class ArtistSignUp extends Component {
                             {genre.touched ? genre.error : ''}
                         </div>
                     </div>
+
+                    <div>
+                        <label>Image</label>
+                        <div>
+                            <Dropzone
+                                { ...user_image }
+                                onDrop={ ( filesToUpload, e ) => user_image.onChange(filesToUpload) }
+                            >
+                                <div>Try dropping some files here, or click to select files to upload.</div>
+                            </Dropzone>
+                        </div>
+                    </div>
+
                     <button type="submit" className="btn btn-primary" >Submit</button>
 
                 </form>

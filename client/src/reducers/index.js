@@ -4,6 +4,7 @@ import data from '../reducers/data'
 import environment from '../reducers/environment'
 import messages from './messages';
 import activeChannel from './activeChannel';
+import imageUpload from './imageUpload';
 import performance from '../reducers/performance'
 import {reducer as formReducer} from 'redux-form';
 
@@ -16,7 +17,7 @@ const rootReducer = combineReducers({
   environment,
   form : formReducer,
   performance,
-
+  imageUpload,
   messages,
   // channels,
   activeChannel

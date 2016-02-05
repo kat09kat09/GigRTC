@@ -14,7 +14,8 @@ const {
     FETCH_ACTIVE_STREAMS,
     LOGIN_ARTIST_SUCCESS,
     VIEW_COUNT_UPDATE,
-    ARTIST_STREAMING_STATUS
+    ARTIST_STREAMING_STATUS,
+    UPLOAD_IMAGE
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -146,6 +147,7 @@ export function SignUpArtist(creds){
     }
 
     return (dispatch) =>{
+        console.log("CREDS SENT TO SIGN UP",creds)
         dispatch(loginUserRequest());
         return fetch(`/auth/signUp/`, config)
             .then(checkHttpStatus)
@@ -324,4 +326,14 @@ export function showTotalViewersWatching(room){
     }
 
 }
+
+//export function uploadPicture(image){
+//    console.log("ACTION UPLOADPICTURE",image)
+//    var data = axios.post('/api/uploadImage',{image : image})
+//
+//    return {
+//        type : UPLOAD_IMAGE,
+//        payload : data
+//    }
+//}
 
