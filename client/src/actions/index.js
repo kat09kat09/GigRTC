@@ -13,7 +13,8 @@ const {
     PUBLIC_TOKEN,
     FETCH_ACTIVE_STREAMS,
     LOGIN_ARTIST_SUCCESS,
-    VIEW_COUNT_UPDATE
+    VIEW_COUNT_UPDATE,
+    ARTIST_STREAMING_STATUS
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -247,6 +248,7 @@ export function determineEnvironment(){
             .then(response => {
                 try {
                     //let decoded = jwtDecode(response.token);
+                    console.log("ACTION RECEIVED AS LOGIN SUCCSS",response.user_details._json)
                     dispatch(loginUserSuccess({token : response.token, user_details:response.user_details._json}));
                     browserHistory.push('/')
                 } catch (e) {
@@ -290,7 +292,12 @@ export function saveBroadcast(broadcastData) {
 
 //CHANGE THIS TO POINT TO THE SERVER END POINT AND THIS FUNCTION IS BEING CALLED PREFIXED WITH activeStreams as i'm trying to start a stream, which should be prevented for users as they will only have watch buttons
 export function performanceActive(room){
-    const data = axios.put('api/activeStreams', room);
+    const data = axios.put('https://localhost:1338/api/activeStreams', room);
+
+    return {
+        type : ARTIST_STREAMING_STATUS,
+        payload : data
+    }
 }
 
 
@@ -300,7 +307,7 @@ export function updatePerformanceViewCount(room){
          axios.put('/api/updatePerformanceViewCount', room)
         .then(function (response) {
             //console.log("DEFINITION OF DISPATCH",dispatch)
-            //dispatch(showTotalViewersWatching(response.data.views))
+            dispatch(showTotalViewersWatching(response.data.views))
         }).catch((error)=> {
             //console.log("AXIOS ERROR", error);
         })
@@ -309,7 +316,7 @@ export function updatePerformanceViewCount(room){
 }
 
 export function showTotalViewersWatching(room){
-    var data = axios.put('/api/currentViewers', room);
+    var data = axios.get('/api/currentViewers', room);
 
     return {
         type : VIEW_COUNT_UPDATE,

@@ -14,7 +14,6 @@ import Chat from './components/Chat';
 
 export default (
 
-
     <Route path="/" component={ App } >
 
         <IndexRoute component={ StreamsContainer } />

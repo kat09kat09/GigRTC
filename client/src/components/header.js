@@ -32,6 +32,19 @@ export class Header extends Component {
     handleToggle = () => this.setState({open: !this.state.open});
 
     render() {
+        var userName;
+
+//To check if user is G+ or FB customer as details returned are different
+        (function userDetails(){
+            if(this.props.userDetails && this.props.userDetails.isPlusUser){
+                    userName = {name : this.props.userDetails.displayName}
+            }
+            else{
+                userName = this.props.userDetails
+            }
+
+        }.bind(this))()
+
         return (
 
           <div>
@@ -39,7 +52,7 @@ export class Header extends Component {
               <div>
                   {console.log("THIS IS IN HEADER",this.props.userDetails)}
               {this.props.isAuthenticated
-                ? <LoggedInHeader user_details={this.props.userDetails}
+                ? <LoggedInHeader user_details={userName}
                                   logoutAndRedirect={this.props.logoutAndRedirect.bind(this)}
                                   userPrivelege={this.props.userPrivelege}
                   />
