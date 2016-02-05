@@ -72,11 +72,6 @@ db.knex.schema.hasTable('artists').then(function(exists) {
   }
 });
 
-/*
-  Other columns that we may need will be:
-  Chatlog (not included since it may end up as a reference to a chats table)
-  Kurento pipeline info (not included since we're still not sure how this will arrive or be stored)
-*/
 db.knex.schema.hasTable('performances').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('performances', function (performances) {
