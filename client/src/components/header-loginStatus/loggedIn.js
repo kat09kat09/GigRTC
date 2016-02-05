@@ -9,7 +9,8 @@ import IconButton from 'material-ui/lib/icon-button';
 import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
-import FlatButton from 'material-ui/lib/flat-button'
+import FlatButton from 'material-ui/lib/flat-button';
+import MusicVideo from 'material-ui/lib/svg-icons/av/music-video';
 
 const styles = {
   title: {
@@ -26,24 +27,38 @@ export default (props)=>{
             iconElementLeft={<img src='../../public/img/rocket.svg' height='40' width='40' alt='' />}
             // showMenuIconButton={false}
             iconElementRight={
-                <div>
+              <div>
+                {props.userPrivelege === 'artist' ?
+                  <RaisedButton
+                    label="Create a Performance"
+                    labelPosition="after"
+                    backgroundColor="#fea92f"
+                    icon={<MusicVideo />}
+                    linkButton={true}
+                    href="/streamYourself"
+                  />
+                :
+                 ""
+                }
 
-                     <IconMenu
+                <IconMenu
                   iconButtonElement={
                     <IconButton><MoreVertIcon /></IconButton>
                   }
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                <MenuItem
-                    linkButton={true}
-                    primaryText="All Artists"
-                    containerElement={<Link to="/router/registeredArtists" className="logoLink">registeredArtists</Link>} />
 
-                <MenuItem
-                    linkButton={true}
-                    primaryText={props.userPrivelege === 'artist' ? props.user_details.user_name : (props.userPrivelege === 'user' ?  props.user_details.name : 'Guest') }
-                    containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
+                  <MenuItem
+                      linkButton={true}
+                      primaryText="All Artists"
+                      containerElement={<Link to="/router/registeredArtists" className="logoLink">registeredArtists</Link>} />
+>
+
+                  <MenuItem
+                      linkButton={true}
+                      primaryText={props.userPrivelege === 'artist' ? props.user_details.user_name : (props.userPrivelege === 'user' ?  props.user_details.name : 'Guest') }
+                      containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
 
                   <MenuItem
                     linkButton={true}
@@ -57,13 +72,16 @@ export default (props)=>{
                   :
                    ""
                   }
-                <MenuItem 
+
+                  <MenuItem
                     linkButton={true}
                     primaryText="About"
                     containerElement={<Link to="/router/about" className="logoLink">About</Link>} />
+
                   <MenuItem primaryText="Sign out" onClick={() => props.logoutAndRedirect()} />
+
                 </IconMenu>
-                </div>
+              </div>
 
               }/>
     )
