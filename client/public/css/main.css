@@ -153,9 +153,15 @@ h1 {
 /*About page helper classes*/
 .avatar {
   display: inline-block;
+  flex-grow: 1;
+}
+.avatar > img { 
+  margin: 10% 25%;
 }
 .avatars {
   margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
 .wrapper {
