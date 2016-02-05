@@ -327,13 +327,3 @@ export function showTotalViewersWatching(room){
 
 }
 
-//export function uploadPicture(image){
-//    console.log("ACTION UPLOADPICTURE",image)
-//    var data = axios.post('/api/uploadImage',{image : image})
-//
-//    return {
-//        type : UPLOAD_IMAGE,
-//        payload : data
-//    }
-//}
-
