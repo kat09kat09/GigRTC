@@ -9,7 +9,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import uuid from 'node-uuid';
 import moment from 'moment';
-
+import List from 'material-ui/lib/lists/list';
+import Table from 'material-ui/lib/table/table';
 
 // var socket = io.connect('https://gigg.tv');
 
@@ -70,6 +71,7 @@ class Chat extends Component {
     });
   }
   componentDidUpdate() {
+    console.log('this.refs', this.refs)
     const messageList = this.refs.messageList;
     messageList.scrollTop = messageList.scrollHeight;
   }
@@ -97,7 +99,7 @@ class Chat extends Component {
         channelID: activeChannel,
         text: text,
         user: userName,
-        time: moment.utc().format('lll')
+        time: moment().calendar()
       };
       socket.emit('new message', newMessage);
       socket.emit('stop typing', { user: userName, channel: activeChannel });
@@ -124,6 +126,12 @@ class Chat extends Component {
       this.setState({ typing: false});
     }
   }
+   // <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
+   //          {filteredMessages.map(message =>
+                
+   //              <MessageListItem message={message} key={message.id} />
+   //          )}
+   //        </ul>
 
 
   render() {
@@ -133,22 +141,28 @@ class Chat extends Component {
     console.log('this.props in Chat.js', this.props); 
 
     const filteredMessages = messages.filter(message => message.channelID === activeChannel);
-    
+    const styles = {
+      propContainerStyle: {
+        width: 200,
+        overflow: 'hidden',
+        margin: '20px auto 0',
+      },
+      propToggleHeader: {
+        margin: '20px auto 10px',
+      },
+    };
     return (
       <div style={{margin: '0', padding: '0', height: '100%', width: '100%', display: '-webkit-box'}}>
     
-        <div className="main">
-          <header style={{background: '#FFFFFF', color: 'black', flexGrow: '0', order: '0', fontSize: '2.3em', paddingLeft: '0.2em'}}>
-            <div>
-            {activeChannel}
-            </div>
-          </header>
-          <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
+        <div className="main" >
+     
+          <div style= {{height: '30em', overflow:'scroll'}}>
             {filteredMessages.map(message =>
-                
-                <MessageListItem message={message} key={message.id} />
+          
+                  <MessageListItem message={message} key={message.id} />
+             
             )}
-          </ul>
+          </div>
           <div style={{
             zIndex: '52',
             left: '21.1rem',
