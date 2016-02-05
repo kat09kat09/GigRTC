@@ -10,6 +10,7 @@ import RadioButtonGroup from 'material-ui/lib/radio-button-group'
 import {SignUpArtist}  from '../../actions';
 import {Link} from 'react-router'
 
+
 class ArtistSignUp extends Component {
 
     constructor(props) {
@@ -32,53 +33,55 @@ class ArtistSignUp extends Component {
         return (
             <div>
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                    <h3>Sing Up</h3>
+                    <h3>Sign Up</h3>
                     <div className={`form-group ${user_name.touched && user_name.invalid ? 'has-danger' : ''}`}>
-                        <label>User Name</label>
-                        <input type="text" className="form-control"  {...user_name} />
+                        <TextField hintText="User Name" floatingLabelText="User Name" lassName="form-control"  {...user_name} />
                         <div className="text-help">
                             {user_name.touched ? user_name.error : ''}
                         </div>
                     </div>
                     <div className={`form-group ${password.touched && password.invalid ? 'has-danger' : ''}`}>
-                        <label>Password</label>
-                        <input type="password" className="form-control"  {...password} />
+                        <TextField type="password" hintText="password" floatingLabelText="Password" className="form-control"  {...password} />
                         <div className="text-help">
                             {password.touched ? password.error : ''}
                         </div>
                     </div>
-                    <div className={`form-group ${email_id.touched && email_id.invalid ? 'has-danger' : ''}`}>
-                        <label>Email Address</label>
-                        <input type="email" className="form-control"  {...email_id} />
+                    <div className={`form-group ${email_id.touched && email_id.invalid ? 'has-danger' : ''}`}>      
+                        <TextField type="email" hintText="Email Address" className="form-control" floatingLabelText="Email Address" {...email_id} />
                         <div className="text-help">
                             {email_id.touched ? email_id.error : ''}
                         </div>
                     </div>
 
                     <div className={`form-group ${brief_description.touched && brief_description.invalid ? 'has-danger' : ''}`}>
-                        <label>A small description</label>
-                        <textarea type="text" className="form-control"  {...brief_description} />
+                        <TextField hintText="Brief Description" className="form-control"  
+                        floatingLabelText="Brief Description"
+                        multiLine={true}
+                        rows={2}
+                        rowsMax={4}
+                        {...brief_description} />
                         <div className="text-help">
                             {brief_description.touched ? brief_description.error : ''}
                         </div>
                     </div>
                     <div className={`form-group ${user_image.touched && user_image.invalid ? 'has-danger' : ''}`}>
-                        <label>Your image</label>
-                        <input type="text" className="form-control"  {...user_image} />
+                    
+                        <TextField className="form-control" hintText="image" floatingLabelText="image" {...user_image} />
                         <div className="text-help">
                             {user_image.touched ? user_image.error : ''}
                         </div>
                     </div>
                     <div className={`form-group ${display_name.touched && display_name.invalid ? 'has-danger' : ''}`}>
-                        <label>A preferrable display name</label>
-                        <input type="text" className="form-control"  {...display_name} />
+        
+                        <TextField hintText="Display Name" floatingLabelText="Display Name" className="form-control"  {...display_name} />
                         <div className="text-help">
                             {display_name.touched ? display_name.error : ''}
                         </div>
                     </div>
                     <div className={`form-group ${genre.touched && genre.invalid ? 'has-danger' : ''}`}>
-                        <label>Whats your genre</label>
-                        <input type="text" className="form-control"  {...genre} />
+                        <TextField hintText="Genre" 
+                        floatingLabelText="Genre"
+                        className="form-control"  {...genre} />
                         <div className="text-help">
                             {genre.touched ? genre.error : ''}
                         </div>
