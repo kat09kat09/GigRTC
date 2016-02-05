@@ -101,7 +101,7 @@ app.post('/auth/signIn/', (req, res) => {
             var check = bcrypt.compareSync(req.body.password, found.get('password'))
             if (check){
 
-                var myToken = jwt.sign({user_name:req.body.user_name},CONFIG.JWT_SECRET)
+                var myToken = jwt.sign({user_name:found.get('email_id')},CONFIG.JWT_SECRET)
                 res.status(200).json({token: myToken, artist_details : found});
             }
             else {
@@ -136,7 +136,7 @@ app.post('/auth/signUp/', (req, res) => {
 
             newArtist.save().then(function (artist) {
                 Artists.add(artist);
-                var myToken = jwt.sign({user_name: req.body.user_name}, CONFIG.JWT_SECRET)
+                var myToken = jwt.sign({user_name: req.body.email_id}, CONFIG.JWT_SECRET)
 
                 res.status(200).json({token: myToken, artist_details: artist});
             })
@@ -275,14 +275,6 @@ app.get('/auth/validateSocialToken',(req, res) => {
 /////////////////ACTIVE STREAM//////////
 app.put('/api/activeStreams', function(req, res){
 
-  //Performance.forge({room: req.body.room})
-  //    .fetch({require: true})
-  //  .then((performance)=>{
-  //      performance.save({
-  //          active : req.body.active
-  //      })
-  //  })
-
     Performance.where({ room: req.body.room }).fetch()
     .then(performance => {
         performance.save({active: req.body.active}, {patch: true});
@@ -317,6 +309,31 @@ app.get('/api/currentViewers', function(req, res) {
     });
 
 });
+
+
+//**********RETOKENIZE LOGIN
+app.get('/auth/getTokenizedUserDetails',(req,res)=>{
+
+    Artist.query({where: {email_id: req.query.email}}).fetch().then(function(found){
+        if(found){
+            console.log("RETOKEN IZE ARTIST",found)
+            var myToken = jwt.sign({user_name:found.get('email_id')},CONFIG.JWT_SECRET)
+            res.status(200).json({token: myToken, artist_details : found});
+        }
+        else {
+            User.query({where: {email_id: req.query.email}}).fetch().then(function(response){
+                if(response){
+                    console.log("FB PRFILE RETOKEN",profile)
+                    return done(null,profile)
+                }
+                else{
+                    res.status(404).json({status : 'User does not exist, please sign up'});
+                }
+            });
+        }
+    });
+
+})
 
 
 //**************UPLOAD IMAGE************************

@@ -42,14 +42,12 @@ export function loginArtistSuccess(userObj){
 }
 
 
-export function refreshLoginState(){
-    const localToken = localStorage.getItem('token')
+export function refreshLoginState(loggedInEmail){
+    var data = axios.get('/auth/getTokenizedUserDetails',{params : loggedInEmail})
+
     return {
         type : PUBLIC_TOKEN,
-        payload : {
-            token : localToken,
-            isAuthenticated : !!localToken
-        }
+        payload : data
     }
 }
 

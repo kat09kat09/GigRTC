@@ -48,12 +48,14 @@ export default createReducer(initialState, {
     },
 
     [PUBLIC_TOKEN]: (state, payload) => {
+        var privilege = payload.data.artist_details.genre ? 'artist' : 'user'
         return Object.assign({}, state, {
             'isAuthenticating': false,
-            'isAuthenticated': payload.isAuthenticated,
-            'token': payload.token,
-            'userDetails': jwtDecode(payload.token).userName,
-            'userName': jwtDecode(payload.token).userName,
+            'isAuthenticated': true,
+            "userPrivelege" : privilege ,
+            'token': payload.data.token,
+            'userDetails': payload.data.artist_details,
+            'userName': payload.data.artist_details.user_name,
             'statusText': 'You have been successfully logged in.'
         });
 
