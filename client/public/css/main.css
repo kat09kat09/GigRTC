@@ -150,46 +150,16 @@ h1 {
 }
 
 
-/*
-.navigation{
-  float:right;
-  display: inline-block;
+/*About page helper classes*/
+.wrapper {
+  width: 100%;
 }
-
-
-
-.streamYourselfLink {
-  text-decoration: none;
-  position: relative;
-
-  float: left;
-  display: inline-block;
-  padding-right: 50px;
-
-
- }
-
-
-.jsonLink{
-  float: left;
-
-  display: inline-block;
-  position: relative;
-  padding-right: 50px;
+.wrapper > h1 {
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 2rem;
 }
-
-.loginLink{
-  float: left;
-  top: -30px;
-  display: inline-block;
-  position: relative;
-  padding-right: 50px;
+.center-block{
+  display: block;
+  margin: 0 auto;
 }
-
-.streamYourselfLinkText{
-   color: #FCF660;
-}
-
-.jsonLinkText{
- color: #FCF660;
-}*/

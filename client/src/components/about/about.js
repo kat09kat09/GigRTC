@@ -5,7 +5,10 @@ export default class About extends Component {
   render(){
     return(
       <div>
-        <h1>Team Dream Stream</h1>
+        <div className="wrapper">
+          <h1 className="center-block">Team Dream Stream</h1>
+
+        </div>
       </div>
       );
   }
