@@ -15,7 +15,6 @@ export function videoHigherOrderFunction(Component) {
 
     const skylink = new Skylink();
 
-
     skylink.on('mediaAccessSuccess', function(stream){
         var vid = document.getElementById('video');
         attachMediaStream(vid, stream);
@@ -90,17 +89,22 @@ export function videoHigherOrderFunction(Component) {
         }
 
         render () {
-
             return (
                 <div>
-                    <Component startBroadcast={this.onVideoBroadCast.bind(this)}
-                               endBroadcast={this.onVideoBroadCastEnd.bind(this)}
+                    <div style={{float:'left'}}>
+                        <Component startBroadcast={this.onVideoBroadCast.bind(this)}
+                                   endBroadcast={this.onVideoBroadCastEnd.bind(this)}
 
-                               currentPrivelege={this.props.userPrivelege}
-                               watchMode={!!this.props.params.room}
-                               watchVideo={this.onWatchVideoBroadcast.bind(this)}
-                        {...this.state} {...this.props}/>
-                    <Chat/>
+                                   currentPrivelege={this.props.userPrivelege}
+                                   watchMode={!!this.props.params.room}
+                                   watchVideo={this.onWatchVideoBroadcast.bind(this)}
+                            {...this.state} {...this.props}/>
+                      
+                    </div>
+
+                    <div style={{float:'right'}}>
+                        <Chat/>
+                    </div>
                 </div>
             )
 
