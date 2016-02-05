@@ -150,46 +150,29 @@ h1 {
 }
 
 
-/*
-.navigation{
-  float:right;
+/*About page helper classes*/
+.avatar {
   display: inline-block;
+  flex-grow: 1;
+}
+.avatar > img { 
+  margin: 10% 25%;
+}
+.avatars {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 }
 
-
-
-.streamYourselfLink {
-  text-decoration: none;
-  position: relative;
-
-  float: left;
-  display: inline-block;
-  padding-right: 50px;
-
-
- }
-
-
-.jsonLink{
-  float: left;
-
-  display: inline-block;
-  position: relative;
-  padding-right: 50px;
+.wrapper {
+  width: 100%;
 }
-
-.loginLink{
-  float: left;
-  top: -30px;
-  display: inline-block;
-  position: relative;
-  padding-right: 50px;
+.wrapper > h1 {
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 2rem;
 }
-
-.streamYourselfLinkText{
-   color: #FCF660;
+.center-block{
+  display: block;
+  margin: 0 auto;
 }
-
-.jsonLinkText{
- color: #FCF660;
-}*/
