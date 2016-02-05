@@ -93,11 +93,10 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use('/',express.static(path.join(__dirname, 'client')));
 
-<<<<<<< HEAD
+
+
 app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook','/about', /^\/api\/.*/, /^\/api\/messages\/.*/,/^\/activeStream\/.*/, /^\/public\/.*/, /^\/router\/.*/]}));
-=======
-app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook', /^\/api\/.*/, /^\/api\/messages\/.*/,/^\/activeStream\/.*/, /^\/public\/.*/, /^\/router\/.*/]}));
->>>>>>> (BUG) Routing error
+
 
 
 app.post('/auth/signIn/', (req, res) => {
@@ -434,8 +433,6 @@ io.on('connection', function (socket){
 
 
 app.get('*', function (request, response){
-    console.log("REQUEST URL",request.url)
-    //response.redirect('/')
     response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
 
 })

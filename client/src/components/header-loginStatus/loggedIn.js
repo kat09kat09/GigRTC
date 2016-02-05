@@ -47,6 +47,7 @@ export default (props)=>{
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
+<<<<<<< HEAD
 
 
                 <MenuItem
@@ -54,6 +55,12 @@ export default (props)=>{
                     primaryText="All Artists"
                     containerElement={<Link to="/router/registeredArtists" className="logoLink">registeredArtists</Link>} />
 
+=======
+                  <MenuItem
+                      linkButton={true}
+                      primaryText="All Artists"
+                      containerElement={<Link to="/router/registeredArtists" className="logoLink">registeredArtists</Link>} />
+>>>>>>> (BUG) fix login issue and rerendering
 
                   <MenuItem
                       linkButton={true}
@@ -65,7 +72,11 @@ export default (props)=>{
                     primaryText="Home"
                     containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+>>>>>>> (BUG) fix login issue and rerendering
                    {props.userPrivelege === 'artist' ?
                     <MenuItem
                     linkButton={true}
@@ -74,7 +85,19 @@ export default (props)=>{
                   :
                    ""
 
+<<<<<<< HEAD
 
+=======
+=======
+                  {props.userPrivelege === 'artist' ?
+                      <MenuItem
+                      linkButton={true}
+                      primaryText="Broadcast"
+                      containerElement={<Link to="/router/streamYourself" >Stream Yourself</Link>} />
+                    :
+                      ""
+>>>>>>> (BUG) fix login issue and rerendering
+>>>>>>> (BUG) fix login issue and rerendering
                   }
 
                   <MenuItem
