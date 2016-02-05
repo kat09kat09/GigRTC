@@ -59,7 +59,6 @@ export class Header extends Component {
                 : <NotLoggedInHeader/>
               }
               </div>
-
           </div>
         );
     }

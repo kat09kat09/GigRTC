@@ -101,7 +101,7 @@ app.post('/auth/signIn/', (req, res) => {
             var check = bcrypt.compareSync(req.body.password, found.get('password'))
             if (check){
 
-                var myToken = jwt.sign({user_name:req.body.user_name},CONFIG.JWT_SECRET)
+                var myToken = jwt.sign({user_name:found.get('email_id')},CONFIG.JWT_SECRET)
                 res.status(200).json({token: myToken, artist_details : found});
             }
             else {
@@ -123,20 +123,20 @@ app.post('/auth/signUp/', (req, res) => {
 
         }
         else {
-          console.log(`creating new user${req.body}`);
+          console.log('creating new user',req.body);
             var newArtist = new Artist({
                 user_name: req.body.user_name,
                 password: req.body.password,
                 email_id: req.body.email_id,
                 brief_description: req.body.brief_description,
-                user_image: req.body.user_image,
+                user_image: req.body.user_image['0'].preview,
                 display_name: req.body.display_name,
                 genre: req.body.genre
             });
 
             newArtist.save().then(function (artist) {
                 Artists.add(artist);
-                var myToken = jwt.sign({user_name: req.body.user_name}, CONFIG.JWT_SECRET)
+                var myToken = jwt.sign({user_name: req.body.email_id}, CONFIG.JWT_SECRET)
 
                 res.status(200).json({token: myToken, artist_details: artist});
             })
@@ -275,14 +275,6 @@ app.get('/auth/validateSocialToken',(req, res) => {
 /////////////////ACTIVE STREAM//////////
 app.put('/api/activeStreams', function(req, res){
 
-  //Performance.forge({room: req.body.room})
-  //    .fetch({require: true})
-  //  .then((performance)=>{
-  //      performance.save({
-  //          active : req.body.active
-  //      })
-  //  })
-
     Performance.where({ room: req.body.room }).fetch()
     .then(performance => {
         performance.save({active: req.body.active}, {patch: true});
@@ -319,6 +311,64 @@ app.get('/api/currentViewers', function(req, res) {
 });
 
 
+//**********RETOKENIZE LOGIN
+app.get('/auth/getTokenizedUserDetails',(req,res)=>{
+
+    Artist.query({where: {email_id: req.query.email}}).fetch().then(function(found){
+        if(found){
+            console.log("RETOKEN IZE ARTIST",found)
+            var myToken = jwt.sign({user_name:found.get('email_id')},CONFIG.JWT_SECRET)
+            res.status(200).json({token: myToken, artist_details : found});
+        }
+        else {
+            User.query({where: {email_id: req.query.email}}).fetch().then(function(response){
+                if(response){
+                    console.log("FB PRFILE RETOKEN",profile)
+                    return done(null,profile)
+                }
+                else{
+                    res.status(404).json({status : 'User does not exist, please sign up'});
+                }
+            });
+        }
+    });
+
+})
+
+
+//**************UPLOAD IMAGE************************
+var cloudinary = require('cloudinary');
+
+cloudinary.config({
+ cloud_name: CONFIG.CLOUD_NAME,
+ api_key: CONFIG.CLOUD_API_KEY,
+ api_secret: CONFIG.CLOUD_API_SECRET
+ });
+
+app.post('/api/uploadImage',function(req,res){
+    console.log("IMAGE TO SERVER",req.body)
+
+    cloudinary.uploader.upload(req.body.image,{tags:'basic_sample'})
+    .then(function(image){
+        console.log("OPEN IMAGE",image)
+        res.json({url : image.url})
+    })
+
+});
+
+//********* Fetch all registered users
+
+app.get('/api/allRegisteredArtists',function(req,res){
+
+   new Artist().fetchAll().then((allArtists)=>{
+        console.log("ALL ARTISTS",allArtists.models[4].attributes.user_image.toString('utf-8'))
+       //console.log("ARTISTS BLOB",Artist.user_image.toString('utf-8'))
+
+       res.status(302).json({registeredArtists : allArtists.models})
+
+    })
+
+})
 
 //******* Test  Chat **************
 //set env vars

@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { getActivePerformances } from '../actions';
 import { Link } from 'react-router';
 
+
+
 import GridList from '../../node_modules/material-ui/lib/grid-list/grid-list';
 import GridTile from '../../node_modules/material-ui/lib/grid-list/grid-tile';
 import StarBorder from '../../node_modules/material-ui/lib/svg-icons/toggle/star-border';
@@ -32,7 +34,6 @@ export class StreamsContainer extends Component {
   }
 
   render () {
-    console.log(this.props.presentActiveStreams, 'in render');
     if (this.props.presentActiveStreams && this.props.presentActiveStreams.length) {
       return(
         <div style={ styles.root }>

@@ -9,6 +9,7 @@ import ArtistContainer from './containers/artist-container';
 import AuthenticationContainer from './components/auth/authenticatePage';
 import {videoHigherOrderFunction} from './containers/watchAndHost/watchingHigherOrder'
 import ArtistAuthenticationLanding from './components/artistAuthentication/artistAuthenticationLanding'
+import RegisteredArtists from './components/registeredArtists/registeredArtists'
 import Chat from './components/Chat';
 import About from './components/about/about';
 
@@ -21,6 +22,7 @@ export default (
         <Route path="streamYourself" component={videoHigherOrderFunction(VideoPlayer)} />
         <Route path="authenticateFacebook" component={AuthenticationContainer} />
         <Route path="artistSignIn" component={ArtistAuthenticationLanding} />
+        <Route path="registeredArtists" component={RegisteredArtists} />
         <Route path="activeStream/:room" component={videoHigherOrderFunction(VideoPlayer)} />
         <Route path="about" component={About} />
     </Route>

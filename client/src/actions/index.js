@@ -14,7 +14,9 @@ const {
     FETCH_ACTIVE_STREAMS,
     LOGIN_ARTIST_SUCCESS,
     VIEW_COUNT_UPDATE,
-    ARTIST_STREAMING_STATUS
+    ARTIST_STREAMING_STATUS,
+    UPLOAD_IMAGE,
+    FETCH_REGISTERED_ARTISTS
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -41,14 +43,12 @@ export function loginArtistSuccess(userObj){
 }
 
 
-export function refreshLoginState(){
-    const localToken = localStorage.getItem('token')
+export function refreshLoginState(loggedInEmail){
+    var data = axios.get('/auth/getTokenizedUserDetails',{params : loggedInEmail})
+
     return {
         type : PUBLIC_TOKEN,
-        payload : {
-            token : localToken,
-            isAuthenticated : !!localToken
-        }
+        payload : data
     }
 }
 
@@ -146,6 +146,7 @@ export function SignUpArtist(creds){
     }
 
     return (dispatch) =>{
+        console.log("CREDS SENT TO SIGN UP",creds)
         dispatch(loginUserRequest());
         return fetch(`/auth/signUp/`, config)
             .then(checkHttpStatus)
@@ -323,5 +324,14 @@ export function showTotalViewersWatching(room){
         payload : data
     }
 
+}
+
+export function fetchAllRegisteredArtists(){
+    var data = axios.get('/api/allRegisteredArtists')
+
+    return {
+        type : FETCH_REGISTERED_ARTISTS,
+        payload : data
+    }
 }
 

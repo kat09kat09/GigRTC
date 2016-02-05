@@ -10,6 +10,7 @@ import {connect} from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import mui from 'material-ui';
 import AppBar from 'material-ui/lib/app-bar';
+import jwtDecode from 'jwt-decode'
 
 //let ThemeManager = mui.Styles.ThemeManager;
 // let Colors = mui.Styles.Colors;
@@ -26,10 +27,12 @@ export class App extends Component {
   }
 
   componentWillMount(){
-        const{dispatch,getState} = this.props
-      if(localStorage.getItem('token'))
-      dispatch(refreshLoginState())
+        const{dispatch} = this.props
+      if(localStorage.getItem('token')){
 
+      console.log("PRESENT TOKEN DECODED",jwtDecode(localStorage.getItem('token')).user_name)
+      dispatch(refreshLoginState({email : jwtDecode(localStorage.getItem('token')).user_name}))
+      }
   }
 
   getChildContext() {

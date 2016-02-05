@@ -16,7 +16,6 @@ const rootReducer = combineReducers({
   environment,
   form : formReducer,
   performance,
-
   messages,
   // channels,
   activeChannel

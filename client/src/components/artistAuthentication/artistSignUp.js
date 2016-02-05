@@ -9,16 +9,27 @@ import RadioButton from 'material-ui/lib/radio-button'
 import RadioButtonGroup from 'material-ui/lib/radio-button-group'
 import {SignUpArtist}  from '../../actions';
 import {Link} from 'react-router'
+import Dropzone from 'react-dropzone';
 
 
 class ArtistSignUp extends Component {
 
     constructor(props) {
         super(props)
+        this.state={
+            file : null
+        }
     }
 
     onSubmit(formData) {
         this.props.SignUpArtist(formData)
+    }
+
+    imageLoading(files) {
+        const file = files[0];
+        this.setState({
+            file: file,
+        });
     }
 
     render() {
@@ -27,7 +38,7 @@ class ArtistSignUp extends Component {
             handleSubmit,
             fields: {
                 user_name, password, email_id, brief_description,
-                user_image, display_name, genre}
+                user_image, display_name,genre}
             } = this.props
 
         return (
@@ -64,13 +75,7 @@ class ArtistSignUp extends Component {
                             {brief_description.touched ? brief_description.error : ''}
                         </div>
                     </div>
-                    <div className={`form-group ${user_image.touched && user_image.invalid ? 'has-danger' : ''}`}>
-                    
-                        <TextField className="form-control" hintText="image" floatingLabelText="image" {...user_image} />
-                        <div className="text-help">
-                            {user_image.touched ? user_image.error : ''}
-                        </div>
-                    </div>
+
                     <div className={`form-group ${display_name.touched && display_name.invalid ? 'has-danger' : ''}`}>
         
                         <TextField hintText="Display Name" floatingLabelText="Display Name" className="form-control"  {...display_name} />
@@ -86,7 +91,28 @@ class ArtistSignUp extends Component {
                             {genre.touched ? genre.error : ''}
                         </div>
                     </div>
-                    <button type="submit" className="btn btn-primary" >Submit</button>
+
+                    <div>
+                        <label>Image</label>
+                        <div>
+                            <Dropzone
+                                onDropAccepted={this.imageLoading.bind(this)}
+                                { ...user_image }
+                                onDrop={ ( filesToUpload, e ) => user_image.onChange(filesToUpload) }
+                            >
+                                <div>Try dropping some files here, or click to select files to upload.</div>
+                            </Dropzone>
+                        </div>
+                        {this.state.file ?
+                            <div>
+                                <h6>Image Preview:</h6>
+                                <div>
+                                    <img style={{height: 100 + 'px'}} src={this.state.file.preview} />
+                                </div>
+                            </div> : null}
+                    </div>
+
+                    <RaisedButton type="submit" >Submit</RaisedButton>
 
                 </form>
             </div>
