@@ -19,7 +19,6 @@ const styles = {
 };
 
 export default (props)=>{
-  console.log('PROPS FROM HEADER:' + props.userPrivelege + "  Details  " + props.user_details);
     return (
         <AppBar
             title={<span style={styles.title}><Link to="/" className="logoLink">GIGG.TV</Link></span>}
@@ -27,33 +26,31 @@ export default (props)=>{
             iconElementLeft={<img src='../../public/img/rocket.svg' height='40' width='40' alt='' />}
             // showMenuIconButton={false}
             iconElementRight={
-              <div>
+                <div>
                 {props.userPrivelege === 'artist' ?
-                  <RaisedButton
-                    label="Create a Performance"
-                    labelPosition="after"
-                    backgroundColor="#fea92f"
-                    icon={<MusicVideo />}
-                    linkButton={true}
-                    href="/streamYourself"
-                  />
-                :
-                 ""
-                }
+                 <RaisedButton
+                   label="Create a Performance"
+                   labelPosition="after"
+                   backgroundColor="#fea92f "
+                   icon={<MusicVideo />}
+                   linkButton={true}
+                   href="/streamYourself"
+                 />
+               :
+                ""
+               }
 
-                <IconMenu
+                  <IconMenu
                   iconButtonElement={
                     <IconButton><MoreVertIcon /></IconButton>
                   }
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-
                   <MenuItem
                       linkButton={true}
                       primaryText="All Artists"
                       containerElement={<Link to="/router/registeredArtists" className="logoLink">registeredArtists</Link>} />
->
 
                   <MenuItem
                       linkButton={true}
@@ -64,13 +61,14 @@ export default (props)=>{
                     linkButton={true}
                     primaryText="Home"
                     containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
-                   {props.userPrivelege === 'artist' ?
-                    <MenuItem
-                    linkButton={true}
-                    primaryText="Broadcast"
-                    containerElement={<Link to="/router/streamYourself" >Stream Yourself</Link>} />
-                  :
-                   ""
+
+                  {props.userPrivelege === 'artist' ?
+                      <MenuItem
+                      linkButton={true}
+                      primaryText="Broadcast"
+                      containerElement={<Link to="/router/streamYourself" >Stream Yourself</Link>} />
+                    :
+                      ""
                   }
 
                   <MenuItem
@@ -81,8 +79,9 @@ export default (props)=>{
                   <MenuItem primaryText="Sign out" onClick={() => props.logoutAndRedirect()} />
 
                 </IconMenu>
-              </div>
+                </div>
 
               }/>
     )
 }
+

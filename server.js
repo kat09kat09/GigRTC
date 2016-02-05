@@ -91,7 +91,7 @@ app.use(bodyParser.json());
 
 app.use('/',express.static(path.join(__dirname, 'client')));
 
-app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook', /^\/api\/.*/, /^\/api\/messages\/.*/,/^\/activeStream\/.*/, /^\/public\/.*/, /^\/router\/.*/]}));
+app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook','/about', /^\/api\/.*/, /^\/api\/messages\/.*/,/^\/activeStream\/.*/, /^\/public\/.*/, /^\/router\/.*/]}));
 
 
 app.post('/auth/signIn/', (req, res) => {
@@ -197,10 +197,6 @@ passport.use(new GoogleStrategy({
         clientID: CONFIG.G_CLIENT_ID,
         clientSecret: CONFIG.G_APP_SECRET,
         callbackURL: CONFIG.G_CALL_BACK
-
-        //profileFields: ['id','email', 'displayName', 'photos']
-        //returnURL: CONFIG.G_CALL_BACK,
-        //realm: 'https://localhost:1338/'
     },
     function(accessToken, refreshToken, profile, done) {
         console.log("GOOGLE PROFILE",profile)
@@ -325,8 +321,9 @@ app.get('/auth/getTokenizedUserDetails',(req,res)=>{
         else {
             User.query({where: {email_id: req.query.email}}).fetch().then(function(response){
                 if(response){
-                    console.log("FB PRFILE RETOKEN",profile)
-                    return done(null,profile)
+                    console.log("FB PRFILE RETOKEN",response)
+                    res.status(200).json({token: myToken, artist_details : response});
+
                 }
                 else{
                     res.status(404).json({status : 'User does not exist, please sign up'});
@@ -427,8 +424,6 @@ io.on('connection', function (socket){
 
 
 app.get('*', function (request, response){
-    console.log("REQUEST URL",request.url)
-    //response.redirect('/')
     response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
 
 })
