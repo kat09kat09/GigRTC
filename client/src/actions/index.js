@@ -299,8 +299,6 @@ export function updatePerformanceViewCount(room){
     console.log("updatePerformanceViewCount", room)
 
     return function(dispatch){
-        //dispatch(showTotalViewersWatching(15));
-        console.log("DISPATCH CURRY FUNCTION BEING ENETERED IN ACTIONS");
          axios.put('/api/updatePerformanceViewCount', room)
         .then(function (response) {
             console.log("DEFINITION OF DISPATCH",dispatch)
