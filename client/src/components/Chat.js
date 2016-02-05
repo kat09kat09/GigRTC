@@ -10,7 +10,12 @@ import { connect } from 'react-redux';
 import uuid from 'node-uuid';
 import moment from 'moment';
 
-var socket = io.connect('https://gigg.tv');
+
+// var socket = io.connect('https://gigg.tv');
+
+
+var socket = io.connect('https://localhost:1338'); 
+
 
 
 class Chat extends Component {
@@ -140,8 +145,8 @@ class Chat extends Component {
           </header>
           <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
             {filteredMessages.map(message =>
-
-              <MessageListItem message={message} key={message.id} />
+                
+                <MessageListItem message={message} key={message.id} />
             )}
           </ul>
           <div style={{
