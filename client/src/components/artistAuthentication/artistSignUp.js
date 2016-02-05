@@ -16,10 +16,20 @@ class ArtistSignUp extends Component {
 
     constructor(props) {
         super(props)
+        this.state={
+            file : null
+        }
     }
 
     onSubmit(formData) {
         this.props.SignUpArtist(formData)
+    }
+
+    imageLoading(files) {
+        const file = files[0];
+        this.setState({
+            file: file,
+        });
     }
 
     render() {
@@ -86,15 +96,23 @@ class ArtistSignUp extends Component {
                         <label>Image</label>
                         <div>
                             <Dropzone
+                                onDropAccepted={this.imageLoading.bind(this)}
                                 { ...user_image }
                                 onDrop={ ( filesToUpload, e ) => user_image.onChange(filesToUpload) }
                             >
                                 <div>Try dropping some files here, or click to select files to upload.</div>
                             </Dropzone>
                         </div>
+                        {this.state.file ?
+                            <div>
+                                <h6>Image Preview:</h6>
+                                <div>
+                                    <img style={{height: 100 + 'px'}} src={this.state.file.preview} />
+                                </div>
+                            </div> : null}
                     </div>
 
-                    <button type="submit" className="btn btn-primary" >Submit</button>
+                    <RaisedButton type="submit" >Submit</RaisedButton>
 
                 </form>
             </div>
