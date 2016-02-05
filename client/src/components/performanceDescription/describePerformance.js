@@ -22,7 +22,7 @@ class DescribePerformance extends Component {
   }
 
   onSubmit(formData) {
-    this.props.DescribePerformance(formData)
+    this.props.MakePerformance(formData)
   }
 
   imageLoading(files) {
@@ -37,31 +37,38 @@ class DescribePerformance extends Component {
     const {
       handleSubmit,
       fields: {
-        user_name, password, email_id, brief_description,
-        user_image, display_name,genre}
+          title,
+          short_description,
+          long_description,
+          performance_image,
+          rated_r
+        }
       } = this.props
 
       return (
         <div>
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        <h3>Sign Up</h3>
-        <div className={`form-group ${user_name.touched && user_name.invalid ? 'has-danger' : ''}`}>
-        <TextField hintText="User Name" floatingLabelText="User Name" lassName="form-control"  {...user_name} />
-        <div className="text-help">
-        {user_name.touched ? user_name.error : ''}
+        <h3>Describe your performance</h3>
+
+        <div className={`form-group ${title.touched && title.invalid ? 'has-danger' : ''}`}>
+          <TextField hintText="Title" floatingLabelText="Title" className="form-control"  {...title} />
+          <div className="text-help">
+            {user_name.touched ? user_name.error : ''}
+          </div>
         </div>
+
+        <div className={`form-group ${short_description.touched && short_description.invalid ? 'has-danger' : ''}`}>
+          <TextField hintText="Short Description" floatingLabelText="Short Description" className="form-control"  {...short_description} />
+          <div className="text-help">
+            {short_description.touched ? short_description.error : ''}
+          </div>
         </div>
-        <div className={`form-group ${password.touched && password.invalid ? 'has-danger' : ''}`}>
-        <TextField type="password" hintText="password" floatingLabelText="Password" className="form-control"  {...password} />
-        <div className="text-help">
-        {password.touched ? password.error : ''}
-        </div>
-        </div>
-        <div className={`form-group ${email_id.touched && email_id.invalid ? 'has-danger' : ''}`}>
-        <TextField type="email" hintText="Email Address" className="form-control" floatingLabelText="Email Address" {...email_id} />
-        <div className="text-help">
-        {email_id.touched ? email_id.error : ''}
-        </div>
+
+        <div className={`form-group ${long_description.touched && long_description.invalid ? 'has-danger' : ''}`}>
+          <TextField hintText="More info about you and your art" floatingLabelText="More info about you and your art" className="form-control" {...long_description} />
+          <div className="text-help">
+            {long_description.touched ? long_description.error : ''}
+          </div>
         </div>
 
         <div className={`form-group ${brief_description.touched && brief_description.invalid ? 'has-danger' : ''}`}>
@@ -123,26 +130,16 @@ class DescribePerformance extends Component {
 function validate(values){
   const errors = {};
 
-  if(!values.user_name){
-    errors.user_name = 'Enter a username'
+  if(!values.title){
+    errors.title = 'Needs a title'
   }
-  if(!values.password){
-    errors.password = 'Enter a password'
+
+  if(!values.short_description){
+    errors.short_description = 'Needs a short description'
   }
-  if(!values.email_id){
-    errors.email_id = 'Enter an email'
-  }
-  if(!values.brief_description){
-    errors.brief_description = 'Enter a brief description'
-  }
-  if(!values.user_image){
-    errors.user_image = 'Upload an image'
-  }
-  if(!values.display_name){
-    errors.display_name = 'Enter a Display Name'
-  }
-  if(!values.genre){
-    errors.genre = 'Enter a genre'
+
+  if(!values.rated_r){
+    errors.rated_r = 'It is ok for teens and kids?'
   }
 
   return errors
@@ -150,8 +147,7 @@ function validate(values){
 
 
 export default reduxForm({
-  form: 'ArtistSignUp',
-  fields : ['user_name', 'password', 'email_id', 'brief_description',
-  'user_image', 'display_name', 'genre'],
+  form: 'DescribePerformance',
+  fields : ['title', 'short_description', 'long_description', 'performance_image', 'rated_r'],
   validate
-},null,{SignUpArtist})(ArtistSignUp)
+},null,{MakePerformance})(DescribePerformance)

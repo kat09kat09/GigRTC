@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import MessageListItem from './MessageListItem';
 import * as actions from '../actions/actions';
 import { Modal, DropdownButton, MenuItem, Button } from 'react-bootstrap';
-const activeChannel='Lobby'; 
+const activeChannel='Lobby';
 import io from 'socket.io-client';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -15,7 +15,7 @@ import Table from 'material-ui/lib/table/table';
 // var socket = io.connect('https://gigg.tv');
 
 
-var socket = io.connect('https://localhost:1338'); 
+var socket = io.connect('https://localhost:1338');
 
 
 
@@ -23,35 +23,35 @@ class Chat extends Component {
 
   constructor(props, context) {
     super(props, context);
-    console.log('props in Chat', props); 
+    console.log('props in Chat', props);
     this.state = {
       text: '',
       typing: false
     };
 
 
-    // connect_socket(props.token); 
+    // connect_socket(props.token);
 
   }
   componentWillMount() {
     const {userDetails, dispatch, activeChannel } = this.props;
     dispatch(actions.fetchMessages(activeChannel));
-    
+
   }
   componentDidMount() {
-    const {userDetails, dispatch, activeChannel}= this.props; 
+    const {userDetails, dispatch, activeChannel}= this.props;
     if(!userDetails) {
-      var userName= 'Guest'; 
+      var userName= 'Guest';
     } else {
-      var userName= userDetails.user_name; 
+      var userName= userDetails.user_name;
 
     }
-    
+
     socket.on('receive socket', socketID =>{
       console.log('received socket id', socketID)
       dispatch(actions.receiveSocket(socketID))
-    }); 
-    console.log('user in Chat', userName); 
+    });
+    console.log('user in Chat', userName);
     socket.emit('chat mounted', userName);
     socket.on('new bc message', msg =>
       dispatch(actions.receiveRawMessage(msg))
@@ -81,16 +81,16 @@ class Chat extends Component {
       dispatch(actions.createMessage(newMessage));
     }
   }
-  
+
   handleSubmit(event) {
-     
+
     const { userDetails, activeChannel} = this.props;
     if(!userDetails) {
-      var userName= 'Guest'; 
+      var userName= 'Guest';
     } else {
-      var userName= userDetails.user_name; 
+      var userName= userDetails.user_name;
     }
-    
+
     const text = event.target.value.trim();
     if (event.which === 13) { //carriage return
       event.preventDefault();
@@ -104,18 +104,18 @@ class Chat extends Component {
       socket.emit('new message', newMessage);
       socket.emit('stop typing', { user: userName, channel: activeChannel });
       // this.props.onSave(newMessage);
-      this.handleSave(newMessage); 
+      this.handleSave(newMessage);
       this.setState({ text: '', typing: false });
     }
   }
   handleChange(event) {
     const { userDetails, activeChannel } = this.props;
     if(!userDetails) {
-      var userName= 'Guest'; 
+      var userName= 'Guest';
     } else {
-      userName= userDetails.user_name; 
+      userName= userDetails.user_name;
     }
-    
+
     this.setState({ text: event.target.value });
     if (event.target.value.length > 0 && !this.state.typing) {
       socket.emit('typing', { user: userName, channel: activeChannel });
@@ -128,7 +128,7 @@ class Chat extends Component {
   }
    // <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
    //          {filteredMessages.map(message =>
-                
+
    //              <MessageListItem message={message} key={message.id} />
    //          )}
    //        </ul>
@@ -137,8 +137,8 @@ class Chat extends Component {
   render() {
 
 
-    const {messages, dispatch,userDetails, activeChannel}= this.props; 
-    console.log('this.props in Chat.js', this.props); 
+    const {messages, dispatch,userDetails, activeChannel}= this.props;
+    console.log('this.props in Chat.js', this.props);
 
     const filteredMessages = messages.filter(message => message.channelID === activeChannel);
     const styles = {
@@ -153,14 +153,14 @@ class Chat extends Component {
     };
     return (
       <div style={{margin: '0', padding: '0', height: '100%', width: '100%', display: '-webkit-box'}}>
-    
+
         <div className="main" >
-     
+
           <div style= {{height: '30em', overflow:'scroll'}}>
             {filteredMessages.map(message =>
-          
+
                   <MessageListItem message={message} key={message.id} />
-             
+
             )}
           </div>
           <div style={{
@@ -189,7 +189,7 @@ class Chat extends Component {
               onKeyDown={this.handleSubmit.bind(this)}/>
           </div>
         </div>
-        
+
       </div>
     );
   }
@@ -197,7 +197,7 @@ class Chat extends Component {
 
 
 function mapStateToProps(state) {
-  console.log(state); 
+  console.log(state);
   return {
       messages: state.messages.data,
       activeChannel: state.activeChannel.name,
