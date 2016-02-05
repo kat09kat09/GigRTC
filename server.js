@@ -91,7 +91,7 @@ app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, 'client')));
 
-app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook', /^\/api\/.*/, /^\/api\/messages\/.*/,/^\/activeStream\/.*/, /^\/public\/.*/]}));
+app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook', /^\/api\/.*/, /^\/api\/messages\/.*/,/^\/activeStream\/.*/, /^\/public\/.*/, /^\/about\/.*/]}));
 
 
 app.post('/auth/signIn/', (req, res) => {
