@@ -185,16 +185,31 @@ h1 {
 
 .wrapper {
   width: 100%;
+  margin-top: 3%;
 }
-.wrapper > h1 {
+ h1 {
   font-size: 3rem;
   text-align: center;
-  margin-top: 2rem;
+  margin-top: 5%;
   color: orange;
 }
 .center-block{
   display: block;
   margin: 0 auto;
+}
+
+.tech{
+  max-width: 95%;
+  margin: 0 7%;
+}
+
+.stack-icon {
+  display: inline-block;
+  margin: 3rem 2rem;
+}
+
+.react{
+  fill: #00ace9;
 }
 
 /*MEDIA QUERIES*/
