@@ -34,6 +34,10 @@ export default (props)=>{
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
+                <MenuItem
+                    linkButton={true}
+                    primaryText="All Artists"
+                    containerElement={<Link to="registeredArtists" className="logoLink">registeredArtists</Link>} />
                   <MenuItem
                     linkButton={true}
                     primaryText="Home"

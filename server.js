@@ -356,6 +356,19 @@ app.post('/api/uploadImage',function(req,res){
 
 });
 
+//********* Fetch all registered users
+
+app.get('/api/allRegisteredArtists',function(req,res){
+
+   new Artist().fetchAll().then((allArtists)=>{
+        console.log("ALL ARTISTS",allArtists.models[4].attributes.user_image.toString('utf-8'))
+       //console.log("ARTISTS BLOB",Artist.user_image.toString('utf-8'))
+
+       res.status(302).json({registeredArtists : allArtists.models})
+
+    })
+
+})
 
 //******* Test  Chat **************
 //set env vars

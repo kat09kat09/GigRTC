@@ -34,7 +34,6 @@ export class StreamsContainer extends Component {
   }
 
   render () {
-    console.log(this.props.presentActiveStreams, 'in render');
     if (this.props.presentActiveStreams && this.props.presentActiveStreams.length) {
       return(
         <div style={ styles.root }>

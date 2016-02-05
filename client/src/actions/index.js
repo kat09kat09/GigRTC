@@ -15,7 +15,8 @@ const {
     LOGIN_ARTIST_SUCCESS,
     VIEW_COUNT_UPDATE,
     ARTIST_STREAMING_STATUS,
-    UPLOAD_IMAGE
+    UPLOAD_IMAGE,
+    FETCH_REGISTERED_ARTISTS
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -323,5 +324,14 @@ export function showTotalViewersWatching(room){
         payload : data
     }
 
+}
+
+export function fetchAllRegisteredArtists(){
+    var data = axios.get('/api/allRegisteredArtists')
+
+    return {
+        type : FETCH_REGISTERED_ARTISTS,
+        payload : data
+    }
 }
 

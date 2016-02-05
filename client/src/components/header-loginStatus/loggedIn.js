@@ -37,6 +37,11 @@ export default (props)=>{
                 >
                 <MenuItem
                     linkButton={true}
+                    primaryText="All Artists"
+                    containerElement={<Link to="registeredArtists" className="logoLink">registeredArtists</Link>} />
+
+                <MenuItem
+                    linkButton={true}
                     primaryText={props.userPrivelege === 'artist' ? props.user_details.user_name : (props.userPrivelege === 'user' ?  props.user_details.name : 'Guest') }
                     containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
 
