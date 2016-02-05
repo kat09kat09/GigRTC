@@ -283,7 +283,9 @@ app.put('/api/activeStreams', function(req, res){
 });
 
 app.get('/api/activeStreams', function(req, res) {
-    Performances.query({where: {active: true}}).fetch().then(function (performances) {
+    Performances
+    // .query({where: {active: true}})
+    .fetch().then(function (performances) {
         res.status(200).send(performances.models);
     });
 
@@ -361,7 +363,7 @@ app.post('/api/uploadImage',function(req,res){
 app.get('/api/allRegisteredArtists',function(req,res){
 
    new Artist().fetchAll().then((allArtists)=>{
-        console.log("ALL ARTISTS",allArtists.models[4].attributes.user_image.toString('utf-8'))
+        // console.log("ALL ARTISTS",allArtists.models[4].attributes.user_image.toString('utf-8'))
        //console.log("ARTISTS BLOB",Artist.user_image.toString('utf-8'))
 
        res.status(302).json({registeredArtists : allArtists.models})

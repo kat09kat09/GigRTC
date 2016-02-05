@@ -17,7 +17,6 @@
     "tests"
   ],
   "dependencies": {
-    "adapter.js": "*",
     "reset-css": "~2.0.2011012602",
     "jquery": "~2.2.0"
   }
