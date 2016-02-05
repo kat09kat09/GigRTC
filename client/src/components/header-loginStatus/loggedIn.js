@@ -38,7 +38,7 @@ export default (props)=>{
                 <MenuItem
                     linkButton={true}
                     primaryText="All Artists"
-                    containerElement={<Link to="registeredArtists" className="logoLink">registeredArtists</Link>} />
+                    containerElement={<Link to="/router/registeredArtists" className="logoLink">registeredArtists</Link>} />
 
                 <MenuItem
                     linkButton={true}
@@ -53,15 +53,14 @@ export default (props)=>{
                     <MenuItem
                     linkButton={true}
                     primaryText="Broadcast"
-                    containerElement={<Link to="/streamYourself" >Stream Yourself</Link>} />
+                    containerElement={<Link to="/router/streamYourself" >Stream Yourself</Link>} />
                   :
                    ""
                   }
                 <MenuItem 
                     linkButton={true}
                     primaryText="About"
-                    containerElement={<Link to="/about" className="logoLink">About</Link>} />
-                  <MenuItem><a href='#' className='jsonLinkText' onClick={() => this.props.fetchProtectedData(this.props.token)}>FOR JSON</a></MenuItem>
+                    containerElement={<Link to="/router/about" className="logoLink">About</Link>} />
                   <MenuItem primaryText="Sign out" onClick={() => props.logoutAndRedirect()} />
                 </IconMenu>
                 </div>

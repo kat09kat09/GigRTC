@@ -89,9 +89,9 @@ app.use(favicon(__dirname + '/client/public/img/spinner.gif'));
 
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, 'client')));
+app.use('/',express.static(path.join(__dirname, 'client')));
 
-app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook', /^\/api\/.*/, /^\/api\/messages\/.*/,/^\/activeStream\/.*/, /^\/public\/.*/, /^\/about\/.*/]}));
+app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook', /^\/api\/.*/, /^\/api\/messages\/.*/,/^\/activeStream\/.*/, /^\/public\/.*/, /^\/router\/.*/]}));
 
 
 app.post('/auth/signIn/', (req, res) => {
@@ -173,13 +173,13 @@ passport.use(new FacebookStrategy({
     function(accessToken, refreshToken, profile, done) {
         new User({facebook_id : profile.id}).fetch().then(function(response){
             if(response){
-                console.log("PRFILE",profile)
                 return done(null,profile)
             }
             else{
+
                 var facebookUser = new User({
                     facebook_id : profile.id,
-                    email_id : profile.emails[0].value || null,
+                    email_id : profile.emails[0].value ? profile.emails[0].value : profile.displayName,
                     display_name : profile.displayName,
                     user_image : profile.photos[0].value
                 })
@@ -206,13 +206,13 @@ passport.use(new GoogleStrategy({
         console.log("GOOGLE PROFILE",profile)
         new User({google_id : profile.id}).fetch().then(function(response){
             if(response){
-                console.log("PRFILE for google",profile)
                 return done(null,profile)
             }
             else{
+
                 var googleUser = new User({
                     google_id : profile.id,
-                    email_id : profile.emails[0].value || null,
+                    email_id : profile.emails[0].value ? profile.emails[0].value : profile.displayName ,
                     display_name : profile.displayName,
                     user_image : profile.photos[0].value
                 })
@@ -239,7 +239,7 @@ var current_user;
 
 app.get('/auth/facebook/callback/',
 
-    passport.authenticate('facebook', { failureRedirect: '/login' }),
+    passport.authenticate('facebook', { failureRedirect: '/' }),
 
     function(req, res) {
         console.log("response",req.user);
@@ -427,7 +427,10 @@ io.on('connection', function (socket){
 
 
 app.get('*', function (request, response){
+    console.log("REQUEST URL",request.url)
+    //response.redirect('/')
     response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
+
 })
 
 module.exports.server = server;

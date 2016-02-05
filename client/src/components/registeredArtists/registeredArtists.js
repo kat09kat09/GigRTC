@@ -55,7 +55,7 @@ export class RegisteredArtists extends Component{
             console.log("USER IMAGE BLOBS",Artist.user_image.toString('utf-8'))
             return (
 
-                <Link to={`activeStream/${Artist.user_name}`}>
+                <Link to={`/router/activeStream/${Artist.user_name}`}>
                     <GridTile
                         key={Artist.id}
 
