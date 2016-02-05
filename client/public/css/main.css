@@ -153,13 +153,32 @@ h1 {
 /*About page helper classes*/
 .avatar {
   display: inline-block;
+  max-width: 25%;
   flex-grow: 1;
+  margin-top:  5%;
+
 }
-.avatar > img { 
-  margin: 10% 25%;
+.avatar > img {
+  width: 150px; 
+  margin-left: 25%;
+  margin-right: 25%;
+}
+.avatar > h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  font-family: 'Changa One';
+  color: #424242;
+  margin-top: 2rem;
+}
+.avatar > h3 {
+  font-size: 1.2rem;
+  text-align: center;
+  font-family: 'Hind Vadodara';
+  color: orange;
 }
 .avatars {
   margin: 0 auto;
+  max-width: 85%;
   display: flex;
   justify-content: center;
 }
@@ -171,8 +190,22 @@ h1 {
   font-size: 3rem;
   text-align: center;
   margin-top: 2rem;
+  color: orange;
 }
 .center-block{
   display: block;
   margin: 0 auto;
+}
+
+/*MEDIA QUERIES*/
+@media (min-width: 1600px) { 
+    .avatar > img { 
+      margin: 0 31%;
+    }
+}
+
+@media (min-width: 800px){
+    .avatar > img { 
+      margin: 0 25%%;
+    }
 }
