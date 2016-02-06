@@ -281,7 +281,7 @@ app.put('/api/describe/', (req, res) => {
   new Performance({room: req.body.room}) // FIXME send req.body.room on form submit room: req.body.user_name?
   .save({
     long_description: req.body.long_description,
-    performance_image: FileList, // FIXME how does this happen
+    // performance_image: FileList, // FIXME how does this happen
     rated_r: JSON.parse(req.body.rated_r),
     short_description: req.body.short_description,
     title: req.body.title

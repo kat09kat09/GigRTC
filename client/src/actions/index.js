@@ -16,7 +16,9 @@ const {
     VIEW_COUNT_UPDATE,
     ARTIST_STREAMING_STATUS,
     FILTER_REGISTERED_ARTISTS,
-    FETCH_REGISTERED_ARTISTS
+    FETCH_REGISTERED_ARTISTS,
+    UPLOAD_IMAGE,
+    PERFORMANCE_DETAIL_UPDATE
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -192,16 +194,15 @@ export function MakePerformance(formData){
     }
 
     return (dispatch) =>{
-        console.log("formData SENT TO MakePerformance: ", formData)
+        console.log("+++++++++++ formData SENT TO MakePerformance: ", formData)
         dispatch(perfDetailUpdate());
         return fetch(`/api/describe/`, config)
             .then(checkHttpStatus) // WHAT
             .then(parseJSON)
             .then(response => {
-                console.log("Detail Performance response ",response)
+                console.log("++++++++++++++ Detail Performance response ",response)
 
                 try {
-                    let decoded = jwtDecode(response.token); // FIXME this?  definitely below
                     dispatch(loginArtistSuccess({token : response.token, artist_details:response.artist_details}));
                     browserHistory.push('/') // FIXME... to the broadcast yourself page?
                 } catch (e) {
@@ -214,6 +215,7 @@ export function MakePerformance(formData){
                 }
             })
             .catch(error => {
+                console.log(error, "+++++++++++++ Error in MakePerformance return from server");
                 dispatch(loginUserFailure(error)); // FIXME
             })
     }
