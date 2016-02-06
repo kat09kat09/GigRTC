@@ -1,12 +1,13 @@
-import React, { Component, PropTypes } from 'react'
-import { reduxForm } from 'redux-form'
-import TextField from 'material-ui/lib/text-field'
+import React, { Component, PropTypes } from 'react';
+import { reduxForm } from 'redux-form';
+import TextField from 'material-ui/lib/text-field';
 import RadioButton from 'material-ui/lib/radio-button';
 import RadioButtonGroup from 'material-ui/lib/radio-button-group';
-import RaisedButton from 'material-ui/lib/raised-button'
+import RaisedButton from 'material-ui/lib/raised-button';
 import { MakePerformance }  from '../../actions';
-import { Link } from 'react-router'
+import { Link } from 'react-router';
 import ImageUpload from '../image_upload/image_upload';
+import { connect } from 'react-redux';
 
 // put this instead of chat on broadcast page, disabling buttons, until there is a title submitted?
 
@@ -15,12 +16,15 @@ class DescribePerformance extends Component {
   constructor(props) {
     super(props)
     this.state={
-      file : null
+      file : null,
+      toGetRoom : this.props.userDetails.user_name
     }
   }
 
   onSubmit(formData) {
-    this.props.MakePerformance(formData)
+    console.log('clicked');
+    // this.props.MakePerformance(formData)
+    console.log(formData, '+++++++++++++++++ formData');
   }
 
   imageLoading(files) {
@@ -31,6 +35,8 @@ class DescribePerformance extends Component {
   }
 
   render() {
+    console.log(this.props, "++++++++++++++++++++++ this is user Details");
+    console.log(this.props.state, "++++++++++++++++++++++ this is props state");
 
     const {
       handleSubmit,
@@ -39,8 +45,7 @@ class DescribePerformance extends Component {
           short_description,
           long_description,
           performance_image,
-          rated_r,
-          room
+          rated_r
         }
       } = this.props
 
@@ -104,11 +109,6 @@ class DescribePerformance extends Component {
             </div>
           </div>
 
-          // I still don't know how to get username
-          <h3>{this.props.user_name}</h3>
-          // to submit with the form as "room"
-          <div className='hidden'>hi</div>
-
           <RaisedButton type="submit" >Submit</RaisedButton>
 
         </form>
@@ -135,15 +135,17 @@ function validate(values){
   return errors
 }
 
-// room is now available to this form
-function mapStateToProps(state) {
-  return {
-    userDetails: state.auth.userDetails
-  }
-}
+// room is now available to this form?
+const mapStateToProps = (state) => ({
+  userDetails: state.auth.userDetails,
+  state
+});
+
+// export default connect(mapStateToProps,{logoutAndRedirect,fetchProtectedData})(Header)
+// connect(mapStateToProps)(DescribePerformance);
 
 export default reduxForm({
   form: 'DescribePerformance',
-  fields : ['title', 'short_description', 'long_description', 'performance_image', 'rated_r', 'room'],
+  fields : ['title', 'short_description', 'long_description', 'performance_image', 'rated_r'],
   validate
 },mapStateToProps,{MakePerformance})(DescribePerformance)

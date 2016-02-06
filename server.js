@@ -289,7 +289,13 @@ app.put('/api/describe/', (req, res) => {
   .then(function(updatedPerf) {
     console.log('Just updated this performance ---> ', updatedPerf);
     Performances.add(updatedPerf);
-    res.status(200).json({token: myToken, artist_details: artist}); // FIXME how to appropriately trigger front end?
+    var responseObject = {
+      title: updatedPerf.get('title'),
+      short_description: updatedPerf.get('short_description'),
+      long_description: updatedPerf.get('long_description'),
+      performance_image: updatedPerf.get('performance_image') // FIXME wait and see how this works
+    };
+    res.status(200).json(responseObject); // FIXME set this up to be available data to front end
   });
 });
 

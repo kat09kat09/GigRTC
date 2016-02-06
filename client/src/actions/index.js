@@ -174,6 +174,12 @@ export function SignUpArtist(creds){
 
 }
 
+export function perfDetailUpdate() {
+  return {
+    type: PERFORMANCE_DETAIL_UPDATE
+  }
+}
+
 export function MakePerformance(formData){
     let config = {
         method: 'put',
@@ -187,7 +193,7 @@ export function MakePerformance(formData){
 
     return (dispatch) =>{
         console.log("formData SENT TO MakePerformance: ", formData)
-        dispatch(loginUserRequest()); // FIXME
+        dispatch(perfDetailUpdate());
         return fetch(`/api/describe/`, config)
             .then(checkHttpStatus) // WHAT
             .then(parseJSON)
