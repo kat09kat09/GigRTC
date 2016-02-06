@@ -246,7 +246,7 @@ app.get('/auth/facebook/callback/',
         console.log("response",req.user);
         current_user = req.user;
         current_token = jwt.sign({user_name: (current_user.emails[0].value ? current_user.emails[0].value : current_user.displayName)},CONFIG.JWT_SECRET);
-        res.redirect('/authenticateFacebook')
+        res.redirect('/router/socialLogin')
     }
 
 );
@@ -262,7 +262,7 @@ app.get('/auth/google/callback/',
         console.log("response for Google",req.user);
         current_user = req.user;
         current_token = jwt.sign({user_name: req.user.emails[0].value },CONFIG.JWT_SECRET);
-        res.redirect('/authenticateFacebook')
+        res.redirect('/router/socialLogin')
     }
 
 );
