@@ -219,7 +219,9 @@ h1 {
 
 .mic-section {
   height: 800px;
-  background-image: url('../img/mic.jpg');
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),  
+    url('../img/mic.jpg');
   background-repeat: no-repeat;
   
   background-size: 100%;
@@ -238,13 +240,16 @@ h1 {
 
 .right {
   width: 50%;
+  margin-top: 10%;
   float: right;
-  color: #FCF660;
+  color: #eCe630;
 }
 
 .right > h1 {
-  color: #FCF660;
+  color: #eCe630;
+  font-family: 'Fjalla One';
 }
+
 
 
 
