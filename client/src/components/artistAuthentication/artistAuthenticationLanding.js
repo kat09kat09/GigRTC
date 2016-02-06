@@ -1,11 +1,12 @@
-import React from 'react';
+import React ,{Component} from 'react';
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
-import SigninForm from '../artistAuthentication/artistSignIn'
-import SignUpForm from '../artistAuthentication/artistSignUp'
-import ImageUpload from '../image_upload/image_upload'
+import SigninForm from '../artistAuthentication/artistSignIn';
+import SignUpForm from '../artistAuthentication/artistSignUp';
+import ImageUpload from '../image_upload/image_upload';
+import {browserHistory} from 'react-router';
 
 const customContentStyleSignIn = {
     width: '25%',
@@ -23,7 +24,7 @@ const styles = {
     }
 };
 
-export default class artistAuthenticationLanding extends React.Component {
+export default class artistAuthenticationLanding extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,36 +33,26 @@ export default class artistAuthenticationLanding extends React.Component {
         };
     }
 
-    handleOpen = (status) => {
-        if(status === 'signin'){
+    componentDidMount(){
+        if(this.props.params.formType === 'signin'){
             this.setState({openSignIn: true});
         }
         else{
             this.setState({openSignUp: true});
         }
-    };
-
-    handleClose = (status) => {
-        if(status === 'signin'){
-            this.setState({openSignIn: false});
-        }
-        else{
-            this.setState({openSignUp: false});
-        }
-    };
+    }
 
     render() {
         const actions = [
             <FlatButton
                 label="Cancel"
                 secondary={true}
-                onTouchTap={this.handleClose}
+                onTouchTap={()=>browserHistory.push('/')}
             />
         ];
 
         return (
             <div>
-                <RaisedButton style={styles.button} label="Sign In" onTouchTap={()=>this.handleOpen('signin')} />
                 <Dialog
                     title="Sign In"
                     actions={actions}
@@ -73,7 +64,6 @@ export default class artistAuthenticationLanding extends React.Component {
                 >
                     <SigninForm />
                 </Dialog>
-                <RaisedButton style={styles.button} label="Sign Up" onTouchTap={()=>this.handleOpen('signup')} />
                 <Dialog
                     title="Sign Up"
                     actions={actions}

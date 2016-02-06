@@ -44,10 +44,6 @@ class ImageUpload extends Component {
             }
         }
 
-
-
-
-
         reader.readAsDataURL(file)
     }
 

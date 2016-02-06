@@ -41,7 +41,7 @@ export default (props)=>{
                     linkButton={true}
                     primaryText="Home"
                     containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
-                  <MenuItem 
+                  <MenuItem
                     linkButton={true}
                     primaryText="About"
                     containerElement={<Link to="/router/about" className="logoLink">About</Link>} />
@@ -50,7 +50,11 @@ export default (props)=>{
                   <MenuItem
                     linkButton={true}
                     primaryText="Login as Artist"
-                    containerElement={<Link to="/router/artistSignIn" >Sign in/Up </Link>} />
+                    containerElement={<Link to="/router/artistAuthenticate/signin" >Sign in/Up </Link>} />
+                  <MenuItem
+                    linkButton={true}
+                    primaryText="Sign Up as Artist"
+                    containerElement={<Link to="/router/artistAuthenticate/signup" >Sign in/Up </Link>} />
                 </IconMenu>
               }/>
     )
