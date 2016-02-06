@@ -93,7 +93,10 @@ app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use('/',express.static(path.join(__dirname, 'client')));
 
+
+
 app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook','/about', /^\/api\/.*/, /^\/api\/messages\/.*/,/^\/activeStream\/.*/, /^\/public\/.*/, /^\/router\/.*/]}));
+
 
 
 app.post('/auth/signIn/', (req, res) => {
@@ -125,6 +128,7 @@ app.post('/auth/signUp/', (req, res) => {
 
         }
         else {
+
             var newArtist = new Artist({
                 user_name: req.body.user_name,
                 password: req.body.password,
@@ -361,6 +365,10 @@ app.post('/api/uploadImage',function(req,res){
 app.get('/api/allRegisteredArtists',function(req,res){
 
    new Artist().fetchAll().then((allArtists)=>{
+
+        //console.log("ALL ARTISTS",allArtists.models[4].attributes.user_image.toString('utf-8'))
+       //console.log("ARTISTS BLOB",Artist.user_image.toString('utf-8'))
+
 
        res.status(302).json({registeredArtists : allArtists.models})
 

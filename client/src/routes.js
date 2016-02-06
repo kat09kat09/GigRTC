@@ -12,6 +12,7 @@ import ArtistAuthenticationLanding from './components/artistAuthentication/artis
 import RegisteredArtists from './components/registeredArtists/registeredArtists'
 import Chat from './components/Chat';
 import About from './components/about/about';
+import Landing from './components/landing/landing';
 
 
 export default (
@@ -21,10 +22,13 @@ export default (
         <IndexRoute component={ StreamsContainer } />
         <Route path="router/streamYourself" component={videoHigherOrderFunction(VideoPlayer)} />
         <Route path="authenticateFacebook" component={AuthenticationContainer} />
+
         <Route path="router/artistSignIn" component={ArtistAuthenticationLanding} />
         <Route path="router/registeredArtists" component={RegisteredArtists} />
         <Route path="router/activeStream/:room" component={videoHigherOrderFunction(VideoPlayer)} />
         <Route path="router/about" component={About} />
+      
+        <Route path="router/landing" component={Landing} />
     </Route>
 
 );
