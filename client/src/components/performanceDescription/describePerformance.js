@@ -85,13 +85,13 @@ class DescribePerformance extends Component {
               <RadioButton
                 // checked={rated_r === false}
                 type="radio" {...rated_r}
-                value={false}
+                value="false"
                 checked={rated_r.value === false}
                 label="OK for kids and teens"
               />
               <RadioButton
                 type="radio" {...rated_r}
-                value={true}
+                value="true"
                 checked={rated_r.value === true}
                 checked={rated_r === true}
                 label="Needs a content warning"
@@ -103,10 +103,7 @@ class DescribePerformance extends Component {
           </div>
 
           <div className={`form-group`}> // this is a cludge to get styling correct
-            <TextField defaultValue="Image for this performance" className="form-control" />
-            <div>
-              <ImageUpload {...performance_image}/>
-            </div>
+            <ImageUpload {...performance_image}/>
           </div>
 
           <RaisedButton type="submit" >Submit</RaisedButton>
