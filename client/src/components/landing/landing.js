@@ -32,8 +32,20 @@ export default class Landing extends Component {
           <div className="right">
             <h1> Pick up the mic! </h1> 
             <h1>Broadcast your GIGG now! </h1>
-            <RaisedButton label="Artists" secondary={true} style={artistButton} />
-            <RaisedButton label="Fans" secondary={true} style={fanButton} />
+            <RaisedButton 
+              label="Artists"
+              secondary={true} 
+              style={artistButton}
+              linkButton={true}
+              href='artistLand' 
+            />
+            <RaisedButton 
+               label="Fans"
+               secondary={true} 
+               style={fanButton}
+               linkButton={true}
+               href='fanland' 
+            />
           </div>
         </div>
           
