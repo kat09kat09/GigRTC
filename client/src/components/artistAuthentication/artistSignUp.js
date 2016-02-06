@@ -118,8 +118,7 @@ class ArtistSignUp extends Component {
                     </div>
 
                     <div>
-                        <label>Image</label>
-                        <RaisedButton label="Image Up" onTouchTap={()=>this.handleOpen()} />
+                        <RaisedButton label="Upload Image" onTouchTap={()=>this.handleOpen()} />
                         <Dialog
                             title="Image Up"
                             actions={actions}
