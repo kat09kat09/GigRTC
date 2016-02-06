@@ -60,7 +60,7 @@ class ArtistSignUp extends Component {
         const actions = [
 
             <FlatButton
-                label="Close"
+                label="Submit"
                 primary={true}
                 onTouchTap={this.handleClose}
             />

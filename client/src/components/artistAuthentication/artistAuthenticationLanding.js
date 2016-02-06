@@ -56,12 +56,7 @@ export default class artistAuthenticationLanding extends React.Component {
                 label="Cancel"
                 secondary={true}
                 onTouchTap={this.handleClose}
-            />,
-            <FlatButton
-                label="Submit"
-                primary={true}
-                onTouchTap={this.handleClose}
-            />,
+            />
         ];
 
         return (
