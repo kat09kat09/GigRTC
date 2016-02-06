@@ -70,7 +70,7 @@ export default (props)=>{
                   <MenuItem
                     linkButton={true}
                     primaryText="Home"
-                    containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
+                    containerElement={<Link to="/landing" className="logoLink">Home</Link>} />
 
 <<<<<<< HEAD
 

@@ -185,9 +185,8 @@ h1 {
 
 .wrapper {
   width: 100%;
-  margin-top: 3%;
 }
- h1 {
+  h1 {
   font-size: 3rem;
   text-align: center;
   margin-top: 5%;
@@ -213,7 +212,39 @@ h1 {
 }
 
 
+/*LANDING PAGE*/
+.land-wrap {
 
+}
+
+.mic-section {
+  height: 800px;
+  background-image: url('../img/mic.jpg');
+  background-repeat: no-repeat;
+  
+  background-size: 100%;
+  border: 1px solid #212121;
+}
+
+.mic-section > h1 {
+  margin-top: 2rem;
+  font-size: 3rem;
+  color: #FCF660;
+}
+
+.left {
+
+}
+
+.right {
+  width: 50%;
+  float: right;
+  color: #FCF660;
+}
+
+.right > h1 {
+  color: #FCF660;
+}
 
 
 
