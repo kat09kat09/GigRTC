@@ -62,7 +62,7 @@ db.knex.schema.hasTable('artists').then(function(exists) {
           artists.string('password', 255).unique(); // what facebook will hopefully give us
           artists.string('email_id', 255).unique(); // listed here as unique as a backup in case our unique check fails
           artists.text('brief_description'); // maximum length is 64 K
-          artists.longtext('user_image'); // mediumblob is for binaries up to 16 M
+          artists.specificType('user_image', 'mediumblob'); // mediumblob is for binaries up to 16 M
           artists.text('display_name');
           artists.text('genre'); //
         })

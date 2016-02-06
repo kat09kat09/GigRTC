@@ -23,11 +23,11 @@ export default (
         <Route path="router/streamYourself" component={videoHigherOrderFunction(VideoPlayer)} />
         <Route path="authenticateFacebook" component={AuthenticationContainer} />
 
-        <Route path="router/artistSignIn" component={ArtistAuthenticationLanding} />
+        <Route path="router/artistAuthenticate/:formType" component={ArtistAuthenticationLanding} />
         <Route path="router/registeredArtists" component={RegisteredArtists} />
         <Route path="router/activeStream/:room" component={videoHigherOrderFunction(VideoPlayer)} />
         <Route path="router/about" component={About} />
-      
+
         <Route path="router/landing" component={Landing} />
     </Route>
 

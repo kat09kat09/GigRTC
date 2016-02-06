@@ -4,6 +4,7 @@ import {bindActionCreators} from 'redux'
 import {fetchAllRegisteredArtists} from '../../actions/index'
 import { Link } from 'react-router';
 
+import SearchBar from '../search_bar'
 
 import GridList from '../../../node_modules/material-ui/lib/grid-list/grid-list';
 import GridTile from '../../../node_modules/material-ui/lib/grid-list/grid-tile';
@@ -33,12 +34,16 @@ export class RegisteredArtists extends Component{
     }
 
     render () {
+
         if (this.props.registeredArtists) {
             return(
-                <div style={ styles.root }>
-                    <GridList cellHeight={ 180 } style={ styles.gridList }>
-                        { this.renderEvents() }
-                    </GridList>
+                <div>
+                    <SearchBar/>
+                    <div style={ styles.root }>
+                        <GridList cellHeight={ 180 } style={ styles.gridList }>
+                            { this.renderEvents() }
+                        </GridList>
+                    </div>
                 </div>
             )
         } else {
