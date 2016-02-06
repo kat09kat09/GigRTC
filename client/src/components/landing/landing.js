@@ -2,15 +2,21 @@ import React from 'react';
 import { Component } from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 
-const artistButton = {
+let artistButton = {
   'margin-top': "45px",
   'margin-left': "35%",
 };
 
-const fanButton = {
+let fanButton = {
   'margin-top': '45px',
   'margin-left': "10%",
 };
+
+let windowWidth = window.innerWidth;
+
+if(windowWidth < 1600){
+  artistButton['margin-left'] = '29%'; 
+}
 
 export default class Landing extends Component {
   render(){
