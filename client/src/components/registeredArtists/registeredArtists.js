@@ -24,12 +24,35 @@ const styles = {
     }
 };
 
-var urlCreator = window.URL || window.webkitURL;
+var reader  = new window.FileReader();
 
 export class RegisteredArtists extends Component{
 
     componentWillMount(){
         this.props.fetchAllRegisteredArtists()
+    }
+
+    convertToDataUrl(blob){
+        var blobUrl = URL.createObjectURL(blob)
+        var xhr = new XMLHttpRequest;
+        xhr.responseType = 'blob';
+
+        xhr.onload = function() {
+            var recoveredBlob = xhr.response;
+
+            var reader = new FileReader;
+
+            reader.onload = function() {
+                var blobAsDataUrl = reader.result;
+                window.location = blobAsDataUrl;
+                console.log("BLOBBY",blobAsDataUrl)
+            };
+
+            reader.readAsDataURL(recoveredBlob);
+        };
+
+        xhr.open('GET', blobUrl);
+        xhr.send();
     }
 
     render () {
@@ -51,8 +74,8 @@ export class RegisteredArtists extends Component{
     }
 
     renderEvents () {
+
         return this.props.registeredArtists.map((Artist)=> {
-            console.log("USER IMAGE BLOBS",Artist.user_image.toString('utf-8'))
             return (
 
                 <Link to={`/router/activeStream/${Artist.user_name}`}>
@@ -63,11 +86,7 @@ export class RegisteredArtists extends Component{
                         Brief Description={<span>by <b>{Artist.brief_description}</b></span>}
                         actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
                     >
-                        <img src={
-                         urlCreator.createObjectURL(
-                        Artist.user_image.toString('utf-8')
-                           )
-                        }
+                        <img src={Artist.user_image}
                         />
                     </GridTile>
                 </Link>

@@ -62,7 +62,7 @@ db.knex.schema.hasTable('artists').then(function(exists) {
           artists.string('password', 255).unique(); // what facebook will hopefully give us
           artists.string('email_id', 255).unique(); // listed here as unique as a backup in case our unique check fails
           artists.text('brief_description'); // maximum length is 64 K
-          artists.specificType('user_image','mediumblob'); // mediumblob is for binaries up to 16 M
+          artists.longtext('user_image'); // mediumblob is for binaries up to 16 M
           artists.text('display_name');
           artists.text('genre'); //
         })
@@ -150,14 +150,14 @@ db.knex.schema.hasTable('messages').then(function(exists) {
           messages.string('user_name', 255); // the user's display name (this field needs to be unique in the users schema)
           messages.string('channelID', 255); // this will be the artist username (could be display_name, but it would need to be unique in the artists schema)
           messages.string('time', 255); // the time at which the message is created (on the client side)
-          messages.text('text'); 
-          //fake out performance id for now... 
-          messages.integer('performance_id'); 
+          messages.text('text');
+          //fake out performance id for now...
+          messages.integer('performance_id');
 
           //****** eventually we'll hook messages up to the performance schema:
           // messages.integer('performance_id').unsigned().references('id').inTable('performances'); // the particular performance this message is attached to
           //***********************************************************************
-          
+
         })
         .then(function (table) {
           console.log('Created Table (messages)', table);
