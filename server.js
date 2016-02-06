@@ -228,7 +228,7 @@ app.use(passport.initialize());
 
 
 app.get('/auth/facebook/',
-    passport.authenticate('facebook',{scope : 'email'}));
+    passport.authenticate('twitter',{scope : 'email'}));
 
 var current_token;
 var current_user;

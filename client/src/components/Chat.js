@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-//import MessageComposer from './MessageComposer';
+
 import MessageListItem from './MessageListItem';
 import * as actions from '../actions/actions';
 import { Modal, DropdownButton, MenuItem, Button } from 'react-bootstrap';
