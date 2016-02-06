@@ -16,15 +16,14 @@ class DescribePerformance extends Component {
   constructor(props) {
     super(props)
     this.state={
-      file : null,
-      toGetRoom : this.props.userDetails.user_name
+      file : null
     }
   }
 
   onSubmit(formData) {
-    console.log('clicked');
-    // this.props.MakePerformance(formData)
-    console.log(formData, '+++++++++++++++++ formData');
+    formData.room = this.props.userDetails.user_name;
+    // console.log('formData ++++++++++++++++++', formData, '+++++++++++++++++ formData');
+    this.props.MakePerformance(formData);
   }
 
   imageLoading(files) {
@@ -35,8 +34,7 @@ class DescribePerformance extends Component {
   }
 
   render() {
-    console.log(this.props, "++++++++++++++++++++++ this is user Details");
-    console.log(this.props.state, "++++++++++++++++++++++ this is props state");
+    console.log(this.props.state, "++++++++++++++++++++++ this is props state in DescribePerformance");
 
     const {
       handleSubmit,
@@ -98,12 +96,8 @@ class DescribePerformance extends Component {
               />
             </RadioButtonGroup>
             <div className="text-help">
-              {rated_r.touched ? rated_r.error : ''} // FIXME need error if it's not touched
+              {rated_r.touched ? rated_r.error : ''}
             </div>
-          </div>
-
-          <div className={`form-group`}> // this is a cludge to get styling correct
-            <ImageUpload {...performance_image}/>
           </div>
 
           <RaisedButton type="submit" >Submit</RaisedButton>
@@ -132,14 +126,11 @@ function validate(values){
   return errors
 }
 
-// room is now available to this form?
+// room is now available
 const mapStateToProps = (state) => ({
   userDetails: state.auth.userDetails,
   state
 });
-
-// export default connect(mapStateToProps,{logoutAndRedirect,fetchProtectedData})(Header)
-// connect(mapStateToProps)(DescribePerformance);
 
 export default reduxForm({
   form: 'DescribePerformance',
