@@ -32,29 +32,6 @@ export class RegisteredArtists extends Component{
         this.props.fetchAllRegisteredArtists()
     }
 
-    convertToDataUrl(blob){
-        var blobUrl = URL.createObjectURL(blob)
-        var xhr = new XMLHttpRequest;
-        xhr.responseType = 'blob';
-
-        xhr.onload = function() {
-            var recoveredBlob = xhr.response;
-
-            var reader = new FileReader;
-
-            reader.onload = function() {
-                var blobAsDataUrl = reader.result;
-                window.location = blobAsDataUrl;
-                console.log("BLOBBY",blobAsDataUrl)
-            };
-
-            reader.readAsDataURL(recoveredBlob);
-        };
-
-        xhr.open('GET', blobUrl);
-        xhr.send();
-    }
-
     render () {
         if (this.props.registeredArtists) {
             return(
