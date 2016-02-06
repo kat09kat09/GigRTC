@@ -23,7 +23,7 @@ export default (props)=>{
         <AppBar
             title={<span style={styles.title}><Link to="/" className="logoLink">GIGG.TV</Link></span>}
             className="header"
-            iconElementLeft={<img src='../../public/img/rocket.svg' height='40' width='40' alt='' />}
+            iconElementLeft={<img className="rock-it" src='../../public/img/rocket.svg' height='40' width='40' alt='' />}
             // showMenuIconButton={false}
             iconElementRight={
                 <div>
@@ -53,10 +53,6 @@ export default (props)=>{
                     primaryText="All Artists"
                     containerElement={<Link to="/router/registeredArtists" className="logoLink">registeredArtists</Link>} />
 
-                  <MenuItem
-                      linkButton={true}
-                      primaryText={props.userPrivelege === 'artist' ? props.user_details.user_name : (props.userPrivelege === 'user' ?  props.user_details.name : 'Guest') }
-                      containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
 
                   <MenuItem
                     linkButton={true}

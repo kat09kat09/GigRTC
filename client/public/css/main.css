@@ -218,7 +218,7 @@ h1 {
 }
 
 .mic-section {
-  height: 800px;
+  height: 950px;
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),  
     url('../img/mic.jpg');
@@ -234,13 +234,14 @@ h1 {
   color: #FCF660;
 }
 
-.left {
-
+.rock-it {
+  margin-top: 13%;
+  transform: rotate(12deg);
 }
 
 .right {
   width: 50%;
-  margin-top: 10%;
+  margin-top: 13%;
   float: right;
   color: #eCe630;
 }

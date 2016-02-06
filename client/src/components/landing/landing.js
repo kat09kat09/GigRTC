@@ -22,6 +22,7 @@ export default class Landing extends Component {
         
           <div className="left">
           </div>
+
           <div className="right">
             <h1> Pick up the mic! </h1> 
             <h1>Broadcast your GIGG now! </h1>
@@ -29,8 +30,9 @@ export default class Landing extends Component {
             <RaisedButton label="Fans" secondary={true} style={fanButton} />
           </div>
         </div>
+          
       </div>
-      </div>
+  </div>
       )
   }
 }
