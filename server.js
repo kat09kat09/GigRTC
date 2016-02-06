@@ -24,6 +24,7 @@ var Performances = require('./db/collections/performances');
 var Performance = require('./db/models/performance');
 
 
+
 var options = {
   key:  fs.readFileSync('keys/server.key'),
   cert: fs.readFileSync('keys/server.crt')
@@ -87,7 +88,8 @@ var passport = require('passport')
 
 app.use(favicon(__dirname + '/client/public/img/spinner.gif'));
 
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use('/',express.static(path.join(__dirname, 'client')));
 
@@ -123,13 +125,12 @@ app.post('/auth/signUp/', (req, res) => {
 
         }
         else {
-          console.log('creating NEW USER',req.body.user_image);
             var newArtist = new Artist({
                 user_name: req.body.user_name,
                 password: req.body.password,
                 email_id: req.body.email_id,
                 brief_description: req.body.brief_description,
-                user_image: req.body.user_image['0'].preview,
+                user_image: req.body.user_image,
                 display_name: req.body.display_name,
                 genre: req.body.genre
             });
@@ -240,7 +241,7 @@ app.get('/auth/facebook/callback/',
     function(req, res) {
         console.log("response",req.user);
         current_user = req.user;
-        current_token = jwt.sign({user_name: req.user.emails[0].value },CONFIG.JWT_SECRET);
+        current_token = jwt.sign({user_name: (current_user.emails[0].value ? current_user.emails[0].value : current_user.displayName)},CONFIG.JWT_SECRET);
         res.redirect('/authenticateFacebook')
     }
 
@@ -280,7 +281,7 @@ app.put('/api/activeStreams', function(req, res){
 
 app.get('/api/activeStreams', function(req, res) {
     Performances
-    // .query({where: {active: true}})
+    // .query({where: {active: true}})  //TODO : CHANGE THIS TO ACTIVE STATE
     .fetch().then(function (performances) {
         res.status(200).send(performances.models);
     });

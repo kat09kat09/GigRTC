@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import SigninForm from '../artistAuthentication/artistSignIn'
 import SignUpForm from '../artistAuthentication/artistSignUp'
+import ImageUpload from '../image_upload/image_upload'
 
 const customContentStyleSignIn = {
     width: '25%',
@@ -90,6 +91,7 @@ export default class artistAuthenticationLanding extends React.Component {
                     <SignUpForm />
 
                 </Dialog>
+
             </div>
         );
     }

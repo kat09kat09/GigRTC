@@ -24,7 +24,7 @@ const styles = {
     }
 };
 
-var urlCreator = window.URL || window.webkitURL;
+var reader  = new window.FileReader();
 
 export class RegisteredArtists extends Component{
 
@@ -51,8 +51,8 @@ export class RegisteredArtists extends Component{
     }
 
     renderEvents () {
+
         return this.props.registeredArtists.map((Artist)=> {
-            console.log("USER IMAGE BLOBS",Artist.user_image.toString('utf-8'))
             return (
 
                 <Link to={`/router/activeStream/${Artist.user_name}`}>
@@ -63,11 +63,7 @@ export class RegisteredArtists extends Component{
                         Brief Description={<span>by <b>{Artist.brief_description}</b></span>}
                         actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
                     >
-                        <img src={
-                         urlCreator.createObjectURL(
-                        Artist.user_image.toString('utf-8')
-                           )
-                        }
+                        <img src={Artist.user_image}
                         />
                     </GridTile>
                 </Link>

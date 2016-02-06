@@ -10,26 +10,42 @@ import RadioButtonGroup from 'material-ui/lib/radio-button-group'
 import {SignUpArtist}  from '../../actions';
 import {Link} from 'react-router'
 import Dropzone from 'react-dropzone';
-
+import ImageUpload from '../image_upload/image_upload'
+import Dialog from 'material-ui/lib/dialog';
+import FlatButton from 'material-ui/lib/flat-button';
 
 class ArtistSignUp extends Component {
 
     constructor(props) {
         super(props)
         this.state={
-            file : null
+            imageButton : false
         }
     }
 
+    handleOpen = () => {
+       this.setState({imageButton: true});
+    };
+
+    handleClose = () => {
+        this.setState({imageButton: false});
+    };
+
     onSubmit(formData) {
+        console.log("FORM DATA",formData)
         this.props.SignUpArtist(formData)
     }
 
-    imageLoading(files) {
-        const file = files[0];
-        this.setState({
-            file: file,
-        });
+    imageLoading(file) {
+        let reader = new FileReader();
+        reader.onloadend = () => {
+            this.setState({
+                file: reader.result
+            });
+            console.log("IMAGE",reader.result)
+        }
+        reader.readAsDataURL(file)
+
     }
 
     render() {
@@ -40,6 +56,15 @@ class ArtistSignUp extends Component {
                 user_name, password, email_id, brief_description,
                 user_image, display_name,genre}
             } = this.props
+
+        const actions = [
+
+            <FlatButton
+                label="Submit"
+                primary={true}
+                onTouchTap={this.handleClose}
+            />
+        ];
 
         return (
             <div>
@@ -57,7 +82,7 @@ class ArtistSignUp extends Component {
                             {password.touched ? password.error : ''}
                         </div>
                     </div>
-                    <div className={`form-group ${email_id.touched && email_id.invalid ? 'has-danger' : ''}`}>      
+                    <div className={`form-group ${email_id.touched && email_id.invalid ? 'has-danger' : ''}`}>
                         <TextField type="email" hintText="Email Address" className="form-control" floatingLabelText="Email Address" {...email_id} />
                         <div className="text-help">
                             {email_id.touched ? email_id.error : ''}
@@ -65,7 +90,7 @@ class ArtistSignUp extends Component {
                     </div>
 
                     <div className={`form-group ${brief_description.touched && brief_description.invalid ? 'has-danger' : ''}`}>
-                        <TextField hintText="Brief Description" className="form-control"  
+                        <TextField hintText="Brief Description" className="form-control"
                         floatingLabelText="Brief Description"
                         multiLine={true}
                         rows={2}
@@ -77,14 +102,14 @@ class ArtistSignUp extends Component {
                     </div>
 
                     <div className={`form-group ${display_name.touched && display_name.invalid ? 'has-danger' : ''}`}>
-        
+
                         <TextField hintText="Display Name" floatingLabelText="Display Name" className="form-control"  {...display_name} />
                         <div className="text-help">
                             {display_name.touched ? display_name.error : ''}
                         </div>
                     </div>
                     <div className={`form-group ${genre.touched && genre.invalid ? 'has-danger' : ''}`}>
-                        <TextField hintText="Genre" 
+                        <TextField hintText="Genre"
                         floatingLabelText="Genre"
                         className="form-control"  {...genre} />
                         <div className="text-help">
@@ -94,22 +119,19 @@ class ArtistSignUp extends Component {
 
                     <div>
                         <label>Image</label>
-                        <div>
-                            <Dropzone
-                                onDropAccepted={this.imageLoading.bind(this)}
-                                { ...user_image }
-                                onDrop={ ( filesToUpload, e ) => user_image.onChange(filesToUpload) }
-                            >
-                                <div>Try dropping some files here, or click to select files to upload.</div>
-                            </Dropzone>
-                        </div>
-                        {this.state.file ?
-                            <div>
-                                <h6>Image Preview:</h6>
-                                <div>
-                                    <img style={{height: 100 + 'px'}} src={this.state.file.preview} />
-                                </div>
-                            </div> : null}
+                        <RaisedButton label="Image Up" onTouchTap={()=>this.handleOpen()} />
+                        <Dialog
+                            title="Image Up"
+                            actions={actions}
+                            modal={true}
+                            autoScrollBodyContent={true}
+                            autoDetectWindowHeight={true}
+                            open={this.state.imageButton}
+                        >
+                            <ImageUpload {...user_image}  />
+
+                        </Dialog>
+
                     </div>
 
                     <RaisedButton type="submit" >Submit</RaisedButton>
