@@ -174,6 +174,45 @@ export function SignUpArtist(creds){
 
 }
 
+export function MakePerformance(creds){
+    let config = {
+        method: 'post',
+        credentials: 'include',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(creds)
+    }
+
+    return (dispatch) =>{
+        console.log("CREDS SENT TO MakePerformance: ",creds)
+        dispatch(loginUserRequest()); // FIXME
+        return fetch(`/auth/signUp/`, config) // FIXME
+            .then(checkHttpStatus) // WHAT
+            .then(parseJSON)
+            .then(response => {
+                console.log("Detail Performance response ",response)
+
+                try {
+                    let decoded = jwtDecode(response.token); // FIXME this?  definitely below
+                    dispatch(loginArtistSuccess({token : response.token, artist_details:response.artist_details}));
+                    browserHistory.push('/') // FIXME... to the broadcast yourself page?
+                } catch (e) {
+                    dispatch(loginUserFailure({ // FIXME
+                        response: {
+                            status: 403,
+                            statusText: 'Invalid token'
+                        }
+                    }));
+                }
+            })
+            .catch(error => {
+                dispatch(loginUserFailure(error)); // FIXME
+            })
+    }
+}
+
 export function receiveProtectedData(data) {
     return {
         type: RECEIVE_PROTECTED_DATA,

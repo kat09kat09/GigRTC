@@ -1,16 +1,14 @@
-import React, {Component, PropTypes} from 'react'
-import {reduxForm} from 'redux-form'
-import Paper from 'material-ui/lib/paper'
+import React, { Component, PropTypes } from 'react'
+import { reduxForm } from 'redux-form'
 import TextField from 'material-ui/lib/text-field'
+import RadioButton from 'material-ui/lib/radio-button';
+import RadioButtonGroup from 'material-ui/lib/radio-button-group';
 import RaisedButton from 'material-ui/lib/raised-button'
-import DropDownMenu from 'material-ui/lib/DropDownMenu' //
-import MenuItem from 'material-ui/lib/menus/menu-item'
-import RadioButton from 'material-ui/lib/radio-button'
-import RadioButtonGroup from 'material-ui/lib/radio-button-group'
-import {SignUpArtist}  from '../../actions'; // FIXME
-import {Link} from 'react-router'
+import { MakePerformance }  from '../../actions';
+import { Link } from 'react-router'
 import Dropzone from 'react-dropzone';
 
+// put this instead of chat on broadcast page, disabling buttons, until there is a title submitted?
 
 class DescribePerformance extends Component {
 
@@ -45,86 +43,86 @@ class DescribePerformance extends Component {
         }
       } = this.props
 
-      return (
-        <div>
+    return (
+      <div>
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        <h3>Describe your performance</h3>
+          <h3>Describe your performance</h3>
 
-        <div className={`form-group ${title.touched && title.invalid ? 'has-danger' : ''}`}>
-          <TextField hintText="Title" floatingLabelText="Title" className="form-control"  {...title} />
-          <div className="text-help">
-            {user_name.touched ? user_name.error : ''}
+          <div className={`form-group ${title.touched && title.invalid ? 'has-danger' : ''}`}>
+            <TextField type="text" hintText="Title" floatingLabelText="Title" className="form-control" {...title} />
+            <div className="text-help">
+              {title.touched ? title.error : ''}
+            </div>
           </div>
-        </div>
 
-        <div className={`form-group ${short_description.touched && short_description.invalid ? 'has-danger' : ''}`}>
-          <TextField hintText="Short Description" floatingLabelText="Short Description" className="form-control"  {...short_description} />
-          <div className="text-help">
-            {short_description.touched ? short_description.error : ''}
+          <div className={`form-group ${short_description.touched && short_description.invalid ? 'has-danger' : ''}`}>
+            <TextField type="text" hintText="Short Description" floatingLabelText="Short Description" className="form-control" {...short_description} />
+            <div className="text-help">
+              {short_description.touched ? short_description.error : ''}
+            </div>
           </div>
-        </div>
 
-        <div className={`form-group ${long_description.touched && long_description.invalid ? 'has-danger' : ''}`}>
-          <TextField hintText="More info about you and your art" floatingLabelText="More info about you and your art" className="form-control" {...long_description} />
-          <div className="text-help">
-            {long_description.touched ? long_description.error : ''}
+          <div className={`form-group`}>
+            <TextField
+              type="text"
+              hintText="Info to display about you and your art"
+              floatingLabelText="Info to display about you and your art"
+              multiLine={ true }
+              rows={ 3 }
+              rowsMax={ 16 }
+              className="form-control" {...long_description}
+            />
           </div>
-        </div>
 
-        <div className={`form-group ${brief_description.touched && brief_description.invalid ? 'has-danger' : ''}`}>
-        <TextField hintText="Brief Description" className="form-control"
-        floatingLabelText="Brief Description"
-        multiLine={true}
-        rows={2}
-        rowsMax={4}
-        {...brief_description} />
-        <div className="text-help">
-        {brief_description.touched ? brief_description.error : ''}
-        </div>
-        </div>
+          <div className={`form-group ${rated_r.touched && rated_r.invalid ? 'has-danger' : ''}`}>
+            <RadioButtonGroup name="rated_r" className="form-control">
+              <RadioButton
+                checked={rated_r === false}
+                type="radio" {...rated_r}
+                value={false}
+                checked={rated_r.value === false}
+                label="OK for kids and teens"
+              />
+              <RadioButton
+                type="radio" {...rated_r}
+                value={true}
+                checked={rated_r.value === true}
+                checked={rated_r === true}
+                label="Needs a content warning"
+              />
+            </RadioButtonGroup>
+            <div className="text-help">
+              {rated_r.touched ? rated_r.error : ''} // FIXME need error if it's not touched
+            </div>
+          </div>
 
-        <div className={`form-group ${display_name.touched && display_name.invalid ? 'has-danger' : ''}`}>
-
-        <TextField hintText="Display Name" floatingLabelText="Display Name" className="form-control"  {...display_name} />
-        <div className="text-help">
-        {display_name.touched ? display_name.error : ''}
-        </div>
-        </div>
-        <div className={`form-group ${genre.touched && genre.invalid ? 'has-danger' : ''}`}>
-        <TextField hintText="Genre"
-        floatingLabelText="Genre"
-        className="form-control"  {...genre} />
-        <div className="text-help">
-        {genre.touched ? genre.error : ''}
-        </div>
-        </div>
-
-        <div>
-        <label>Image</label>
-        <div>
-        <Dropzone
-        onDropAccepted={this.imageLoading.bind(this)}
-        { ...user_image }
-        onDrop={ ( filesToUpload, e ) => user_image.onChange(filesToUpload) }
-        >
-        <div>Try dropping some files here, or click to select files to upload.</div>
-        </Dropzone>
-        </div>
-        {this.state.file ?
           <div>
-          <h6>Image Preview:</h6>
-          <div>
-          <img style={{height: 100 + 'px'}} src={this.state.file.preview} />
-          </div>
-          </div> : null}
+            <label>Image for this performance</label>
+            <div>
+              <Dropzone
+                onDropAccepted={this.imageLoading.bind(this)}
+                { ...performance_image }
+                onDrop={ ( filesToUpload, e ) => performance_image.onChange(filesToUpload) }
+              >
+                <div>Drag and drop a file here, or click to select a file to upload.</div>
+              </Dropzone>
+            </div>
+
+            {this.state.file ?
+            <div>
+              <h6>Image Preview:</h6>
+              <div>
+                <img style={{height: 100 + 'px'}} src={this.state.file.preview} />
+              </div>
+            </div> : null}
           </div>
 
           <RaisedButton type="submit" >Submit</RaisedButton>
 
-          </form>
-          </div>
-          )
-}
+        </form>
+      </div>
+    )
+  }
 }
 
 function validate(values){
@@ -139,7 +137,7 @@ function validate(values){
   }
 
   if(!values.rated_r){
-    errors.rated_r = 'It is ok for teens and kids?'
+    errors.rated_r = 'Will it be fine for teenagers and kids?'
   }
 
   return errors
