@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import TextField from 'material-ui/lib/text-field';
 
 export default class searchBar extends Component{
 
@@ -12,7 +13,7 @@ export default class searchBar extends Component{
     render(){
         return (
             <div>
-                <input
+                <TextField
                     placeholder="Find your favourite artists"
                     value = {this.state.term}
                     onChange={this.onInputChange.bind(this)} />
@@ -23,5 +24,6 @@ export default class searchBar extends Component{
         this.setState({
             term : event.target.value
         })
+        console.log(event.target.value)
     }
 }

@@ -58,6 +58,7 @@ export class RegisteredArtists extends Component{
     renderEvents () {
 
         return this.props.registeredArtists.map((Artist)=> {
+            console.log("PRESENT ARTIST",Artist.user_image.toString('ascii'));
             return (
 
                 <Link to={`/router/activeStream/${Artist.user_name}`}>

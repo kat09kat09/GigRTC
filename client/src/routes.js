@@ -21,7 +21,7 @@ export default (
 
         <IndexRoute component={ StreamsContainer } />
         <Route path="router/streamYourself" component={videoHigherOrderFunction(VideoPlayer)} />
-        <Route path="authenticateFacebook" component={AuthenticationContainer} />
+        <Route path="router/socialLogin" component={AuthenticationContainer} />
 
         <Route path="router/artistAuthenticate/:formType" component={ArtistAuthenticationLanding} />
         <Route path="router/registeredArtists" component={RegisteredArtists} />
