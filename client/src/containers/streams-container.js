@@ -57,7 +57,7 @@ export class StreamsContainer extends Component {
     return this.props.presentActiveStreams.map((performance)=> {
       return (
 
-        <Link to={`activeStream/${performance.room}`}>
+        <Link to={`/router/activeStream/${performance.room}`}>
           <GridTile
           key={performance.id}
 

@@ -89,9 +89,9 @@ app.use(favicon(__dirname + '/client/public/img/spinner.gif'));
 
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, 'client')));
+app.use('/',express.static(path.join(__dirname, 'client')));
 
-app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook', /^\/api\/.*/, /^\/api\/messages\/.*/,/^\/activeStream\/.*/, /^\/public\/.*/, /^\/about\/.*/]}));
+app.use(expressJWT({secret : CONFIG.JWT_SECRET}).unless({path : ['/',/^\/auth\/.*/,'/authenticateFacebook','/about', /^\/api\/.*/, /^\/api\/messages\/.*/,/^\/activeStream\/.*/, /^\/public\/.*/, /^\/router\/.*/]}));
 
 
 app.post('/auth/signIn/', (req, res) => {
@@ -123,7 +123,7 @@ app.post('/auth/signUp/', (req, res) => {
 
         }
         else {
-          console.log('creating new user',req.body);
+          console.log('creating NEW USER',req.body.user_image);
             var newArtist = new Artist({
                 user_name: req.body.user_name,
                 password: req.body.password,
@@ -173,13 +173,13 @@ passport.use(new FacebookStrategy({
     function(accessToken, refreshToken, profile, done) {
         new User({facebook_id : profile.id}).fetch().then(function(response){
             if(response){
-                console.log("PRFILE",profile)
                 return done(null,profile)
             }
             else{
+
                 var facebookUser = new User({
                     facebook_id : profile.id,
-                    email_id : profile.emails[0].value || null,
+                    email_id : profile.emails[0].value ? profile.emails[0].value : profile.displayName,
                     display_name : profile.displayName,
                     user_image : profile.photos[0].value
                 })
@@ -197,22 +197,18 @@ passport.use(new GoogleStrategy({
         clientID: CONFIG.G_CLIENT_ID,
         clientSecret: CONFIG.G_APP_SECRET,
         callbackURL: CONFIG.G_CALL_BACK
-
-        //profileFields: ['id','email', 'displayName', 'photos']
-        //returnURL: CONFIG.G_CALL_BACK,
-        //realm: 'https://localhost:1338/'
     },
     function(accessToken, refreshToken, profile, done) {
         console.log("GOOGLE PROFILE",profile)
         new User({google_id : profile.id}).fetch().then(function(response){
             if(response){
-                console.log("PRFILE for google",profile)
                 return done(null,profile)
             }
             else{
+
                 var googleUser = new User({
                     google_id : profile.id,
-                    email_id : profile.emails[0].value || null,
+                    email_id : profile.emails[0].value ? profile.emails[0].value : profile.displayName ,
                     display_name : profile.displayName,
                     user_image : profile.photos[0].value
                 })
@@ -239,7 +235,7 @@ var current_user;
 
 app.get('/auth/facebook/callback/',
 
-    passport.authenticate('facebook', { failureRedirect: '/login' }),
+    passport.authenticate('facebook', { failureRedirect: '/' }),
 
     function(req, res) {
         console.log("response",req.user);
@@ -325,8 +321,9 @@ app.get('/auth/getTokenizedUserDetails',(req,res)=>{
         else {
             User.query({where: {email_id: req.query.email}}).fetch().then(function(response){
                 if(response){
-                    console.log("FB PRFILE RETOKEN",profile)
-                    return done(null,profile)
+                    console.log("FB PRFILE RETOKEN",response)
+                    res.status(200).json({token: myToken, artist_details : response});
+
                 }
                 else{
                     res.status(404).json({status : 'User does not exist, please sign up'});
@@ -363,8 +360,6 @@ app.post('/api/uploadImage',function(req,res){
 app.get('/api/allRegisteredArtists',function(req,res){
 
    new Artist().fetchAll().then((allArtists)=>{
-        // console.log("ALL ARTISTS",allArtists.models[4].attributes.user_image.toString('utf-8'))
-       //console.log("ARTISTS BLOB",Artist.user_image.toString('utf-8'))
 
        res.status(302).json({registeredArtists : allArtists.models})
 
@@ -430,6 +425,7 @@ io.on('connection', function (socket){
 
 app.get('*', function (request, response){
     response.sendFile(path.resolve(__dirname, 'client', 'index.html'))
+
 })
 
 module.exports.server = server;

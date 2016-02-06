@@ -26,7 +26,7 @@ class FBButton extends Component {
                 label = "Log In With Facebook"
                 style = {style}
                 linkButton = {true}
-                href = '/auth/facebook/'
+                href = 'auth/facebook/'
             />
         );
     }

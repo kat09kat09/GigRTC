@@ -19,12 +19,12 @@ export default (
     <Route path="/" component={ App } >
 
         <IndexRoute component={ StreamsContainer } />
-        <Route path="streamYourself" component={videoHigherOrderFunction(VideoPlayer)} />
+        <Route path="router/streamYourself" component={videoHigherOrderFunction(VideoPlayer)} />
         <Route path="authenticateFacebook" component={AuthenticationContainer} />
-        <Route path="artistSignIn" component={ArtistAuthenticationLanding} />
-        <Route path="registeredArtists" component={RegisteredArtists} />
-        <Route path="activeStream/:room" component={videoHigherOrderFunction(VideoPlayer)} />
-        <Route path="about" component={About} />
+        <Route path="router/artistSignIn" component={ArtistAuthenticationLanding} />
+        <Route path="router/registeredArtists" component={RegisteredArtists} />
+        <Route path="router/activeStream/:room" component={videoHigherOrderFunction(VideoPlayer)} />
+        <Route path="router/about" component={About} />
     </Route>
 
 );

@@ -1,3 +1,5 @@
+var path = require('path')
+
 module.exports = {
     entry: [
         './src/index.js'
@@ -14,6 +16,9 @@ module.exports = {
         }]
     },
     resolve: {
+        alias: {
+            react: path.resolve('./node_modules/react')
+        },
         extensions: ['', '.js', '.jsx']
     },
     devServer: {

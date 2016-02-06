@@ -15,7 +15,7 @@ export class AuthenticatePage extends Component {
             this.props.getSocialDetails().then(function(){
                 console.log("SOCIAL LOGIN",this.props.auth)
             }.bind(this))
-            console.log('Authentication Page being called',this.props)
+            console.log('Authentication Page FOR SOCIAL being called')
 
     }
 
