@@ -21,14 +21,32 @@ class ImageUpload extends Component {
         let reader = new FileReader();
         let file = e.target.files[0];
 
-        reader.onloadend = () => {
-            this.setState({
-                file: file,
-                imagePreviewUrl: reader.result
-            });
-            this.props.onChange(reader.result)
-            console.log('Image base64',window.atob(reader.result));
+        const fileTypes = {
+            "image/png"  : true,
+            "image/jpeg" : true
         }
+
+        if(fileTypes[file.type] && file.size < 1031612 ){
+            reader.onloadend = () => {
+                this.setState({
+                    file: file,
+                    imagePreviewUrl: reader.result
+                });
+                this.props.onChange(reader.result)
+            }
+        }
+        else{
+            reader.onloadend = () => {
+                this.setState({
+                    file: file,
+                    imagePreviewUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Dialog-error-round.svg/2000px-Dialog-error-round.svg.png"
+                });
+            }
+        }
+
+
+
+
 
         reader.readAsDataURL(file)
     }
@@ -39,7 +57,7 @@ class ImageUpload extends Component {
         if (imagePreviewUrl) {
             $imagePreview = (<img src={imagePreviewUrl} />);
         } else {
-            $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+            $imagePreview = (<div className="previewText">Image should be JPEG OR PNG and less than 1MB</div>);
         }
 
         return (

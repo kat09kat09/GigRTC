@@ -48,14 +48,10 @@ export default (props)=>{
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
 
-
-
                 <MenuItem
                     linkButton={true}
                     primaryText="All Artists"
                     containerElement={<Link to="/router/registeredArtists" className="logoLink">registeredArtists</Link>} />
-
-        
 
                   <MenuItem
                       linkButton={true}
