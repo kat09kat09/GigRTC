@@ -274,6 +274,25 @@ app.get('/auth/validateSocialToken',(req, res) => {
 });
 
 /////////////////ACTIVE STREAM//////////
+
+app.put('/api/describe/', (req, res) => {
+  console.log(req.body, '<---- req.body in api/describe');
+
+  new Performance({room: req.body.room}) // FIXME send req.body.room on form submit room: req.body.user_name?
+  .save({
+    long_description: req.body.long_description,
+    performance_image: FileList, // FIXME how does this happen
+    rated_r: JSON.parse(req.body.rated_r),
+    short_description: req.body.short_description,
+    title: req.body.title
+  }, {patch: true})
+  .then(function(updatedPerf) {
+    console.log('Just updated this performance ---> ', updatedPerf);
+    Performances.add(updatedPerf);
+    res.status(200).json({token: myToken, artist_details: artist}); // FIXME how to appropriately trigger front end?
+  });
+});
+
 app.put('/api/activeStreams', function(req, res){
 
     Performance.where({ room: req.body.room }).fetch()

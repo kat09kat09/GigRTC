@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import Chat from  '../../components/Chat';
 import CONFIG from '../../../../config'
 import DropZone from '../../components/dropzone/dropzone.js'
-
+import DescribePerformance from '../../components/performanceDescription/describePerformance';
 
 export function videoHigherOrderFunction(Component) {
 
@@ -34,7 +34,7 @@ export function videoHigherOrderFunction(Component) {
         });
 
     };
-    
+
     function onStream(room){
         console.log("FROM SKYLINK WATCHING HIGHER ORDER WATCH STREAM",room)
         skylink.init({
@@ -99,10 +99,11 @@ export function videoHigherOrderFunction(Component) {
                                    watchMode={!!this.props.params.room}
                                    watchVideo={this.onWatchVideoBroadcast.bind(this)}
                             {...this.state} {...this.props}/>
-                      
+
                     </div>
 
                     <div style={{float:'right'}}>
+                    <DescribePerformance />
                         <Chat/>
                     </div>
                 </div>

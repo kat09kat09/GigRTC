@@ -174,21 +174,21 @@ export function SignUpArtist(creds){
 
 }
 
-export function MakePerformance(creds){
+export function MakePerformance(formData){
     let config = {
-        method: 'post',
-        credentials: 'include',
+        method: 'put',
+        credentials: 'include', // WHAT
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(creds)
+        body: JSON.stringify(formData)
     }
 
     return (dispatch) =>{
-        console.log("CREDS SENT TO MakePerformance: ",creds)
+        console.log("formData SENT TO MakePerformance: ", formData)
         dispatch(loginUserRequest()); // FIXME
-        return fetch(`/auth/signUp/`, config) // FIXME
+        return fetch(`/api/describe/`, config)
             .then(checkHttpStatus) // WHAT
             .then(parseJSON)
             .then(response => {

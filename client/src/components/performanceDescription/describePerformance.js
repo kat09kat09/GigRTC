@@ -46,7 +46,7 @@ class DescribePerformance extends Component {
     return (
       <div>
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-          <h3>Describe your performance</h3>
+          <h2>Describe your performance</h2>
 
           <div className={`form-group ${title.touched && title.invalid ? 'has-danger' : ''}`}>
             <TextField type="text" hintText="Title" floatingLabelText="Title" className="form-control" {...title} />
@@ -77,7 +77,7 @@ class DescribePerformance extends Component {
           <div className={`form-group ${rated_r.touched && rated_r.invalid ? 'has-danger' : ''}`}>
             <RadioButtonGroup name="rated_r" className="form-control">
               <RadioButton
-                checked={rated_r === false}
+                // checked={rated_r === false}
                 type="radio" {...rated_r}
                 value={false}
                 checked={rated_r.value === false}
