@@ -6,7 +6,7 @@ import RadioButtonGroup from 'material-ui/lib/radio-button-group';
 import RaisedButton from 'material-ui/lib/raised-button'
 import { MakePerformance }  from '../../actions';
 import { Link } from 'react-router'
-import Dropzone from 'react-dropzone';
+import ImageUpload from '../image_upload/image_upload';
 
 // put this instead of chat on broadcast page, disabling buttons, until there is a title submitted?
 
@@ -39,7 +39,8 @@ class DescribePerformance extends Component {
           short_description,
           long_description,
           performance_image,
-          rated_r
+          rated_r,
+          room
         }
       } = this.props
 
@@ -96,26 +97,17 @@ class DescribePerformance extends Component {
             </div>
           </div>
 
-          <div>
-            <label>Image for this performance</label>
+          <div className={`form-group`}> // this is a cludge to get styling correct
+            <TextField defaultValue="Image for this performance" className="form-control" />
             <div>
-              <Dropzone
-                onDropAccepted={this.imageLoading.bind(this)}
-                { ...performance_image }
-                onDrop={ ( filesToUpload, e ) => performance_image.onChange(filesToUpload) }
-              >
-                <div>Drag and drop a file here, or click to select a file to upload.</div>
-              </Dropzone>
+              <ImageUpload {...performance_image}/>
             </div>
-
-            {this.state.file ?
-            <div>
-              <h6>Image Preview:</h6>
-              <div>
-                <img style={{height: 100 + 'px'}} src={this.state.file.preview} />
-              </div>
-            </div> : null}
           </div>
+
+          // I still don't know how to get username
+          <h3>{this.props.user_name}</h3>
+          // to submit with the form as "room"
+          <div className='hidden'>hi</div>
 
           <RaisedButton type="submit" >Submit</RaisedButton>
 
@@ -143,9 +135,15 @@ function validate(values){
   return errors
 }
 
+// room is now available to this form
+function mapStateToProps(state) {
+  return {
+    userDetails: state.auth.userDetails
+  }
+}
 
 export default reduxForm({
   form: 'DescribePerformance',
-  fields : ['title', 'short_description', 'long_description', 'performance_image', 'rated_r'],
+  fields : ['title', 'short_description', 'long_description', 'performance_image', 'rated_r', 'room'],
   validate
-},null,{MakePerformance})(DescribePerformance)
+},mapStateToProps,{MakePerformance})(DescribePerformance)

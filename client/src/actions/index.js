@@ -177,7 +177,7 @@ export function SignUpArtist(creds){
 export function MakePerformance(formData){
     let config = {
         method: 'put',
-        credentials: 'include', // WHAT
+        credentials: 'include', // someday security can look at token
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -332,7 +332,7 @@ export function saveBroadcast(broadcastData) {
 
 //CHANGE THIS TO POINT TO THE SERVER END POINT AND THIS FUNCTION IS BEING CALLED PREFIXED WITH activeStreams as i'm trying to start a stream, which should be prevented for users as they will only have watch buttons
 export function performanceActive(room){
-    const data = axios.put('https://localhost:1338/api/activeStreams', room);
+    const data = axios.put('/api/activeStreams', room);
 
     return {
         type : ARTIST_STREAMING_STATUS,
