@@ -21,10 +21,10 @@ export default (
 
     <Route path="/" component={ App } >
 
-        <IndexRoute component={ StreamsContainer } />
+        <IndexRoute component={ Landing } />
         <Route path="router/streamYourself" component={videoHigherOrderFunction(VideoPlayer)} />
         <Route path="router/socialLogin" component={AuthenticationContainer} />
-
+        <Route path="router/nowStreaming" component={StreamsContainer} />
         <Route path="router/artistAuthenticate/:formType" component={ArtistAuthenticationLanding} />
         <Route path="router/registeredArtists" component={RegisteredArtists} />
         <Route path="router/activeStream/:room" component={videoHigherOrderFunction(VideoPlayer)} />

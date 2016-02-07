@@ -48,6 +48,11 @@ export default (props)=>{
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
 
+                <MenuItem 
+                  linkButton={true}
+                  primaryText='Now Streaming'
+                  containerElement={<Link to="/router/nowStreaming" className="logoLink"> Now Streaming </Link>} />
+
                 <MenuItem
                     linkButton={true}
                     primaryText="All Artists"
@@ -57,7 +62,7 @@ export default (props)=>{
                   <MenuItem
                     linkButton={true}
                     primaryText="Home"
-                    containerElement={<Link to="/router/landing" className="logoLink">Home</Link>} />
+                    containerElement={<Link to="/" className="logoLink">Home</Link>} />
 
                   {props.userPrivelege === 'artist' ?
                       <MenuItem

@@ -209,7 +209,7 @@ h1 {
 .mic-section {
   height: 950px;
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),  
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),  
     url('../img/mic.jpg');
   background-repeat: no-repeat;
   

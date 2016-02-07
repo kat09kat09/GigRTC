@@ -33,6 +33,13 @@ export default (props)=>{
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
+
+                <MenuItem 
+                  linkButton={true}
+                  primaryText='Now Streaming'
+                  containerElement={<Link to="/router/nowStreaming" className="logoLink"> Now Streaming </Link>} />
+
+
                 <MenuItem
                     linkButton={true}
                     primaryText="All Artists"
