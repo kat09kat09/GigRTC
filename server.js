@@ -86,7 +86,7 @@ var passport = require('passport')
     , FacebookStrategy = require('passport-facebook').Strategy
     ,   GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
-app.use(favicon(__dirname + '/client/public/img/spinner.gif'));
+app.use(favicon(__dirname + '/client/public/img/favicon.png'));
 
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));

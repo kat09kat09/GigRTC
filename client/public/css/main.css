@@ -74,29 +74,6 @@ video {
   border-style: none;
 }
 
-/*.videoWrapper {
-  max-width: 100%;
-}*/
-/*
-.header {
-  width: 100%;
-  height: 100px;
-  background-color: #343434;
-  color: #FCF660;
-  border-radius: 0px;
-  font-family: 'Chelsea Market', cursive;
-  padding-left: 16px;
-}
-*/
-/*.logoLink {
-  text-decoration: none;
-}
-*/
-
-/*.videoWrapper {
-  background-image: url('../img/crowdVideo2.jpg');
-  height: 900px;
-}*/
 
 .hide {
   display: none;
@@ -151,6 +128,18 @@ h1 {
 
 
 /*About page helper classes*/
+
+.art-land-wrap {
+  height: 950px;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),  
+    url('../img/artLand.jpg');
+  background-repeat: no-repeat;
+  
+  background-size: 100%;
+  border: 1px solid #212121;
+}
+
 .avatar {
   display: inline-block;
   max-width: 25%;
@@ -218,9 +207,9 @@ h1 {
 }
 
 .mic-section {
-  height: 800px;
+  height: 950px;
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),  
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),  
     url('../img/mic.jpg');
   background-repeat: no-repeat;
   
@@ -234,13 +223,14 @@ h1 {
   color: #FCF660;
 }
 
-.left {
-
+.rock-it {
+  margin-top: 13%;
+  transform: rotate(12deg);
 }
 
 .right {
   width: 50%;
-  margin-top: 10%;
+  margin-top: 13%;
   float: right;
   color: #eCe630;
 }
@@ -250,11 +240,23 @@ h1 {
   font-family: 'Fjalla One';
 }
 
+/*.artistButton {
+  margin-top: 45px;
+  margin-left: 40%;
+};
+
+*/
+/*.fanButton {
+  margin-top: 45%;
+  margin-left: 10%;
+}
 
 
+*/
 
-
-
+.fanButton {
+  margin-top: 3rem;
+}
 
 /*MEDIA QUERIES*/
 @media (min-width: 1800px) {
@@ -268,8 +270,28 @@ h1 {
       margin: 0 25%;
     }
 
+/*    .artistButton {
+      margin-top: 45px,
+      margin-left: 35%;
+    };
+
+    .fanButton {
+      margin-top: 45px;
+      margin-left: 10%;
+    };*/
+
+    
     .avatars {
       margin-top: 5%;
+    }
+
+    .mic-section, .art-land-wrap {
+      height: 670px;
+    }
+
+
+    .right {
+      margin
     }
     .stack {
       margin-top: 10%;

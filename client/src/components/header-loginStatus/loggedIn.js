@@ -23,7 +23,7 @@ export default (props)=>{
         <AppBar
             title={<span style={styles.title}><Link to="/" className="logoLink">GIGG.TV</Link></span>}
             className="header"
-            iconElementLeft={<img src='../../public/img/rocket.svg' height='40' width='40' alt='' />}
+            iconElementLeft={<img className="rock-it" src='../../public/img/rocket.svg' height='40' width='40' alt='' />}
             // showMenuIconButton={false}
             iconElementRight={
                 <div>
@@ -48,20 +48,21 @@ export default (props)=>{
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
 
+                <MenuItem 
+                  linkButton={true}
+                  primaryText='Now Streaming'
+                  containerElement={<Link to="/router/nowStreaming" className="logoLink"> Now Streaming </Link>} />
+
                 <MenuItem
                     linkButton={true}
                     primaryText="All Artists"
                     containerElement={<Link to="/router/registeredArtists" className="logoLink">registeredArtists</Link>} />
 
-                  <MenuItem
-                      linkButton={true}
-                      primaryText={props.userPrivelege === 'artist' ? props.user_details.user_name : (props.userPrivelege === 'user' ?  props.user_details.name : 'Guest') }
-                      containerElement={<Link to="/" className="logoLink">GIGG.tv</Link>} />
 
                   <MenuItem
                     linkButton={true}
                     primaryText="Home"
-                    containerElement={<Link to="/router/landing" className="logoLink">Home</Link>} />
+                    containerElement={<Link to="/" className="logoLink">Home</Link>} />
 
                   {props.userPrivelege === 'artist' ?
                       <MenuItem
