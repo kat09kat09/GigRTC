@@ -18,7 +18,9 @@ const {
     FILTER_REGISTERED_ARTISTS,
     FETCH_REGISTERED_ARTISTS,
     UPLOAD_IMAGE,
-    PERFORMANCE_DETAIL_UPDATE
+    PERFORMANCE_DETAIL_UPDATE,
+    PERFORMANCE_DETAIL_SUCCESS,
+    PERFORMANCE_DETAIL_FAILURE
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -178,7 +180,25 @@ export function SignUpArtist(creds){
 
 export function perfDetailUpdate() {
   return {
-    type: PERFORMANCE_DETAIL_UPDATE
+    type : PERFORMANCE_DETAIL_UPDATE
+  }
+}
+
+export function perfDetailSuccess(perfObj) {
+  console.log('in perfDetailSuccess, this is perfObj ++++++++++++++++++', perfObj);
+  return {
+    type : PERFORMANCE_DETAIL_SUCCESS,
+    payload : perfObj
+  }
+}
+
+export function perfDetailFailure(errObj) {
+  console.log('in perfDetailFailure, this is errObj ++++++++++++++++++', errObj);
+  return {
+    type: PERFORMANCE_DETAIL_FAILURE,
+    payload : {
+      error: errObj
+    }
   }
 }
 
@@ -200,23 +220,17 @@ export function MakePerformance(formData){
             .then(checkHttpStatus) // WHAT
             .then(parseJSON)
             .then(response => {
-                console.log("++++++++++++++ Detail Performance response ",response)
-
+                console.log("++++++++++++++ response from server to MakePerformance", response);
                 try {
-                    dispatch(loginArtistSuccess({token : response.token, artist_details:response.artist_details}));
-                    browserHistory.push('/') // FIXME... to the broadcast yourself page?
+                    dispatch(perfDetailSuccess(response));
+                    // browserHistory.push('/'); // FIXME... to the broadcast yourself page?
                 } catch (e) {
-                    dispatch(loginUserFailure({ // FIXME
-                        response: {
-                            status: 403,
-                            statusText: 'Invalid token'
-                        }
-                    }));
+                    dispatch(perfDetailFailure(response));
                 }
             })
             .catch(error => {
                 console.log(error, "+++++++++++++ Error in MakePerformance return from server");
-                dispatch(loginUserFailure(error)); // FIXME
+                dispatch(perfDetailFailure(error));
             })
     }
 }
