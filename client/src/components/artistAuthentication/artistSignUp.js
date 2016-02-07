@@ -76,7 +76,7 @@ class ArtistSignUp extends Component {
                 <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                     <h3>Sign Up</h3>
                     <div className={`form-group ${user_name.touched && user_name.invalid ? 'has-danger' : ''}`}>
-                        <TextField hintText="User Name" floatingLabelText="User Name" lassName="form-control"  {...user_name} />
+                        <TextField hintText="User Name" floatingLabelText="User Name" className="form-control"  {...user_name} />
                         <div className="text-help">
                             {user_name.touched ? user_name.error : ''}
                         </div>

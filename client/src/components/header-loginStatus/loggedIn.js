@@ -10,7 +10,7 @@ import NavigationClose from 'material-ui/lib/svg-icons/navigation/close';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import FlatButton from 'material-ui/lib/flat-button';
-import MusicVideo from 'material-ui/lib/svg-icons/av/music-video';
+import Videocam from 'material-ui/lib/svg-icons/av/videocam';
 
 const styles = {
   title: {
@@ -28,17 +28,17 @@ export default (props)=>{
             iconElementRight={
                 <div>
                 {props.userPrivelege === 'artist' ?
-                 <RaisedButton
-                   label="Create a Performance"
-                   labelPosition="after"
-                   backgroundColor="#fea92f "
-                   icon={<MusicVideo />}
-                   linkButton={true}
-                   href="/streamYourself"
-                 />
-               :
-                ""
-               }
+                  <RaisedButton
+                    label="Create a Performance"
+                    labelPosition="after"
+                    backgroundColor="#fea92f"
+                    icon={<Videocam />}
+                    linkButton={true}
+                    href="/streamYourself"
+                  />
+                :
+                 ""
+                }
 
                   <IconMenu
                   iconButtonElement={

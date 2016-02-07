@@ -15,8 +15,13 @@ const {
     LOGIN_ARTIST_SUCCESS,
     VIEW_COUNT_UPDATE,
     ARTIST_STREAMING_STATUS,
+    FETCH_ALL_STREAMS,
+    FILTER_REGISTERED_ARTISTS,
     FETCH_REGISTERED_ARTISTS,
-    FETCH_ALL_STREAMS
+    UPLOAD_IMAGE,
+    PERFORMANCE_DETAIL_UPDATE,
+    PERFORMANCE_DETAIL_SUCCESS,
+    PERFORMANCE_DETAIL_FAILURE
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -174,6 +179,63 @@ export function SignUpArtist(creds){
 
 }
 
+export function perfDetailUpdate() {
+  return {
+    type : PERFORMANCE_DETAIL_UPDATE
+  }
+}
+
+export function perfDetailSuccess(perfObj) {
+  console.log('in perfDetailSuccess, this is perfObj ++++++++++++++++++', perfObj);
+  return {
+    type : PERFORMANCE_DETAIL_SUCCESS,
+    payload : perfObj
+  }
+}
+
+export function perfDetailFailure(errObj) {
+  console.log('in perfDetailFailure, this is errObj ++++++++++++++++++', errObj);
+  return {
+    type: PERFORMANCE_DETAIL_FAILURE,
+    payload : {
+      error: errObj
+    }
+  }
+}
+
+export function MakePerformance(formData){
+    let config = {
+        method: 'put',
+        credentials: 'include', // someday security can look at token
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+    }
+
+    return (dispatch) =>{
+        console.log("+++++++++++ formData SENT TO MakePerformance: ", formData)
+        dispatch(perfDetailUpdate());
+        return fetch(`/api/describe/`, config)
+            .then(checkHttpStatus) // WHAT
+            .then(parseJSON)
+            .then(response => {
+                console.log("++++++++++++++ response from server to MakePerformance", response);
+                try {
+                    dispatch(perfDetailSuccess(response));
+                    // browserHistory.push('/'); // FIXME... to the broadcast yourself page?
+                } catch (e) {
+                    dispatch(perfDetailFailure(response));
+                }
+            })
+            .catch(error => {
+                console.log(error, "+++++++++++++ Error in MakePerformance return from server");
+                dispatch(perfDetailFailure(error));
+            })
+    }
+}
+
 export function receiveProtectedData(data) {
     return {
         type: RECEIVE_PROTECTED_DATA,
@@ -305,7 +367,7 @@ export function saveBroadcast(broadcastData) {
 
 //CHANGE THIS TO POINT TO THE SERVER END POINT AND THIS FUNCTION IS BEING CALLED PREFIXED WITH activeStreams as i'm trying to start a stream, which should be prevented for users as they will only have watch buttons
 export function performanceActive(room){
-    const data = axios.put('https://localhost:1338/api/activeStreams', room);
+    const data = axios.put('/api/activeStreams', room);
 
     return {
         type : ARTIST_STREAMING_STATUS,

@@ -9,7 +9,7 @@ import { bindActionCreators } from 'redux';
 import Chat from  '../../components/Chat';
 import CONFIG from '../../../../config'
 import DropZone from '../../components/dropzone/dropzone.js'
-
+import DescribePerformance from '../../components/performanceDescription/describePerformance';
 
 export function videoHigherOrderFunction(Component) {
 
@@ -109,6 +109,7 @@ export function videoHigherOrderFunction(Component) {
                     </div>
 
                     <div style={{float:'right'}}>
+                    <DescribePerformance />
                         <Chat/>
                     </div>
                 </div>
