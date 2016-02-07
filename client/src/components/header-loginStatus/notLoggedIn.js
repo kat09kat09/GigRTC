@@ -24,7 +24,7 @@ export default (props)=>{
         <AppBar
             title={<span style={styles.title}><Link to="/" className="logoLink">GIGG.TV</Link></span>}
             className="header"
-            iconElementLeft={<img src='../../public/img/rocket.svg' height='40' width='40' alt='' />}
+            iconElementLeft={<img className="rock-it" src='../../public/img/rocket.svg' height='40' width='40' alt='' />}
             iconElementRight={
                 <IconMenu
                   iconButtonElement={
@@ -33,6 +33,13 @@ export default (props)=>{
                   targetOrigin={{horizontal: 'right', vertical: 'top'}}
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
+
+                <MenuItem 
+                  linkButton={true}
+                  primaryText='Now Streaming'
+                  containerElement={<Link to="/router/nowStreaming" className="logoLink"> Now Streaming </Link>} />
+
+
                 <MenuItem
                     linkButton={true}
                     primaryText="All Artists"
