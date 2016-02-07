@@ -205,14 +205,32 @@ h1 {
 .land-wrap {
 
 }
+.live {
+  display:inline-block;
+  float: left;
+  width: 240px;
+  height: 950px;
+  background-color: #212121;
+  text-align: center;
+  color: orange;
+  z-index: 10;
+}
+
+.live > h2 {
+  font-size: 1.1rem;
+  font-family: 'Fjalla One';
+  margin-top: 1rem;
+}
 
 .mic-section {
+  display:inline-block;
   height: 950px;
+  width: 100%;
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url('../img/mic.jpg');
   background-repeat: no-repeat;
-
+  background-position: 240px 0;
   background-size: 100%;
   border: 1px solid #212121;
 }
@@ -231,8 +249,10 @@ h1 {
 .right {
   width: 50%;
   margin-top: 13%;
+  margin-left: 10%;
   float: right;
   color: #eCe630;
+
 }
 
 .right > h1 {
@@ -284,12 +304,19 @@ h1 {
     .avatars {
       margin-top: 5%;
     }
-
+    .live {
+  
+      float: left;
+      width: 220px;
+      height: 670px;
+      background-color: #212121;
+      text-align: center;
+      color: orange;
+}
     .mic-section, .art-land-wrap {
       height: 670px;
+      background-position: 220px 0px;
     }
-
-
 
     .stack {
       margin-top: 10%;
