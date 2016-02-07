@@ -15,7 +15,7 @@ const {
     LOGIN_ARTIST_SUCCESS,
     VIEW_COUNT_UPDATE,
     ARTIST_STREAMING_STATUS,
-    UPLOAD_IMAGE,
+    FILTER_REGISTERED_ARTISTS,
     FETCH_REGISTERED_ARTISTS
     } = CONSTANTS;
 
@@ -202,11 +202,11 @@ export function fetchProtectedData(token,environment) {
             .then(response => {
                 console.log('response data after login', response.data);
                 dispatch(receiveProtectedData(response.data));
-                
+
             })
             .catch(error => {
                 if(error.response.status === 401) {
-                    console.log('there was an error with logging in'); 
+                    console.log('there was an error with logging in');
                     dispatch(loginUserFailure(error));
                     browserHistory.push('/');
                 }
@@ -335,3 +335,10 @@ export function fetchAllRegisteredArtists(){
     }
 }
 
+export function filterRegisteredArtists(results){
+
+    return {
+        type : FILTER_REGISTERED_ARTISTS,
+        payload : results
+    }
+}
