@@ -274,6 +274,33 @@ app.get('/auth/validateSocialToken',(req, res) => {
 });
 
 /////////////////ACTIVE STREAM//////////
+
+app.put('/api/describe/', (req, res) => {
+  console.log(req.body, '<---- req.body in api/describe');
+
+  Performance.where({ room: req.body.room }).fetch().then(function(updatedPerf){
+    updatedPerf.save({
+      long_description: req.body.long_description,
+      // performance_image: FileList, // FIXME how does this happen
+      rated_r: JSON.parse(req.body.rated_r),
+      short_description: req.body.short_description,
+      title: req.body.title
+    }, {patch: true})
+    .then(function(perf) {
+      console.log('Just updated this performance ---> ', perf);
+      Performances.add(perf);
+      var responseObject = {
+        title: perf.get('title'),
+        short_description: perf.get('short_description'),
+        long_description: perf.get('long_description'),
+        performance_image: perf.get('performance_image') // FIXME wait and see how this works
+      };
+      res.status(200).json(responseObject); // this object is returned to the client
+    });
+  });
+
+});
+
 app.put('/api/activeStreams', function(req, res){
 
     Performance.where({ room: req.body.room }).fetch()
