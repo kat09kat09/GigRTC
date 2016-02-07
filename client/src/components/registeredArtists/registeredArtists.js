@@ -68,7 +68,6 @@ export class RegisteredArtists extends Component{
     render () {
 
         if (this.state.registeredArtists) {
-            {console.log(this.props.state)}
             return(
                 <div>
                     <div style={ styles.searchBar }>
