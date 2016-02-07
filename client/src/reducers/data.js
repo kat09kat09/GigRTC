@@ -31,14 +31,5 @@ export default createReducer(initialState, {
             }
         });
     },
-
-    [FILTER_REGISTERED_ARTISTS] : (state,payload) =>{
-        console.log("FETCH Filtered ARTISTS",payload);
-        return Object.assign({}, state, {
-            'isFetching': true,
-            'data' : {
-                filteredArtists : payload
-            }
-        });
-    }
+    
 });

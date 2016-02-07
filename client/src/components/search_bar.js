@@ -25,11 +25,6 @@ export default class searchBar extends Component{
         }
     }
 
-    //static contextTypes = {
-    //    selected : PropTypes.string
-    //}
-
-
 
     render(){
         return (
