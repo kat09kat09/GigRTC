@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
-import {fetchAllRegisteredArtists,getActivePerformances} from '../../actions/index'
+import {fetchAllRegisteredArtists,getAllStreams} from '../../actions/index'
 import { Link } from 'react-router';
 import _ from 'lodash';
 
@@ -32,7 +32,7 @@ export class RegisteredArtists extends Component{
         super(props);
         this.state ={
             registeredArtists : null,
-            activeArtists : null
+            allStreams : null
         }
 
     }
@@ -43,9 +43,9 @@ export class RegisteredArtists extends Component{
                 registeredArtists : data.payload.data.registeredArtists
             })
         }.bind(this))
-        this.props.getActivePerformances().then(function(info){
+        this.props.getAllStreams().then(function(info){
             this.setState({
-                activeArtists : info.payload.data
+                allStreams : info.payload.data
             })
         }.bind(this))
     }
@@ -94,11 +94,11 @@ export class RegisteredArtists extends Component{
     renderEvents () {
 
         return this.state.registeredArtists.map((Artist)=> {
-            var performanceProfile = _.find(this.props.activeStreams,{room : Artist.user_name}) //This data's image will be used to fill up the banner for the tile, line 111
+            var performanceProfile = _.find(this.props.allStreams,{room : Artist.user_name}) //This data's image will be used to fill up the banner for the tile, line 111
 
             return (
                 <li key={Artist.id}>
-                    <Link to={`/router/activeStream/${Artist.user_name}`}>
+                    <Link to={`/router/artistPage/${Artist.user_name}`}>
                         <Card>
                             <CardHeader
                                 title={Artist.display_name}
@@ -134,12 +134,12 @@ function mapStateToProps(state){
 
     return{
         registeredArtists : state.data.registeredArtists,
-        activeStreams : state.data.activeStreams
+        allStreams : state.data.allStreams
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchAllRegisteredArtists,getActivePerformances}, dispatch)
+    return bindActionCreators({fetchAllRegisteredArtists,getAllStreams}, dispatch)
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(RegisteredArtists)

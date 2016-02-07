@@ -15,7 +15,8 @@ const {
     LOGIN_ARTIST_SUCCESS,
     VIEW_COUNT_UPDATE,
     ARTIST_STREAMING_STATUS,
-    FETCH_REGISTERED_ARTISTS
+    FETCH_REGISTERED_ARTISTS,
+    FETCH_ALL_STREAMS
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -277,6 +278,18 @@ export function getActivePerformances(){
     }
 
 }
+
+export function getAllStreams(){
+
+    var data = axios.get('/api/allStreams')
+
+    return {
+        type : FETCH_ALL_STREAMS,
+        payload : data
+    }
+
+}
+
 
 
 

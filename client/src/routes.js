@@ -10,7 +10,7 @@ import AuthenticationContainer from './components/auth/authenticatePage';
 import {videoHigherOrderFunction} from './containers/watchAndHost/watchingHigherOrder'
 import ArtistAuthenticationLanding from './components/artistAuthentication/artistAuthenticationLanding'
 import RegisteredArtists from './components/registeredArtists/registeredArtists'
-
+import ArtistPage from './components/artistShowPage'
 import Chat from './components/Chat';
 import About from './components/about/about';
 import Landing from './components/landing/landing';
@@ -33,6 +33,7 @@ export default (
         <Route path="router/artistLand" component={ArtistLand} />
         <Route path="router/fanLand" component={FanLand} />
         <Route path="router/landing" component={Landing} />
+        <Route path="router/artistPage/:artist_name" component={ArtistPage} />
     </Route>
 
 );

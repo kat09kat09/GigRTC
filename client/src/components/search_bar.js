@@ -1,6 +1,6 @@
 import React,{Component,PropTypes} from 'react';
 import TextField from 'material-ui/lib/text-field';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 import _ from 'lodash';
 import RadioButton from 'material-ui/lib/radio-button';
 import RadioButtonGroup from 'material-ui/lib/radio-button-group';
@@ -12,8 +12,8 @@ const styles = {
         margin : '0 auto'
     },
     radioButton: {
-        marginBottom: 16,
-    },
+        marginBottom: 16
+    }
 };
 
 var selected = "Artist";
