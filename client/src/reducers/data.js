@@ -30,6 +30,6 @@ export default createReducer(initialState, {
                 registeredArtists : payload.data.registeredArtists
             }
         });
-    },
-    
+    }
+
 });

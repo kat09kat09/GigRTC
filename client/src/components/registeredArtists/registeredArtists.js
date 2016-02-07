@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
-import {fetchAllRegisteredArtists,filterRegisteredArtists} from '../../actions/index'
+import {fetchAllRegisteredArtists} from '../../actions/index'
 import { Link } from 'react-router';
 import _ from 'lodash';
 
@@ -130,7 +130,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchAllRegisteredArtists,filterRegisteredArtists}, dispatch)
+    return bindActionCreators({fetchAllRegisteredArtists}, dispatch)
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(RegisteredArtists)
