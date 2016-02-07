@@ -1,20 +1,20 @@
-import React,{Component} from 'react';
+import React,{Component,PropTypes} from 'react';
 import TextField from 'material-ui/lib/text-field';
 import {connect} from 'react-redux'
 import _ from 'lodash';
-import Toggle from 'material-ui/lib/toggle';
+import RadioButton from 'material-ui/lib/radio-button';
+import RadioButtonGroup from 'material-ui/lib/radio-button-group';
 
 const styles = {
     block: {
         maxWidth: 250,
     },
-    toggle: {
+    radioButton: {
         marginBottom: 16,
     },
 };
 
-var genre = false;
-var artist = false;
+var selected = "Artist";
 
 export default class searchBar extends Component{
 
@@ -25,27 +25,32 @@ export default class searchBar extends Component{
         }
     }
 
+    //static contextTypes = {
+    //    selected : PropTypes.string
+    //}
+
 
 
     render(){
         return (
             <div>
 
-                <Toggle
-                    label="Name"
-                    labelPosition="right"
-                    style={styles.toggle}
-                    onToggle={()=>artist=!artist}
-                />
-                <Toggle
-                    label="Genre"
-                    labelPosition="right"
-                    style={styles.toggle}
-                    onToggle={()=>{
-                    genre=!genre
-                    console.log("TOGGLE SWITCH",genre)
-                    }}
-                />
+                <RadioButtonGroup name="shipSpeed" defaultSelected="Artist" >
+                    <RadioButton
+                        value="Genre"
+                        label="Genre"
+                        name = "Genre"
+                        style={styles.radioButton}
+                        onClick={this.selectedAttribute.bind(this,"Genre")}
+                    />
+                    <RadioButton
+                        value="Artist"
+                        label="Artist"
+                        name = "Artist"
+                        style={styles.radioButton}
+                        onClick={this.selectedAttribute.bind(this,"Artist")}
+                    />
+                </RadioButtonGroup>
                 <TextField
                     placeholder="Find your favourite artists"
                     value = {this.state.term}
@@ -57,7 +62,11 @@ export default class searchBar extends Component{
         this.setState({
             term : event.target.value
         });
-        this.props.filterData(event.target.value);
+        this.props.filterData({text : event.target.value, selected});
 
+    }
+
+    selectedAttribute(data){
+        selected = data
     }
 }

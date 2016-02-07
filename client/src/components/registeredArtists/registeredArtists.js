@@ -45,7 +45,16 @@ export class RegisteredArtists extends Component{
     }
 
     filterData(criteria){
-        var results = _.filter(this.props.registeredArtists, function(artist) { return artist.display_name == criteria });
+        console.log("CRITERIA",criteria)
+        var results = _.filter(this.props.registeredArtists, function(artist) {
+            if( criteria.selected === "Artist" ){
+               return  artist.display_name == criteria.text
+            }
+            else if(criteria.selected === "Genre"){
+                return  artist.genre == criteria.text
+            }
+
+        });
         this.setState({
             registeredArtists : results
         })
