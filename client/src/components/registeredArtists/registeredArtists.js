@@ -1,15 +1,19 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
-import {fetchAllRegisteredArtists} from '../../actions/index'
+import {fetchAllRegisteredArtists,filterRegisteredArtists} from '../../actions/index'
 import { Link } from 'react-router';
+import _ from 'lodash';
 
 import SearchBar from '../search_bar'
 
-import GridList from '../../../node_modules/material-ui/lib/grid-list/grid-list';
-import GridTile from '../../../node_modules/material-ui/lib/grid-list/grid-tile';
-import StarBorder from '../../../node_modules/material-ui/lib/svg-icons/toggle/star-border';
-import IconButton from '../../../node_modules/material-ui/lib/icon-button';
+import Card from 'material-ui/lib/card/card';
+import CardActions from 'material-ui/lib/card/card-actions';
+import CardHeader from 'material-ui/lib/card/card-header';
+import CardMedia from 'material-ui/lib/card/card-media';
+import CardTitle from 'material-ui/lib/card/card-title';
+import FlatButton from 'material-ui/lib/flat-button';
+import CardText from 'material-ui/lib/card/card-text';
 
 const styles = {
     root: {
@@ -17,32 +21,49 @@ const styles = {
         flexWrap: 'wrap',
         justifyContent: 'space-around'
     },
-    gridList: {
-        width: 800,
-        height: 600,
-        overflowY: 'auto',
-        marginBottom: 24
+    searchBar : {
+        margin: '0 auto'
     }
 };
 
-var reader  = new window.FileReader();
-
 export class RegisteredArtists extends Component{
 
+    constructor(props){
+        super(props)
+        this.state ={
+            registeredArtists : null
+        }
+
+    }
+
     componentWillMount(){
-        this.props.fetchAllRegisteredArtists()
+        this.props.fetchAllRegisteredArtists().then(function(data){
+            this.setState({
+                registeredArtists : data.payload.data.registeredArtists
+            })
+        }.bind(this))
+    }
+
+    filterData(criteria){
+        var results = _.filter(this.props.registeredArtists, function(artist) { return artist.display_name == criteria });
+        this.setState({
+            registeredArtists : results
+        })
     }
 
     render () {
 
-        if (this.props.registeredArtists) {
+        if (this.state.registeredArtists) {
             return(
                 <div>
-                    <SearchBar/>
+                    <div style={ styles.searchBar }>
+                        <SearchBar filterData={this.filterData.bind(this)}/>
+                    </div>
+
                     <div style={ styles.root }>
-                        <GridList cellHeight={ 180 } style={ styles.gridList }>
+                        <ul>
                             { this.renderEvents() }
-                        </GridList>
+                        </ul>
                     </div>
                 </div>
             )
@@ -57,22 +78,35 @@ export class RegisteredArtists extends Component{
 
     renderEvents () {
 
-        return this.props.registeredArtists.map((Artist)=> {
-            console.log("PRESENT ARTIST",Artist.user_image.toString('ascii'));
+        return this.state.registeredArtists.map((Artist)=> {
+            console.log("ARTIST",Artist);
             return (
+                <li key={Artist.id}>
+                    <Link to={`/router/activeStream/${Artist.user_name}`}>
+                        <Card>
+                            <CardHeader
+                                title={Artist.display_name}
+                                avatar="http://lorempixel.com/100/100/nature/"
+                            />
+                            <CardMedia
+                                overlay={<CardTitle title={Artist.genre}  />}
+                            >
+                                <img src={Artist.user_image} />
+                            </CardMedia>
+                            <CardTitle title="Hey there!" subtitle="I'm the OG " />
+                            <CardText>
+                                {Artist.brief_description}
+                            </CardText>
+                            <CardActions>
+                                <FlatButton label="Subscribe to me" />
+                                <FlatButton
+                                    onTouchTap={()=>browserHistory.push(`/router/activeStream/${Artist.user_name}`)}
+                                    label="Come see me perform live!" />
+                            </CardActions>
+                        </Card>
+                    </Link>
+                </li>
 
-                <Link to={`/router/activeStream/${Artist.user_name}`}>
-                    <GridTile
-                        key={Artist.id}
-
-                        Name={Artist.user_name}
-                        Brief Description={<span>by <b>{Artist.brief_description}</b></span>}
-                        actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
-                    >
-                        <img src={Artist.user_image}
-                        />
-                    </GridTile>
-                </Link>
             )
         })
     }
@@ -80,13 +114,14 @@ export class RegisteredArtists extends Component{
 
 
 function mapStateToProps(state){
+
     return{
         registeredArtists : state.data.data.registeredArtists
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchAllRegisteredArtists}, dispatch)
+    return bindActionCreators({fetchAllRegisteredArtists,filterRegisteredArtists}, dispatch)
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(RegisteredArtists)
