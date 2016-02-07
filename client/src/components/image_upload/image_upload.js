@@ -59,7 +59,12 @@ class ImageUpload extends Component {
         return (
             <div className="previewComponent">
                 <form onSubmit={(e)=>this._handleSubmit(e)}>
-                    <input className="fileInput" type="file" onChange={(e)=>this._handleImageChange(e)} />
+                    <label className="custom-file-upload">
+                    Upload
+                    <input type="file" onChange={(e)=>this._handleImageChange(e)} />
+
+                    </label>
+
                 </form>
                 <div className="imgPreview">
                     {$imagePreview}

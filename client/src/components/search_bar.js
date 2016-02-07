@@ -1,17 +1,19 @@
 import React,{Component,PropTypes} from 'react';
 import TextField from 'material-ui/lib/text-field';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 import _ from 'lodash';
 import RadioButton from 'material-ui/lib/radio-button';
 import RadioButtonGroup from 'material-ui/lib/radio-button-group';
+import Paper from 'material-ui/lib/paper';
 
 const styles = {
     block: {
-        maxWidth: 250,
+        maxWidth: '20%',
+        margin : '0 auto'
     },
     radioButton: {
-        marginBottom: 16,
-    },
+        marginBottom: 16
+    }
 };
 
 var selected = "Artist";
@@ -25,15 +27,10 @@ export default class searchBar extends Component{
         }
     }
 
-    //static contextTypes = {
-    //    selected : PropTypes.string
-    //}
-
-
 
     render(){
         return (
-            <div>
+            <Paper style={styles.block} zDepth={4}>
 
                 <RadioButtonGroup name="shipSpeed" defaultSelected="Artist" >
                     <RadioButton
@@ -55,7 +52,7 @@ export default class searchBar extends Component{
                     placeholder="Find your favourite artists"
                     value = {this.state.term}
                     onChange={this.onInputChange.bind(this)} />
-            </div>
+            </Paper>
         )
     }
     onInputChange(event){

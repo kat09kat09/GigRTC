@@ -15,6 +15,7 @@ const {
     LOGIN_ARTIST_SUCCESS,
     VIEW_COUNT_UPDATE,
     ARTIST_STREAMING_STATUS,
+    FETCH_ALL_STREAMS,
     FILTER_REGISTERED_ARTISTS,
     FETCH_REGISTERED_ARTISTS,
     UPLOAD_IMAGE,
@@ -340,6 +341,18 @@ export function getActivePerformances(){
 
 }
 
+export function getAllStreams(){
+
+    var data = axios.get('/api/allStreams')
+
+    return {
+        type : FETCH_ALL_STREAMS,
+        payload : data
+    }
+
+}
+
+
 
 
 //placeholder for post to /api/saveBroadcast endpoint
@@ -393,13 +406,5 @@ export function fetchAllRegisteredArtists(){
     return {
         type : FETCH_REGISTERED_ARTISTS,
         payload : data
-    }
-}
-
-export function filterRegisteredArtists(results){
-
-    return {
-        type : FILTER_REGISTERED_ARTISTS,
-        payload : results
     }
 }

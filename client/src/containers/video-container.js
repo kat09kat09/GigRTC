@@ -10,7 +10,7 @@ export class VideoContainer extends Component {
 
         return (
             <div id="videoBig">
-                <video id="video"  autoPlay width="640px" height="480px" poster="../../public/img/guitarist.jpg" />
+                <video id="video"  autoPlay width="640px" height="480px" poster="../../public/img/loadingGif.gif" />
                 <div className="video-overlay"></div>
                 <StreamButtons startBroadcast={this.props.startBroadcast}
                                endBroadcast={this.props.endBroadcast}
@@ -19,8 +19,6 @@ export class VideoContainer extends Component {
                                watchMode={this.props.watchMode}
                                watchVideo={this.props.watchVideo}
                 />
-                {//isBroadcaster will be managed by state, is true when artist is logged in
-                }
 
                 <div>{this.props.view_count}</div>
 

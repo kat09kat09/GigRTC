@@ -86,7 +86,13 @@ export function videoHigherOrderFunction(Component) {
                         showTotalViewersWatching(self.props.userDetails.user_name);
                     }, 1000)
                 }
+            this.onVideoBroadCast.call(this)
         }
+
+        componentWillUnmount(){
+            this.onVideoBroadCastEnd.call(this)
+        }
+
 
         render () {
             return (

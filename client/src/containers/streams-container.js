@@ -75,7 +75,7 @@ export class StreamsContainer extends Component {
 
 function mapStateToProps(state){
   return {
-    presentActiveStreams : state.data.data.activeStreams
+    presentActiveStreams : state.data.activeStreams
   }
 }
 
