@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
-import {fetchAllRegisteredArtists} from '../../actions/index'
+import {fetchAllRegisteredArtists,getActivePerformances} from '../../actions/index'
 import { Link } from 'react-router';
 import _ from 'lodash';
 
@@ -29,9 +29,10 @@ const styles = {
 export class RegisteredArtists extends Component{
 
     constructor(props){
-        super(props)
+        super(props);
         this.state ={
-            registeredArtists : null
+            registeredArtists : null,
+            activeArtists : null
         }
 
     }
@@ -42,10 +43,14 @@ export class RegisteredArtists extends Component{
                 registeredArtists : data.payload.data.registeredArtists
             })
         }.bind(this))
+        this.props.getActivePerformances().then(function(info){
+            this.setState({
+                activeArtists : info.payload.data
+            })
+        }.bind(this))
     }
 
     filterData(criteria){
-        console.log("CRITERIA",criteria)
         var results = _.filter(this.props.registeredArtists, function(artist) {
             if( criteria.selected === "Artist" ){
                return  artist.display_name == criteria.text
@@ -63,6 +68,7 @@ export class RegisteredArtists extends Component{
     render () {
 
         if (this.state.registeredArtists) {
+            {console.log(this.props.state)}
             return(
                 <div>
                     <div style={ styles.searchBar }>
@@ -88,7 +94,8 @@ export class RegisteredArtists extends Component{
     renderEvents () {
 
         return this.state.registeredArtists.map((Artist)=> {
-            console.log("ARTIST",Artist);
+            var performanceProfile = _.find(this.props.activeStreams,{room : Artist.user_name}) //This data's image will be used to fill up the banner for the tile, line 111
+
             return (
                 <li key={Artist.id}>
                     <Link to={`/router/activeStream/${Artist.user_name}`}>
@@ -108,9 +115,10 @@ export class RegisteredArtists extends Component{
                             </CardText>
                             <CardActions>
                                 <FlatButton label="Subscribe to me" />
-                                <FlatButton
-                                    onTouchTap={()=>browserHistory.push(`/router/activeStream/${Artist.user_name}`)}
+                                 <FlatButton
+                                    onTouchTap={()=>browserHistory.push(`/router/artistPage/${Artist.user_name}`)}
                                     label="Come see me perform live!" />
+
                             </CardActions>
                         </Card>
                     </Link>
@@ -125,12 +133,13 @@ export class RegisteredArtists extends Component{
 function mapStateToProps(state){
 
     return{
-        registeredArtists : state.data.data.registeredArtists
+        registeredArtists : state.data.registeredArtists,
+        activeStreams : state.data.activeStreams
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchAllRegisteredArtists}, dispatch)
+    return bindActionCreators({fetchAllRegisteredArtists,getActivePerformances}, dispatch)
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(RegisteredArtists)

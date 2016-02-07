@@ -132,10 +132,10 @@ h1 {
 .art-land-wrap {
   height: 950px;
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),  
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url('../img/artLand.jpg');
   background-repeat: no-repeat;
-  
+
   background-size: 100%;
   border: 1px solid #212121;
 }
@@ -209,10 +209,10 @@ h1 {
 .mic-section {
   height: 950px;
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),  
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
     url('../img/mic.jpg');
   background-repeat: no-repeat;
-  
+
   background-size: 100%;
   border: 1px solid #212121;
 }
@@ -280,7 +280,7 @@ h1 {
       margin-left: 10%;
     };*/
 
-    
+
     .avatars {
       margin-top: 5%;
     }
@@ -290,9 +290,7 @@ h1 {
     }
 
 
-    .right {
-      margin
-    }
+
     .stack {
       margin-top: 10%;
     }
@@ -342,4 +340,18 @@ h1 {
 }
 .submitButton:hover {
   background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  height : 20px;
+  width: 50px;
+  background-color: #eCe630;
 }

@@ -63,6 +63,11 @@ class ArtistSignUp extends Component {
                 label="Submit"
                 primary={true}
                 onTouchTap={this.handleClose}
+            />,
+            <FlatButton
+                label="Cancel"
+                secondary={true}
+                onTouchTap={this.handleClose}
             />
         ];
 
