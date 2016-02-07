@@ -14,7 +14,13 @@ export default class ArtistLand extends Component{
   render(){
     return(
       <div>
+        <div className="art-land-wrap">
+        <div className='left'>
+        </div>
+          <div className="right">
+          </div>
         <h1> Artist Landing </h1>
+        </div>
       </div>
       )
   }
