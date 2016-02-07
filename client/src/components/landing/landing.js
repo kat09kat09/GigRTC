@@ -29,6 +29,9 @@ export default class Landing extends Component {
         
           <div className="left">
           </div>
+          <div className="live">
+            <h2> Currently Streaming </h2>
+          </div>
 
           <div className="right">
             <h1> Pick up the mic! </h1> 
