@@ -34,7 +34,7 @@ export function videoHigherOrderFunction(Component) {
         });
 
     };
-    
+
     function onStream(room){
         console.log("FROM SKYLINK WATCHING HIGHER ORDER WATCH STREAM",room)
         skylink.init({
@@ -86,7 +86,13 @@ export function videoHigherOrderFunction(Component) {
                         showTotalViewersWatching(self.props.userDetails.user_name);
                     }, 1000)
                 }
+            this.onVideoBroadCast.call(this)
         }
+
+        componentWillUnmount(){
+            this.onVideoBroadCastEnd.call(this)
+        }
+
 
         render () {
             return (
@@ -99,7 +105,7 @@ export function videoHigherOrderFunction(Component) {
                                    watchMode={!!this.props.params.room}
                                    watchVideo={this.onWatchVideoBroadcast.bind(this)}
                             {...this.state} {...this.props}/>
-                      
+
                     </div>
 
                     <div style={{float:'right'}}>
