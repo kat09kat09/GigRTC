@@ -24,13 +24,15 @@ const styles = {
   },
 };
 
-export class StreamsContainer extends Component {
+class StreamsContainer extends Component {
   constructor(props){
     super(props)
   }
 
   componentWillMount(){
-    this.props.getActivePerformances()
+    console.log('streams container called')
+    const {dispatch } = this.props;
+    this.props.getActivePerformances(); 
   }
 
   render () {

@@ -58,6 +58,10 @@ export class RegisteredArtists extends Component{
         this.setState({
             registeredArtists : results
         })
+
+        console.log(this.props); 
+        this.props.fetchAllRegisteredArtists()
+
     }
 
     render () {

@@ -25,6 +25,7 @@ import io from 'socket.io-client';
 
 
 
+
 export function loginUserSuccess(userObj){
     console.log("LOGIN USER SUCCESS",userObj)
     localStorage.setItem('token',userObj.token);
@@ -268,21 +269,33 @@ export function determineEnvironment(){
     }
 }
 
+
+
 export function getActivePerformances(){
-
-    var data = axios.get('/api/activeStreams')
-
-    return {
-        type : FETCH_ACTIVE_STREAMS,
-        payload : data
+    console.log('get active performances called'); 
+    return (dispatch) => {
+        // dispatch(requestMessages())
+        console.log('will call endpoint /api/activeStreams'); 
+        return axios.get('/api/activeStreams/')
+          .then(function (response){
+            console.log('active performances gets here', response); 
+            dispatch(receiveActivePerformances(response)); 
+          })   
     }
-
 }
 
+export function receiveActivePerformances(response){
+    console.log('receiveActivePerformances called')
+    return {
+        type : FETCH_ACTIVE_STREAMS,
+        payload : response
+    }
+}
 
 
 //placeholder for post to /api/saveBroadcast endpoint
 export function saveBroadcast(broadcastData) {
+    console.log('save broadcast called'); 
   axios.post('api/saveBroadcast', broadcastData);
 
   return {
@@ -335,6 +348,7 @@ export function fetchAllRegisteredArtists(){
     }
 }
 
+
 export function filterRegisteredArtists(results){
 
     return {
@@ -342,3 +356,4 @@ export function filterRegisteredArtists(results){
         payload : results
     }
 }
+

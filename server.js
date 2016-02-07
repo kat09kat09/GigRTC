@@ -274,8 +274,10 @@ app.get('/auth/validateSocialToken',(req, res) => {
 });
 
 /////////////////ACTIVE STREAM//////////
-app.put('/api/activeStreams', function(req, res){
 
+
+app.put('/api/activeStreams', function(req, res){
+    console.log('put for api/activeStreams')
     Performance.where({ room: req.body.room }).fetch()
     .then(performance => {
         performance.save({active: req.body.active}, {patch: true});
@@ -284,13 +286,27 @@ app.put('/api/activeStreams', function(req, res){
 });
 
 app.get('/api/activeStreams', function(req, res) {
+    console.log('got to route for: get active performances '); 
     Performances
-    // .query({where: {active: true}})  //TODO : CHANGE THIS TO ACTIVE STATE
+    .query({where: {active: true}})  //TODO : CHANGE THIS TO ACTIVE STATE
     .fetch().then(function (performances) {
-        res.status(200).send(performances.models);
+        var result= performances.models.map(function(performance){
+            return performances.attributes; 
+        });
+        console.log('db results from /api/activeStreams', result); 
+        res.status(200).send(result);
     });
 
 });
+
+ // Messages.query({where: {channelID: req.params.channel}}).fetch().then(function(messages){
+ //      var result= messages.models.map(function(message){
+ //        return message.attributes; 
+ //      });
+ //      console.log('retrieved messages from db: ', result); 
+ //      res.status(200).send(result); 
+ //    })
+
 
 app.put('/api/updatePerformanceViewCount', function(req, res) {
     Performance.forge({room: req.body.room})
@@ -319,7 +335,7 @@ app.get('/auth/getTokenizedUserDetails',(req,res)=>{
 
     Artist.query({where: {email_id: req.query.email}}).fetch().then(function(found){
         if(found){
-            console.log("RETOKEN IZE ARTIST",found)
+            // console.log("RETOKEN IZE ARTIST",found)
             var myToken = jwt.sign({user_name:found.get('email_id')},CONFIG.JWT_SECRET)
             res.status(200).json({token: myToken, artist_details : found});
         }

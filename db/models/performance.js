@@ -1,6 +1,7 @@
 var db = require('../config');
-var User = require('./user');
+var Artist = require('./artist');
 var Tag = require('./tag');
+console.log('gets to performance model'); 
 
 var Performance = db.Model.extend({
   tableName: 'performances',
@@ -11,20 +12,23 @@ var Performance = db.Model.extend({
     number_of_viewers : 0
 
   },
-  user: function() {
-    return this.belongsTo(User);
-  },
-  tags: function() {
-    return this.belongsToMany(Tag);
-  },
+  // artists: function() {
+  //   return this.belongsTo(Artist);
+  // },
+  // tags: function() {
+  //   return this.hasMany(Tag);
+  // },
   initialize: function(){
     this.on('creating', function(model, attrs, options){
+      console.log('creating performances'); 
       // var shasum = crypto.createHash('sha1');
       // shasum.update(model.get('url'));
       // model.set('code', shasum.digest('hex').slice(0, 5));
     });
   }
 });
+
+console.log('performance', Performance); 
 
 module.exports = Performance;
 
