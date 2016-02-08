@@ -359,6 +359,45 @@ app.get('/api/currentViewers', function(req, res) {
 
 });
 
+//*********Tags
+app.post('/api/addTag', function (req,res){
+    console.log('/api/addTag route called: ',req.body);  
+    var tagName= req.body.tagname;
+    var userId= req.body.user_Id; 
+    var performanceId= req.body.performanceId;
+
+    Tag.where({ tagname: tagName }).fetch()
+    .then(tag => {
+        if(tag) {
+            console.log('tag exists in db');
+            Performance.where({id: performanceId}).fetch()
+            .then(performance => {
+               performance.tags().attach(tag.id); 
+               console.log('tag attached to performance'); 
+            })
+        } else {
+            console.log('adding tag to db'); 
+            var newTag= new Tag({
+                tagname: tagName,
+                user_id: userId
+            })
+            newTag.save().then (function (tag){
+                console.log('tag sucessfuly saved', tag.id); 
+                Tags.add(tag);
+
+                Performance.where({id: performanceId}).fetch()
+                .then(performance => {
+                    performance.tags().attach(tag.id); 
+                    console.log('tag attached to performance'); 
+                })  
+            })
+        }
+    })
+    
+
+});
+
+
 
 //**********RETOKENIZE LOGIN
 app.get('/auth/getTokenizedUserDetails',(req,res)=>{

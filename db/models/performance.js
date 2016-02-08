@@ -1,6 +1,6 @@
 var db = require('../config');
 var User = require('./user');
-var Tag = require('./tag');
+// var Tag = require('./tag');
 
 var Performance = db.Model.extend({
   tableName: 'performances',
@@ -11,11 +11,11 @@ var Performance = db.Model.extend({
     number_of_viewers : 0
 
   },
-  user: function() {
-    return this.belongsTo(User);
-  },
+  // user: function() {
+  //   return this.belongsTo(User);
+  // },
   tags: function() {
-    return this.belongsToMany(Tag);
+    return this.belongsToMany(require('./tag'));
   },
   initialize: function(){
     this.on('creating', function(model, attrs, options){
