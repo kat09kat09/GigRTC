@@ -408,7 +408,7 @@ export function fetchAllRegisteredArtists(){
     }
 }
 
-<<<<<<< HEAD
+
 export function subscribeToArtist(){
     var data = axios.get('/api/subscribeToArtist')
     console.log("SUBSCRIBE TO ARTISTS ACTION CALLED")
@@ -417,7 +417,7 @@ export function subscribeToArtist(){
         payload : data
     }
 }
-=======
+
 export function addTag(tag) {
     console.log('/api/addTag', tag); 
     axios.post('/api/addTag', tag)
@@ -440,4 +440,3 @@ export function showTag(data){
 
 
 
->>>>>>> Add feature to add tags to performance
