@@ -2,14 +2,15 @@ import React,{Component} from 'react';
 import {connect} from 'react-redux';
 //import {pushState} from 'redux-router';
 import {browserHistory} from 'react-router'
-import {performanceActive} from '../../actions';
-import {updatePerformanceViewCount} from '../../actions'
-import {showTotalViewersWatching} from '../../actions'
+import {performanceActive,
+    emailAllSubscribers,
+    updatePerformanceViewCount,
+    showTotalViewersWatching} from '../../actions';
 import { bindActionCreators } from 'redux';
 import Chat from  '../../components/Chat';
 import CONFIG from '../../../../config'
-import DropZone from '../../components/dropzone/dropzone.js'
 import DescribePerformance from '../../components/performanceDescription/describePerformance';
+import axios from 'axios'
 
 export function videoHigherOrderFunction(Component) {
 
@@ -79,14 +80,29 @@ export function videoHigherOrderFunction(Component) {
 
         }
 
+        emailAllSubscribers(artistID){
+            axios.get('/api/emailAllSubscribers',{params : artistID}).then((emails)=>{
+                console.log("ALL ARTIST SUBSRCRIBERS",emails)
+            })
+
+        }
+
         componentDidMount(){
-                var self = this;
-                if(this.props.params.room === self.props.userDetails.user_name) {
-                    setInterval(function () {
-                        showTotalViewersWatching(self.props.userDetails.user_name);
-                    }, 1000)
-                }
-            this.onVideoBroadCast.call(this)
+                //var self = this;
+                //if(this.props.params.room === self.props.userDetails.user_name) {
+                //    setInterval(function () {
+                //        showTotalViewersWatching(self.props.userDetails.user_name);
+                //    }, 1000)
+                //}
+            //Based on user/artist it will call broadcast/watch
+            if(this.props.userPrivelege == 'artist'){
+                this.onVideoBroadCast.call(this)
+                //This function may need to change to a Redux action call, based on twilio //TODO
+                this.emailAllSubscribers.call(this,{artist_id : this.props.userDetails.id})
+            }
+            else{
+                this.onWatchVideoBroadcast.call(this)
+            }
         }
 
         componentWillUnmount(){
@@ -123,7 +139,8 @@ export function videoHigherOrderFunction(Component) {
         return bindActionCreators({
             performanceActive,
             updatePerformanceViewCount,
-            showTotalViewersWatching
+            showTotalViewersWatching,
+                emailAllSubscribers
         },
             dispatch)
     }

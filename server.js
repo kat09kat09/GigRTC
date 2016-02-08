@@ -125,7 +125,8 @@ app.post('/auth/signUp/', (req, res) => {
 
     new Artist({user_name: req.body.user_name, password: req.body.password}).fetch().then(function (found) {
         if (found) {
-            res.sendStatus(403);
+            console.log("APPARENTLY FOUND",found)
+            res.status(403);
 
         }
         else {
@@ -139,7 +140,7 @@ app.post('/auth/signUp/', (req, res) => {
                 display_name: req.body.display_name,
                 genre: req.body.genre
             });
-
+            console.log("NEW ARTIST BEING SAVED",newArtist)
             newArtist.save().then(function (artist) {
                 Artists.add(artist);
                 var myToken = jwt.sign({user_name: req.body.email_id}, CONFIG.JWT_SECRET)
@@ -150,15 +151,7 @@ app.post('/auth/signUp/', (req, res) => {
     });
 
        new Performance({active: false, room: req.body.user_name})
-        .save().then((performance)=>{
-
-           if(performance){
-               res.sendStatus(403)
-           }
-           else{
-               console.log("NEW PERFORMANCE CREATED",performance)
-           }
-        })
+        .save()
 
 });
 
@@ -459,19 +452,36 @@ app.get('/api/allRegisteredArtists',function(req,res){
 
 //***************** Create Artist User Relation
 
-app.get('/api/subscribeToArtist',function(req,res){
-
+app.post('/api/subscribeToArtist',function(req,res){
+    console.log("SUBSCRIBE CALLED",req.body)
     var data = req.body;
     new Artist_User({
-        artist_id: data.eventId,
-        user_id: data.userId
+        artist_id: data.artist_id,
+        user_id: data.user_id
     })
         .save()
-        .then(function(){
-            res.json('Joined Event successfully');
+        .then(function(data){
+            console.log("RELATIONSHIP MADE",data)
+            res.json({data : 'Subscribed successfully'});
         })
 
 })
+
+//************** Get all artist subscribers
+
+app.get('/api/emailAllSubscribers',function(req,res){
+    var data = []
+
+    Artist_User.query({where: {artist_id :req.query.artist_id }}).fetchAll().then(function(emails){
+        emails.models.map(function(user_id){
+           User.query({where : {id : user_id.attributes.user_id}}).fetch().then(function(model){
+             //CALL TWILIO ACTION HERE //TODO
+              console.log(model.get('email_id'))
+          })
+        })
+    });
+    res.json("SOMETHIN IS HAPPENING")
+});
 
 //******* Test  Chat **************
 //set env vars

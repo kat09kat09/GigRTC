@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux'
 import {fetchAllRegisteredArtists,getAllStreams,subscribeToArtist} from '../../actions/index'
 import { Link } from 'react-router';
 import _ from 'lodash';
-
+import axios from 'axios'
 import SearchBar from '../search_bar'
 
 import Card from 'material-ui/lib/card/card';
@@ -69,6 +69,15 @@ export class RegisteredArtists extends Component{
         })
     }
 
+    createArtistSubscription(data){
+        console.log("SUBSRICTION IN REGISTED ARTISTS",data)
+       axios.post('/api/subscribeToArtist', {
+            user_id: data.user_id,
+            artist_id: data.artist_id
+
+        })
+    }
+
     render () {
 
         if (this.state.registeredArtists) {
@@ -113,13 +122,13 @@ export class RegisteredArtists extends Component{
                             </CardMedia>
                             <CardTitle title="Hey there!" subtitle="I'm the OG " />
                             <CardText>
-                                {Artist.brief_description}
+                                {Artist.id}
                             </CardText>
                             <CardActions>
-                                <FlatButton label="Subscribe to me" />
+                                <FlatButton label="Buffer" />
                                  <FlatButton
-                                    onTouchTap={()=>this.props.subscribeToArtist()}
-                                    label="Come see me perform live!" />
+                                    onTouchTap={()=>this.props.subscribeToArtist({artist_id : Artist.id,user_id : this.props.user_id })}
+                                    label="Subscribe to me" />
 
                             </CardActions>
                         </Card>
@@ -135,7 +144,8 @@ function mapStateToProps(state){
 
     return{
         registeredArtists : state.data.registeredArtists,
-        allStreams : state.data.allStreams
+        allStreams : state.data.allStreams,
+        user_id : state.auth.userDetails.id
     }
 }
 

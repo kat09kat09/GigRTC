@@ -23,7 +23,9 @@ const {
     PERFORMANCE_DETAIL_SUCCESS,
     PERFORMANCE_DETAIL_FAILURE,
     SUBSCRIPTION_STATUS,
-    ADD_TAG
+    SUBSCRIBED_USERS,
+    ADD_TAG,
+    SUBSCRIBED_TO_ARTIST
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -408,12 +410,27 @@ export function fetchAllRegisteredArtists(){
     }
 }
 
+export function subscribeToArtist(info) {
+    var data = axios.post('/api/subscribeToArtist', {
+        user_id: info.user_id,
+        artist_id: info.artist_id
 
-export function subscribeToArtist(){
-    var data = axios.get('/api/subscribeToArtist')
-    console.log("SUBSCRIBE TO ARTISTS ACTION CALLED")
+    })
+
     return {
-        type : SUBSCRIPTION_STATUS,
+        type : SUBSCRIBED_TO_ARTIST,
+        payload : data
+    }
+
+}
+
+//This Action may not be necessary based on twilio implementation // TODO
+export function emailAllSubscribers(artistID){
+    var data = axios.get('/api/emailAllSubscribers',{params : artistID})
+    console.log("GET ALL RELATIONS TO ARTIST ACTION CALLED")
+
+    return {
+        type : SUBSCRIBED_USERS,
         payload : data
     }
 }
