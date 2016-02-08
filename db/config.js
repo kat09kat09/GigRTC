@@ -84,7 +84,7 @@ db.knex.schema.hasTable('performances').then(function(exists) {
       performances.string('title', 255);
       performances.string('short_description', 255);
       performances.text('long_description'); // maximum length is 64 K
-      performances.specificType('performance_image', 'mediumblob'); // mediumblob is for binaries up to 16 M
+      performances.longtext('performance_image'); // mediumblob is for binaries up to 16 M
       performances.boolean('rated_r');
       performances.integer('number_of_viewers');
       performances.integer('user_id').unsigned().references('id').inTable('users'); // artist

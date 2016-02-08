@@ -183,7 +183,10 @@ passport.use(new FacebookStrategy({
         profileFields: ['id','email', 'displayName', 'photos']
     },
     function(accessToken, refreshToken, profile, done) {
+
         new User({facebook_id : profile.id}).fetch().then(function(response){
+            console.log("FB RESPONSE",response)
+            console.log("FB PROFILE",profile)
             if(response){
                 return done(null,response.attributes)
             }
@@ -359,7 +362,7 @@ app.get('/api/currentViewers', function(req, res) {
 
 //**********RETOKENIZE LOGIN
 app.get('/auth/getTokenizedUserDetails',(req,res)=>{
-
+    console.log("RETOKENIZE",req.query)
     Artist.query({where: {email_id: req.query.email}}).fetch().then(function(found){
         if(found){
             console.log("RETOKEN IZE ARTIST",found)
