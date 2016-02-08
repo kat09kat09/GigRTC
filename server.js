@@ -125,7 +125,8 @@ app.post('/auth/signUp/', (req, res) => {
 
     new Artist({user_name: req.body.user_name, password: req.body.password}).fetch().then(function (found) {
         if (found) {
-            res.sendStatus(403);
+            console.log("APPARENTLY FOUND",found)
+            res.status(403);
 
         }
         else {
@@ -139,7 +140,7 @@ app.post('/auth/signUp/', (req, res) => {
                 display_name: req.body.display_name,
                 genre: req.body.genre
             });
-
+            console.log("NEW ARTIST BEING SAVED",newArtist)
             newArtist.save().then(function (artist) {
                 Artists.add(artist);
                 var myToken = jwt.sign({user_name: req.body.email_id}, CONFIG.JWT_SECRET)
@@ -150,15 +151,7 @@ app.post('/auth/signUp/', (req, res) => {
     });
 
        new Performance({active: false, room: req.body.user_name})
-        .save().then((performance)=>{
-
-           if(performance){
-               res.sendStatus(403)
-           }
-           else{
-               console.log("NEW PERFORMANCE CREATED",performance)
-           }
-        })
+        .save()
 
 });
 
