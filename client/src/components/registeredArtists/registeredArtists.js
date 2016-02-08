@@ -113,13 +113,13 @@ export class RegisteredArtists extends Component{
                             </CardMedia>
                             <CardTitle title="Hey there!" subtitle="I'm the OG " />
                             <CardText>
-                                {Artist.brief_description}
+                                {Artist.id}
                             </CardText>
                             <CardActions>
-                                <FlatButton label="Subscribe to me" />
+                                <FlatButton label="Buffer" />
                                  <FlatButton
-                                    onTouchTap={()=>this.props.subscribeToArtist()}
-                                    label="Come see me perform live!" />
+                                    onTouchTap={()=>this.props.subscribeToArtist({artist_id : Artist.id,user_id : this.props.user_id })}
+                                    label="Subscribe to me" />
 
                             </CardActions>
                         </Card>
@@ -135,7 +135,8 @@ function mapStateToProps(state){
 
     return{
         registeredArtists : state.data.registeredArtists,
-        allStreams : state.data.allStreams
+        allStreams : state.data.allStreams,
+        user_id : state.auth.userDetails.id
     }
 }
 

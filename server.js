@@ -420,19 +420,36 @@ app.get('/api/allRegisteredArtists',function(req,res){
 
 //***************** Create Artist User Relation
 
-app.get('/api/subscribeToArtist',function(req,res){
-
+app.post('/api/subscribeToArtist',function(req,res){
+    console.log("SUBSCRIBE CALLED",req.body)
     var data = req.body;
     new Artist_User({
-        artist_id: data.eventId,
-        user_id: data.userId
+        artist_id: data.artist_id,
+        user_id: data.user_id
     })
         .save()
-        .then(function(){
-            res.json('Joined Event successfully');
+        .then(function(data){
+            console.log("RELATIONSHIP MADE",data)
+            res.json('Subscribed successfully');
         })
 
 })
+
+//************** Get all artist subscribers
+
+app.get('/api/emailAllSubscribers',function(req,res){
+    var data = []
+
+    Artist_User.query({where: {artist_id :req.query.artist_id }}).fetchAll().then(function(emails){
+        emails.models.map(function(user_id){
+           User.query({where : {id : user_id.attributes.user_id}}).fetch().then(function(model){
+             //CALL TWILIO ACTION HERE //TODO
+              console.log(model.get('email_id'))
+          })
+        })
+    });
+    res.json("SOMETHIN IS HAPPENING")
+});
 
 //******* Test  Chat **************
 //set env vars
