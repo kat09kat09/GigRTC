@@ -138,7 +138,7 @@ h1 {
 
 /*About page helper classes*/
 
-.art-land-wrap, .videoWrapper {
+.art-land-wrap{
   height: 950px;
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
