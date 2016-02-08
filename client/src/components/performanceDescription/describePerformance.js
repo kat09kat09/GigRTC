@@ -48,7 +48,7 @@ class DescribePerformance extends Component {
       } = this.props
 
     return (
-      <div>
+      <div className='performance-description-main'>
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <h2>Describe your performance</h2>
 

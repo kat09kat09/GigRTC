@@ -278,6 +278,11 @@ h1 {
   margin-top: 3rem;
 }
 
+/*PERFORMANCE DESCRIPTION PAGE FIXME not centered on page at all? Ask Auggie, styling master*/
+.performance-description-main {
+  width: 70%
+}
+
 /*MEDIA QUERIES*/
 @media (min-width: 1800px) {
     .avatar > img {
@@ -305,7 +310,7 @@ h1 {
       margin-top: 5%;
     }
     .live {
-  
+
       float: left;
       width: 220px;
       height: 670px;
