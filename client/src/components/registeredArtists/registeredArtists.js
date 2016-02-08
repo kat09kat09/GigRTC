@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux'
-import {fetchAllRegisteredArtists,getAllStreams} from '../../actions/index'
+import {fetchAllRegisteredArtists,getAllStreams,subscribeToArtist} from '../../actions/index'
 import { Link } from 'react-router';
 import _ from 'lodash';
 
@@ -42,7 +42,7 @@ export class RegisteredArtists extends Component{
             this.setState({
                 registeredArtists : data.payload.data.registeredArtists
             })
-        }.bind(this))
+        }.bind(this));
         this.props.getAllStreams().then(function(info){
             this.setState({
                 allStreams : info.payload.data
@@ -51,12 +51,16 @@ export class RegisteredArtists extends Component{
     }
 
     filterData(criteria){
+        console.log("SEARCH BAR CRITERIA",criteria)
         var results = _.filter(this.props.registeredArtists, function(artist) {
-            if( criteria.selected === "Artist" ){
+            if( criteria.selected === "Artist" && criteria.text){
                return  artist.display_name == criteria.text
             }
-            else if(criteria.selected === "Genre"){
+            else if(criteria.selected === "Genre" && criteria.text){
                 return  artist.genre == criteria.text
+            }
+            else{
+                return true;
             }
 
         });
@@ -97,7 +101,6 @@ export class RegisteredArtists extends Component{
 
             return (
                 <li key={Artist.id}>
-                    <Link to={`/router/artistPage/${Artist.user_name}`}>
                         <Card>
                             <CardHeader
                                 title={Artist.display_name}
@@ -115,12 +118,11 @@ export class RegisteredArtists extends Component{
                             <CardActions>
                                 <FlatButton label="Subscribe to me" />
                                  <FlatButton
-                                    onTouchTap={()=>browserHistory.push(`/router/artistPage/${Artist.user_name}`)}
+                                    onTouchTap={()=>this.props.subscribeToArtist()}
                                     label="Come see me perform live!" />
 
                             </CardActions>
                         </Card>
-                    </Link>
                 </li>
 
             )
@@ -138,7 +140,8 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({fetchAllRegisteredArtists,getAllStreams}, dispatch)
+    return bindActionCreators({fetchAllRegisteredArtists,getAllStreams,subscribeToArtist}, dispatch)
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(RegisteredArtists)
+//to={`/router/artistPage/${Artist.user_name}`}
