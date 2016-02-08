@@ -228,7 +228,7 @@ export function MakePerformance(formData){
                 console.log("++++++++++++++ response from server to MakePerformance", response);
                 try {
                     dispatch(perfDetailSuccess(response));
-                    // browserHistory.push('/'); // FIXME... to the broadcast yourself page?
+                    browserHistory.push('router/activeStream/' + formData.room);
                 } catch (e) {
                     dispatch(perfDetailFailure(response));
                 }
@@ -436,18 +436,18 @@ export function emailAllSubscribers(artistID){
 }
 
 export function addTag(tag) {
-    console.log('/api/addTag', tag); 
+    console.log('/api/addTag', tag);
     axios.post('/api/addTag', tag)
     .then(function (response) {
         dispatch(showTag(performanceId, response.data))
     }).catch((error)=> {
         //console.log("AXIOS ERROR", error);
     })
-    
+
 }
 
 export function showTag(data){
-    console.log('addtag', ADD_TAG); 
+    console.log('addtag', ADD_TAG);
     return {
         type : ADD_TAG,
         payload : data

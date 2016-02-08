@@ -125,7 +125,6 @@ export function videoHigherOrderFunction(Component) {
                     </div>
 
                     <div style={{float:'right'}}>
-                    <DescribePerformance />
                         <Chat/>
                     </div>
                 </div>
