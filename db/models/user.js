@@ -32,13 +32,3 @@ var User = db.Model.extend({
 
 module.exports = User;
 
-// users.increments('id').primary();
-// users.timestamps();  // Adds a created_at and updated_at column on the database, setting these each to dateTime types.
-// users.string('oauth_id', 255); // what google.plus will hopefully give us
-// users.string('username', 255);
-// users.text('artist_info'); // maximum length is 64 K
-// users.specificType('userimage', 'mediumblob'); // mediumblob is for binaries up to 16 M
-// users.date('banned_until'); // YYYY-MM-DD
-// users.boolean('harassed'); // is this user the target of a troll campaign
-// users.boolean('over17');
-// users.boolean('admin');

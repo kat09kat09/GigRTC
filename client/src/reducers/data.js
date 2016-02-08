@@ -1,6 +1,6 @@
 import {createReducer} from '../utils';
 import CONSTANTS from '../constants';
-const { FETCH_ACTIVE_STREAMS,FETCH_REGISTERED_ARTISTS,FETCH_ALL_STREAMS} = CONSTANTS
+const { FETCH_ACTIVE_STREAMS,FETCH_REGISTERED_ARTISTS,FETCH_ALL_STREAMS,SUBSCRIPTION_STATUS} = CONSTANTS
 import jwtDecode from 'jwt-decode';
 
 const initialState = {

@@ -21,7 +21,8 @@ const {
     UPLOAD_IMAGE,
     PERFORMANCE_DETAIL_UPDATE,
     PERFORMANCE_DETAIL_SUCCESS,
-    PERFORMANCE_DETAIL_FAILURE
+    PERFORMANCE_DETAIL_FAILURE,
+    SUBSCRIPTION_STATUS
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -301,9 +302,6 @@ export function determineEnvironment(){
  export function getSocialDetails(){
 
 
-//export function getSocialToken(){
-
-
     return (dispatch) =>{
         return  fetch(`/auth/validateSocialToken`)
             .then(checkHttpStatus)
@@ -311,8 +309,8 @@ export function determineEnvironment(){
             .then(response => {
                 try {
                     //let decoded = jwtDecode(response.token);
-                    console.log("ACTION RECEIVED AS LOGIN SUCCSS",response.user_details._json)
-                    dispatch(loginUserSuccess({token : response.token, user_details:response.user_details._json}));
+                    console.log("ACTION RECEIVED AS LOGIN SUCCSS",response.user_details)
+                    dispatch(loginUserSuccess({token : response.token, user_details:response.user_details}));
                     browserHistory.push('/')
                 } catch (e) {
                     dispatch(loginUserFailure({
@@ -405,6 +403,15 @@ export function fetchAllRegisteredArtists(){
 
     return {
         type : FETCH_REGISTERED_ARTISTS,
+        payload : data
+    }
+}
+
+export function subscribeToArtist(){
+    var data = axios.get('/api/subscribeToArtist')
+    console.log("SUBSCRIBE TO ARTISTS ACTION CALLED")
+    return {
+        type : SUBSCRIPTION_STATUS,
         payload : data
     }
 }

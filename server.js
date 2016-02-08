@@ -23,6 +23,7 @@ var Tag = require('./db/models/tag');
 var Performances = require('./db/collections/performances');
 var Performance = require('./db/models/performance');
 
+var Artist_User = require('./db/models/artist_user')
 
 
 var options = {
@@ -178,7 +179,7 @@ passport.use(new FacebookStrategy({
     function(accessToken, refreshToken, profile, done) {
         new User({facebook_id : profile.id}).fetch().then(function(response){
             if(response){
-                return done(null,profile)
+                return done(null,response.attributes)
             }
             else{
 
@@ -204,10 +205,11 @@ passport.use(new GoogleStrategy({
         callbackURL: CONFIG.G_CALL_BACK
     },
     function(accessToken, refreshToken, profile, done) {
-        console.log("GOOGLE PROFILE",profile)
         new User({google_id : profile.id}).fetch().then(function(response){
             if(response){
-                return done(null,profile)
+                console.log("GOOGLE RESPONSE",response)
+                console.log("GOOGLE PROFILE",profile)
+                return done(null,response.attributes)
             }
             else{
 
@@ -218,9 +220,9 @@ passport.use(new GoogleStrategy({
                     user_image : profile.photos[0].value
                 })
 
-                googleUser.save().then(function(newFacebookUser) {
-                    Users.add(newFacebookUser);
-                    return done(null,newFacebookUser)
+                googleUser.save().then(function(newGoogleUser) {
+                    Users.add(newGoogleUser);
+                    return done(null,newGoogleUser)
                 });
             }
         });
@@ -243,9 +245,9 @@ app.get('/auth/facebook/callback/',
     passport.authenticate('facebook', { failureRedirect: '/' }),
 
     function(req, res) {
-        console.log("response",req.user);
+        console.log("RESPONSE IN CALLBACK facebook",req.user);
         current_user = req.user;
-        current_token = jwt.sign({user_name: (current_user.emails[0].value ? current_user.emails[0].value : current_user.displayName)},CONFIG.JWT_SECRET);
+        current_token = jwt.sign({user_name: (req.user.attributes.email_id ) },CONFIG.JWT_SECRET);
         res.redirect('/router/socialLogin')
     }
 
@@ -259,9 +261,9 @@ app.get('/auth/google/callback/',
     passport.authenticate('google', { failureRedirect: '/login' }),
 
     function(req, res) {
-        console.log("response for Google",req.user);
+        console.log("response for Google in callback",req.user);
         current_user = req.user;
-        current_token = jwt.sign({user_name: req.user.emails[0].value },CONFIG.JWT_SECRET);
+        current_token = jwt.sign({user_name: (req.user.attributes.email_id ) },CONFIG.JWT_SECRET);
         res.redirect('/router/socialLogin')
     }
 
@@ -404,6 +406,22 @@ app.get('/api/allRegisteredArtists',function(req,res){
        res.status(302).json({registeredArtists : allArtists.models})
 
     })
+
+})
+
+//***************** Create Artist User Relation
+
+app.get('/api/subscribeToArtist',function(req,res){
+
+    var data = req.body;
+    new Artist_User({
+        artist_id: data.eventId,
+        user_id: data.userId
+    })
+        .save()
+        .then(function(){
+            res.json('Joined Event successfully');
+        })
 
 })
 
