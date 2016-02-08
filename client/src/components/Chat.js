@@ -152,32 +152,20 @@ class Chat extends Component {
       },
     };
     return (
-      <div style={{margin: '0', padding: '0', height: '100%', width: '100%', display: '-webkit-box'}}>
+      <div className="chatWrapper">
 
         <div className="main" >
 
-          <div style= {{height: '30em', overflow:'scroll'}}>
+          <div className="messageContainer">
             {filteredMessages.map(message =>
 
-                  <MessageListItem message={message} key={message.id} />
+                  <MessageListItem  message={message} key={message.id} />
 
             )}
           </div>
-          <div style={{
-            zIndex: '52',
-            left: '21.1rem',
-            right: '1rem',
-            width: '100%',
-            flexShrink: '0',
-            order: '2',
-            marginTop: '0.5em'
-          }}>
+          <div className="chatFieldWrapper">
             <input
-              style={{
-                height: '100%',
-                fontSize: '2em',
-                marginBottom: '1em'
-              }}
+              className="chatInput"
               type="textarea"
               name="message"
               ref="messageComposer"

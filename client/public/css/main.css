@@ -135,6 +135,26 @@ h1 {
 .broadcastComponent {
   margin-top: 10%;
 }
+/*CHAT BOX STYLES*/
+.messageContainer{
+  height: 850px;
+  overflow: hidden;
+}
+.chatFieldWrapper {
+  z-index: 52;
+  left: 21.1rem;
+  right: 1rem;
+  width: 100%;
+  flexShrink: 0;
+  order: 2;
+  marginTop: .5em;
+}
+
+.chatInput {
+  height: 100%;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
 
 /*About page helper classes*/
 
