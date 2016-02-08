@@ -16,7 +16,7 @@ import About from './components/about/about';
 import Landing from './components/landing/landing';
 import ArtistLand from './components/landing/artistLand';
 import FanLand from './components/landing/fanLand';
-
+import DescribePerformance from './components/performanceDescription/describePerformance';
 
 export default (
 
@@ -34,6 +34,7 @@ export default (
         <Route path="router/fanLand" component={FanLand} />
         <Route path="router/landing" component={Landing} />
         <Route path="router/artistPage/:artist_name" component={ArtistPage} />
+        <Route path="router/describePerformance" component={ DescribePerformance } />
     </Route>
 
 );

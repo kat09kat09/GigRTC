@@ -34,7 +34,7 @@ export default (props)=>{
                     backgroundColor="#fea92f"
                     icon={<Videocam />}
                     linkButton={true}
-                    href="/streamYourself"
+                    href="/router/describePerformance"
                   />
                 :
                  ""
@@ -48,7 +48,7 @@ export default (props)=>{
                   anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
 
-                <MenuItem 
+                <MenuItem
                   linkButton={true}
                   primaryText='Now Streaming'
                   containerElement={<Link to="/router/nowStreaming" className="logoLink"> Now Streaming </Link>} />
