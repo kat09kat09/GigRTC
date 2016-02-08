@@ -50,7 +50,6 @@ video {
   width: 640px;
   height: 480px;
   margin: auto;
-
 }
 
 
@@ -126,10 +125,20 @@ h1 {
 
 }
 
+.chatComponent {
+  float: right;
+  width: 340px;
+  background-color: #212121;
+  height: 950px;
+}
+
+.broadcastComponent {
+  margin-top: 10%;
+}
 
 /*About page helper classes*/
 
-.art-land-wrap {
+.art-land-wrap, .videoWrapper {
   height: 950px;
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -305,21 +314,34 @@ h1 {
       margin-top: 45px;
       margin-left: 10%;
     };*/
+    #videoBig {
+      margin-left: 10%;
+    }
 
+    .broadcastComponent {
+      margin-top: 5%;
+    }
 
     .avatars {
       margin-top: 5%;
     }
+    .chatComponent {
+      height: 670px;
+    }
+
+    .art-land-wrap, .videoWrapper {
+      height: 670px;
+    }
     .live {
 
       float: left;
-      width: 220px;
       height: 670px;
       background-color: #212121;
       text-align: center;
       color: orange;
-}
-    .mic-section, .art-land-wrap {
+    }
+
+    .mic-section {
       height: 670px;
       background-position: 220px 0px;
     }

@@ -112,8 +112,11 @@ export function videoHigherOrderFunction(Component) {
 
         render () {
             return (
-                <div>
-                    <div style={{float:'left'}}>
+                <div className="art-land-wrap">
+                    <div className="chatComponent">
+                        <Chat/>
+                    </div>
+                    <div className="broadcastComponent">
                         <Component startBroadcast={this.onVideoBroadCast.bind(this)}
                                    endBroadcast={this.onVideoBroadCastEnd.bind(this)}
 
@@ -123,10 +126,14 @@ export function videoHigherOrderFunction(Component) {
                             {...this.state} {...this.props}/>
 
                     </div>
+                    
 
+<<<<<<< HEAD
                     <div style={{float:'right'}}>
                         <Chat/>
                     </div>
+=======
+>>>>>>> (ENHANCE) style broadcaster page
                 </div>
             )
 
