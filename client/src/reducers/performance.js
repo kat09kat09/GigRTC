@@ -23,8 +23,8 @@ export default createReducer(initialState, {
         });
     },
 
-    [PERFORMANCE_DETAIL_UPDATE]: (state, payload) => {
-        console.log('++++++++++++ Updated Performance Info in performance reducer', payload);
+    [PERFORMANCE_DETAIL_UPDATE]: (state) => {
+        console.log('++++++++++++ Updated Performance Info in performance reducer');
         return Object.assign({}, state, {
             'savingData': true // this action would be used if we wanted to show something like a "saving your data" gif
         });
@@ -33,14 +33,16 @@ export default createReducer(initialState, {
     [PERFORMANCE_DETAIL_SUCCESS]: (state, payload) => {
         console.log('++++++++++++ Updated Performance Info POST SUCCESS in performance reducer', payload);
         return Object.assign({}, state, {
-            performance_info : payload
+            performance_info : payload,
+            'savingData': false
         });
     },
 
     [PERFORMANCE_DETAIL_FAILURE]: (state, payload) => {
         console.log('++++++++++++ Performance Info ERROR in performance reducer', payload);
         return Object.assign({}, state, {
-            performance_info : payload
+            performance_info : payload,
+            'savingData': false
         });
     }
 });

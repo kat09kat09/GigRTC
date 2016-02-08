@@ -323,7 +323,7 @@ app.put('/api/activeStreams', function(req, res){
 
 app.get('/api/activeStreams', function(req, res) {
     Performances
-     .query({where: {active: true}})
+     // .query({where: {active: true}})
     .fetch().then(function (performances) {
         res.status(200).send(performances.models);
     });
