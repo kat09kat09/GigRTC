@@ -80,14 +80,15 @@ db.knex.schema.hasTable('performances').then(function(exists) {
       performances.boolean('active');
       performances.string('room',255).unique();
       performances.timestamp('went_live'); // timestamp is seconds since 1-1-1970, will not change with time zones
-      performances.timestamp('ended');
+      // performances.timestamp('ended');
       performances.string('title', 255);
       performances.string('short_description', 255);
       performances.text('long_description'); // maximum length is 64 K
       performances.longtext('performance_image'); // mediumblob is for binaries up to 16 M
       performances.boolean('rated_r');
       performances.integer('number_of_viewers');
-      performances.integer('user_id').unsigned().references('id').inTable('users'); // artist
+      // performances.integer('user_id').unsigned().references('id').inTable('users'); // artist
+      performances.integer('tag_id').unsigned().references('id').inTable('tags');
     })
     .then(function (table) {
       console.log('Created Table', table);
@@ -105,6 +106,7 @@ db.knex.schema.hasTable('tags').then(function(exists) {
       tags.boolean('needs_judgement'); // this tag will only be applied after a judgement call from a human, eg "racist"
       // https://github.com/tgriesser/knex/issues/24  <-- possible foreign key troubles
       tags.integer('user_id').unsigned().references('id').inTable('users'); // user who created this tag
+      tags.integer('performance_id').unsigned().references('id').inTable('performances'); // user who created this tag
     })
     .then(function (table) {
       console.log('Created Table', table);

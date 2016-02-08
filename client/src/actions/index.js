@@ -22,7 +22,8 @@ const {
     PERFORMANCE_DETAIL_UPDATE,
     PERFORMANCE_DETAIL_SUCCESS,
     PERFORMANCE_DETAIL_FAILURE,
-    SUBSCRIPTION_STATUS
+    SUBSCRIPTION_STATUS,
+    ADD_TAG
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -407,6 +408,7 @@ export function fetchAllRegisteredArtists(){
     }
 }
 
+<<<<<<< HEAD
 export function subscribeToArtist(){
     var data = axios.get('/api/subscribeToArtist')
     console.log("SUBSCRIBE TO ARTISTS ACTION CALLED")
@@ -415,3 +417,27 @@ export function subscribeToArtist(){
         payload : data
     }
 }
+=======
+export function addTag(tag) {
+    console.log('/api/addTag', tag); 
+    axios.post('/api/addTag', tag)
+    .then(function (response) {
+        dispatch(showTag(performanceId, response.data))
+    }).catch((error)=> {
+        //console.log("AXIOS ERROR", error);
+    })
+    
+}
+
+export function showTag(data){
+    console.log('addtag', ADD_TAG); 
+    return {
+        type : ADD_TAG,
+        payload : data
+    }
+
+}
+
+
+
+>>>>>>> Add feature to add tags to performance
