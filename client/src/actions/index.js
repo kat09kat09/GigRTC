@@ -23,8 +23,9 @@ const {
     PERFORMANCE_DETAIL_SUCCESS,
     PERFORMANCE_DETAIL_FAILURE,
     SUBSCRIPTION_STATUS,
-    SUBSCRIBED_USERS
-
+    SUBSCRIBED_USERS,
+    ADD_TAG,
+    SUBSCRIBED_TO_ARTIST
     } = CONSTANTS;
 
 import jwtDecode from 'jwt-decode';
@@ -409,20 +410,23 @@ export function fetchAllRegisteredArtists(){
     }
 }
 
-export function subscribeToArtist(data){
-    var data = axios.post('/api/subscribeToArtist',{
-            user_id : data.user_id,
-            artist_id : data.artist_id
+export function subscribeToArtist(info) {
+    var data = axios.post('/api/subscribeToArtist', {
+        user_id: info.user_id,
+        artist_id: info.artist_id
 
     })
+
     return {
-        type : SUBSCRIPTION_STATUS,
+        type : SUBSCRIBED_TO_ARTIST,
         payload : data
     }
+
 }
+
 //This Action may not be necessary based on twilio implementation // TODO
 export function emailAllSubscribers(artistID){
-    var data = axios.get('/api/emailAllSubscribers')
+    var data = axios.get('/api/emailAllSubscribers',{params : artistID})
     console.log("GET ALL RELATIONS TO ARTIST ACTION CALLED")
 
     return {
@@ -430,3 +434,26 @@ export function emailAllSubscribers(artistID){
         payload : data
     }
 }
+
+export function addTag(tag) {
+    console.log('/api/addTag', tag); 
+    axios.post('/api/addTag', tag)
+    .then(function (response) {
+        dispatch(showTag(performanceId, response.data))
+    }).catch((error)=> {
+        //console.log("AXIOS ERROR", error);
+    })
+    
+}
+
+export function showTag(data){
+    console.log('addtag', ADD_TAG); 
+    return {
+        type : ADD_TAG,
+        payload : data
+    }
+
+}
+
+
+

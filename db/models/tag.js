@@ -1,6 +1,6 @@
 var db = require('../config');
 var User = require('./user');
-var Performance = require('./performance');
+// var Performance = require('./performance');
 
 var Tag = db.Model.extend({
   tableName: 'tags',
@@ -13,7 +13,7 @@ var Tag = db.Model.extend({
     return this.belongsTo(User);  // Bookshelf uses table name to automatically set foreignkey to user_id
   },
   performances: function() {
-    return this.belongsToMany(Performance); // belongsToMany automatically returns a Collection, so not redq to make it
+    return this.belongsToMany(require('./performance')); // belongsToMany automatically returns a Collection, so not redq to make it
   },
   initialize: function(){ // for filling in individual cells with recieved data
     this.on('creating', function(model, attrs, options){

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getActivePerformances } from '../actions';
+import { getActivePerformances , addTag} from '../actions';
 import { Link } from 'react-router';
 
 
@@ -27,10 +27,52 @@ const styles = {
 export class StreamsContainer extends Component {
   constructor(props){
     super(props)
+    this.state={
+      text: '', 
+      typing: false
+    }
   }
 
   componentWillMount(){
     this.props.getActivePerformances()
+  }
+
+  handleSave(tag) {
+    console.log('handlesave is called with tag: ', tag)
+    if (tag.length !== 0) {
+      this.props.addTag(tag);
+    }
+  }
+
+  handleSubmit(performanceId, event) {
+    console.log('performanceId in handle submit' ,performanceId); 
+    const { userId} = this.props;
+
+    const text = event.target.value.trim();
+    if (event.which === 13) { //carriage return
+      event.preventDefault();
+      var newTag = {
+        tagname: text,
+        user_id: userId,
+        performanceId: performanceId
+      };
+      this.handleSave(newTag);
+      this.setState({ text: '', typing: false });
+    }
+  }
+  handleChange(event) {
+    const { userId} = this.props;
+    if(!userId) {
+      console.log('need to be logged in to add tag')
+    } else {
+      this.setState({ text: event.target.value });
+      if (event.target.value.length > 0 && !this.state.typing) {
+        this.setState({ typing: true});
+      }
+      if (event.target.value.length === 0 && this.state.typing) {
+        this.setState({ typing: false});
+      }
+    }    
   }
 
   render () {
@@ -52,22 +94,36 @@ export class StreamsContainer extends Component {
     }
   }
 
+  // onSave={this.handleSave.bind(this, performance.id)
   renderEvents () {
     // return <div>Result</div>
     return this.props.presentActiveStreams.map((performance)=> {
       return (
+        <div>
+          <Link to={`/router/activeStream/${performance.room}`}>
+            <GridTile
+            key={performance.id}
 
-        <Link to={`/router/activeStream/${performance.room}`}>
-          <GridTile
-          key={performance.id}
-
-          title={performance.title}
-          subtitle={<span>by <b>{performance.room}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
-          >
-            <img src='../../public/img/crowd.jpg' />
-          </GridTile>
-        </Link>
+            title={performance.title}
+            subtitle={<span>by <b>{performance.room}</b></span>}
+            actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
+            >
+              <img src='../../public/img/crowd.jpg' />
+            </GridTile>
+          </Link>
+          <input
+                style={{
+                  height: '100%',
+                  fontSize: '2em',
+                  marginBottom: '1em'
+                }}
+                type="textarea"
+                autoFocus="true"
+                placeholder="Add a tag"
+                value={this.state.text}
+                onChange={this.handleChange.bind(this)}
+                onKeyDown={this.handleSubmit.bind(this, performance.id)}/>
+        </div>
       )
     })
   }
@@ -75,12 +131,14 @@ export class StreamsContainer extends Component {
 
 function mapStateToProps(state){
   return {
-    presentActiveStreams : state.data.activeStreams
+    presentActiveStreams : state.data.activeStreams,
+    userId: state.auth.userDetails.id
   }
 }
 
 const mapDispatchToProps = {
-  getActivePerformances
+  getActivePerformances,
+  addTag
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(StreamsContainer)

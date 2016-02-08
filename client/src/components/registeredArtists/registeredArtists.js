@@ -4,7 +4,7 @@ import {bindActionCreators} from 'redux'
 import {fetchAllRegisteredArtists,getAllStreams,subscribeToArtist} from '../../actions/index'
 import { Link } from 'react-router';
 import _ from 'lodash';
-
+import axios from 'axios'
 import SearchBar from '../search_bar'
 
 import Card from 'material-ui/lib/card/card';
@@ -66,6 +66,15 @@ export class RegisteredArtists extends Component{
         });
         this.setState({
             registeredArtists : results
+        })
+    }
+
+    createArtistSubscription(data){
+        console.log("SUBSRICTION IN REGISTED ARTISTS",data)
+       axios.post('/api/subscribeToArtist', {
+            user_id: data.user_id,
+            artist_id: data.artist_id
+
         })
     }
 
