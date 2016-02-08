@@ -151,7 +151,13 @@ app.post('/auth/signUp/', (req, res) => {
 
        new Performance({active: false, room: req.body.user_name})
         .save().then((performance)=>{
-            console.log("NEW PERFORMANCE CREATED",performance)
+
+           if(performance){
+               res.sendStatus(403)
+           }
+           else{
+               console.log("NEW PERFORMANCE CREATED",performance)
+           }
         })
 
 });
@@ -247,7 +253,7 @@ app.get('/auth/facebook/callback/',
     function(req, res) {
         console.log("RESPONSE IN CALLBACK facebook",req.user);
         current_user = req.user;
-        current_token = jwt.sign({user_name: (req.user.attributes.email_id ) },CONFIG.JWT_SECRET);
+        current_token = jwt.sign({user_name: (req.user.email_id ) },CONFIG.JWT_SECRET);
         res.redirect('/router/socialLogin')
     }
 
@@ -263,7 +269,7 @@ app.get('/auth/google/callback/',
     function(req, res) {
         console.log("response for Google in callback",req.user);
         current_user = req.user;
-        current_token = jwt.sign({user_name: (req.user.attributes.email_id ) },CONFIG.JWT_SECRET);
+        current_token = jwt.sign({user_name: (req.user.email_id ) },CONFIG.JWT_SECRET);
         res.redirect('/router/socialLogin')
     }
 

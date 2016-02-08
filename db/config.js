@@ -78,7 +78,7 @@ db.knex.schema.hasTable('performances').then(function(exists) {
       performances.increments('id').primary();
       performances.timestamps();
       performances.boolean('active');
-      performances.string('room',255).unique();;
+      performances.string('room',255).unique();
       performances.timestamp('went_live'); // timestamp is seconds since 1-1-1970, will not change with time zones
       performances.timestamp('ended');
       performances.string('title', 255);
