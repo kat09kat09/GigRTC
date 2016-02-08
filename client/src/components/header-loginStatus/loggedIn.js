@@ -67,8 +67,8 @@ export default (props)=>{
                   {props.userPrivelege === 'artist' ?
                       <MenuItem
                       linkButton={true}
-                      primaryText="Broadcast"
-                      containerElement={<Link to="/router/streamYourself" >Stream Yourself</Link>} />
+                      primaryText="Stream Yourself"
+                      containerElement={<Link to="/router/describePerformance" >Stream Yourself</Link>} />
                     :
                       ""
 

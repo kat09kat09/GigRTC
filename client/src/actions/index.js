@@ -226,7 +226,7 @@ export function MakePerformance(formData){
                 console.log("++++++++++++++ response from server to MakePerformance", response);
                 try {
                     dispatch(perfDetailSuccess(response));
-                    browserHistory.push('router/activeStream/' + formData.room); // FIXME... to the broadcast yourself page?
+                    browserHistory.push('router/activeStream/' + formData.room);
                 } catch (e) {
                     dispatch(perfDetailFailure(response));
                 }
