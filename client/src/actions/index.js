@@ -440,8 +440,8 @@ export function subscribeToArtist(info) {
 }
 
 //This Action may not be necessary based on twilio implementation // TODO
-export function emailAllSubscribers(artistID){
-    var data = axios.get('/api/emailAllSubscribers',{params : artistID})
+export function emailAllSubscribers(artistDetails){
+    var data = axios.get('/api/emailAllSubscribers',{params : artistDetails})
     console.log("GET ALL RELATIONS TO ARTIST ACTION CALLED")
 
     return {
