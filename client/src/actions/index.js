@@ -228,7 +228,7 @@ export function MakePerformance(formData){
                 console.log("++++++++++++++ response from server to MakePerformance", response);
                 try {
                     dispatch(perfDetailSuccess(response));
-                    browserHistory.push('/router/streamYourself/');
+                    browserHistory.push('/router/streamYourself'); 
                 } catch (e) {
                     dispatch(perfDetailFailure(response));
                 }

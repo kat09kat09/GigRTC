@@ -20,9 +20,10 @@ export default createReducer(initialState, {
           stream.tags.forEach(function(tag){
             if(!uniqueTags[tag.tagname]) { uniqueTags[tag.tagname]= true }
           })
+          return uniqueTags;
         }, {}); 
-        var activeTags= Object.keys(uniqueActiveTags); 
-        console.log('fetch active streams reducer', payload.data); 
+        var activeTags= Object.keys(uniqueActiveTags);
+        console.log('active tags');  
         return Object.assign({}, state, {
 
               activeStreams: payload.data, 
@@ -50,7 +51,6 @@ export default createReducer(initialState, {
             //tagname exists, don't change attributes on state
             return Object.assign({}, state); 
         } else {
-
            var newState= Object.assign({}, state); 
           
            newState.activeStreams= newState.activeStreams.map(function (stream){
@@ -59,8 +59,7 @@ export default createReducer(initialState, {
              }
              return stream; 
            })
-
-           newState.activeTags= newState.activeTags.push(payload.tagname); 
+           newState.activeTags.push(payload.tagname); 
            return newState; 
         }    
         
