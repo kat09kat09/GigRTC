@@ -109,7 +109,6 @@ export function videoHigherOrderFunction(Component) {
             this.onVideoBroadCastEnd.call(this)
         }
 
-
         render () {
             return (
                 <div className="art-land-wrap">
@@ -128,12 +127,10 @@ export function videoHigherOrderFunction(Component) {
                     </div>
                     
 
-<<<<<<< HEAD
                     <div style={{float:'right'}}>
                         <Chat/>
                     </div>
-=======
->>>>>>> (ENHANCE) style broadcaster page
+
                 </div>
             )
 

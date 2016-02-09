@@ -42,7 +42,11 @@ export class StreamsContainer extends Component {
   componentWillMount(){
     const {dispatch}= this.props; 
     // this.props.getActivePerformances()
-    dispatch(actions.getActivePerformances()); 
+
+    //TODO uncomment before deployement
+    dispatch(actions.getActivePerformances());
+    dispatch(actions.getAllStreams());
+
     // var activeTags= this.props.presentActiveStreams.reduce((allTags,stream) =>{
     //   stream.tags.forEach(tag =>{
     //     allTags[tag.tagname]=true;
