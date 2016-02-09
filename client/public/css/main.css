@@ -314,8 +314,8 @@ i:first-of-type + div {
 
 /*PERFORMANCE DESCRIPTION PAGE FIXME not centered on page at all? Ask Auggie, styling master*/
 .performance-description-main {
-  width: 450px;
-  height: 400px;
+  width: 480px;
+  height: 420px;
   margin: 10% auto;
   padding: 2rem;
   background-color: #A1A1A1;
@@ -325,6 +325,10 @@ i:first-of-type + div {
 
 .formContainer {
   margin: 0 30%;
+}
+
+.formGroup {
+  width: 300px;
 }
 /*MEDIA QUERIES*/
 @media (min-width: 1800px) {
@@ -397,6 +401,7 @@ i:first-of-type + div {
       margin-top: 7%;
     }
 }
+/*END MEDIA QUERY*/
 
 
 .fileInput {

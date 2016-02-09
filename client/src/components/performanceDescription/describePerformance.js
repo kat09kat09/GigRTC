@@ -71,7 +71,7 @@ class DescribePerformance extends Component {
             <TextField
               type="text"
               hintText="Info to display about you and your art"
-              floatingLabelText="Info to display about you and your art"
+              floatingLabelText="Info to display about your gigg"
               multiLine={ true }
               rows={ 3 }
               rowsMax={ 16 }
