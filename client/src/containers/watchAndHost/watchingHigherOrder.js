@@ -127,10 +127,6 @@ export function videoHigherOrderFunction(Component) {
 
                     </div>
 
-                    <div style={{float:'right'}}>
-                        <Chat/>
-                    </div>
-
                 </div>
             )
 

@@ -156,6 +156,10 @@ h1 {
   margin-bottom: 1em;
 }
 
+i:first-of-type + div {
+  color: #FCF660;
+}
+
 /*About page helper classes*/
 
 .art-land-wrap{
