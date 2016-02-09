@@ -50,7 +50,6 @@ video {
   width: 640px;
   height: 480px;
   margin: auto;
-
 }
 
 
@@ -126,10 +125,40 @@ h1 {
 
 }
 
+.chatComponent {
+  float: right;
+  width: 340px;
+  background-color: #212121;
+  height: 950px;
+}
+
+.broadcastComponent {
+  margin-top: 10%;
+}
+/*CHAT BOX STYLES*/
+.messageContainer{
+  height: 850px;
+  overflow: hidden;
+}
+.chatFieldWrapper {
+  z-index: 52;
+  left: 21.1rem;
+  right: 1rem;
+  width: 100%;
+  flexShrink: 0;
+  order: 2;
+  marginTop: .5em;
+}
+
+.chatInput {
+  height: 100%;
+  font-size: 2em;
+  margin-bottom: 1em;
+}
 
 /*About page helper classes*/
 
-.art-land-wrap {
+.art-land-wrap{
   height: 950px;
   background-image:
     linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
@@ -214,6 +243,7 @@ h1 {
   text-align: center;
   color: orange;
   z-index: 10;
+  box-shadow: 2px 0px 10px 5px rgba(0, 0, 0, 0.4);
 }
 
 .live > h2 {
@@ -304,21 +334,34 @@ h1 {
       margin-top: 45px;
       margin-left: 10%;
     };*/
+    #videoBig {
+      margin-left: 10%;
+    }
 
+    .broadcastComponent {
+      margin-top: 5%;
+    }
 
     .avatars {
       margin-top: 5%;
     }
+    .chatComponent {
+      height: 670px;
+    }
+
+    .art-land-wrap, .videoWrapper {
+      height: 670px;
+    }
     .live {
 
       float: left;
-      width: 220px;
       height: 670px;
       background-color: #212121;
       text-align: center;
       color: orange;
-}
-    .mic-section, .art-land-wrap {
+    }
+
+    .mic-section {
       height: 670px;
       background-position: 220px 0px;
     }

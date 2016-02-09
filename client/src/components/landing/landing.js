@@ -2,6 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import { Link } from 'react-router';
+import SignInModal from '../modals/userSigninModal';
 
 let artistButton = {
   'margin-top': "45px",
@@ -41,14 +42,14 @@ export default class Landing extends Component {
               secondary={true} 
               style={artistButton}
               linkButton={true}
-              containerElement={<Link to="router/artistLand" className="logoLink">Artists</Link>} 
+              containerElement={<Link to="/router/artistAuthenticate/signup" >Sign in/Up </Link>} 
             />
             <RaisedButton 
                label="Fans"
                secondary={true} 
                style={fanButton}
                linkButton={true}
-               containerElement={<Link to="router/fanLand" className="logoLink">Fans</Link>} 
+               containerElement={<Link to="/router/nowStreaming" className="logoLink"> Now Streaming </Link>}  
             />
           </div>
         </div>
