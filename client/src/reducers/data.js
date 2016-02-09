@@ -16,10 +16,18 @@ const initialState = {
 export default createReducer(initialState, {
 
     [FETCH_ACTIVE_STREAMS] : (state,payload) =>{
-        console.log('fetch active streams reducer', payload.data); 
+        var uniqueActiveTags= payload.data.reduce(function(uniqueTags,stream){
+          stream.tags.forEach(function(tag){
+            if(!uniqueTags[tag.tagname]) { uniqueTags[tag.tagname]= true }
+          })
+          return uniqueTags;
+        }, {}); 
+        var activeTags= Object.keys(uniqueActiveTags);
+        console.log('active tags');  
         return Object.assign({}, state, {
 
-              activeStreams: payload.data
+              activeStreams: payload.data, 
+              activeTags: activeTags
 
         });
     },
@@ -43,7 +51,6 @@ export default createReducer(initialState, {
             //tagname exists, don't change attributes on state
             return Object.assign({}, state); 
         } else {
-          
            var newState= Object.assign({}, state); 
           
            newState.activeStreams= newState.activeStreams.map(function (stream){
@@ -52,10 +59,9 @@ export default createReducer(initialState, {
              }
              return stream; 
            })
+           newState.activeTags.push(payload.tagname); 
            return newState; 
-        }
-        
-        
+        }    
         
     }
 
