@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 // import { getActivePerformances , addTag} from '../actions';
 import * as actions from '../actions'; 
 import { Link } from 'react-router';
-
+import _ from 'lodash';
 
 
 import GridList from '../../node_modules/material-ui/lib/grid-list/grid-list';
@@ -12,7 +12,8 @@ import GridTile from '../../node_modules/material-ui/lib/grid-list/grid-tile';
 import StarBorder from '../../node_modules/material-ui/lib/svg-icons/toggle/star-border';
 import IconButton from '../../node_modules/material-ui/lib/icon-button';
 import RaisedButton from 'material-ui/lib/raised-button';
-
+import AutoComplete from 'material-ui/lib/auto-complete';
+import Close from 'material-ui/lib/svg-icons/navigation/close';  
 
 
 const styles = {
@@ -34,8 +35,9 @@ export class StreamsContainer extends Component {
     super(props)
     this.state={
       text: '', 
-      typing: false
-     
+      typing: false,
+      tagSearchText: '',
+      filteredStreams: []
     }
   }
 
@@ -43,22 +45,11 @@ export class StreamsContainer extends Component {
     const {dispatch}= this.props; 
     // this.props.getActivePerformances()
 
-    //TODO uncomment before deployement
-    dispatch(actions.getActivePerformances());
-    dispatch(actions.getAllStreams());
-
-    // var activeTags= this.props.presentActiveStreams.reduce((allTags,stream) =>{
-    //   stream.tags.forEach(tag =>{
-    //     allTags[tag.tagname]=true;
-    //   })
-    // }, {});
-    // this.setState({activeTags: Object.keys(activeTags)}); 
+    dispatch(actions.getActivePerformances()); 
   }
 
   handleSave(tag) {
     const {dispatch}= this.props; 
-    console.log('this.props in streams-container', this.props)
-    console.log('handlesave is called with tag: ', tag)
     if (tag.length !== 0) {
       // this.props.addTag(tag);
       dispatch(actions.addTag(tag)); 
@@ -66,7 +57,6 @@ export class StreamsContainer extends Component {
   }
 
   handleSubmit(performanceId, event) {
-    console.log('performanceId in handle submit' ,performanceId); 
     const { userId} = this.props;
 
     const text = event.target.value.trim();
@@ -84,7 +74,7 @@ export class StreamsContainer extends Component {
   handleChange(event) {
     const { userId} = this.props;
     if(!userId) {
-      console.log('need to be logged in to add tag')
+      //need to be logged in to submit a tag
     } else {
       this.setState({ text: event.target.value });
       if (event.target.value.length > 0 && !this.state.typing) {
@@ -96,11 +86,42 @@ export class StreamsContainer extends Component {
     }    
   }
 
+  handleTagSearch(searchTag) {
+    if(searchTag.length>0){
+      var filteredStreams= _.filter(this.props.presentActiveStreams, function(stream){
+        return stream.tags.some(function(tag){
+          return tag.tagname=== searchTag; 
+        })
+      }); 
+      this.setState({filteredStreams: filteredStreams}); 
+    }
+  }
+  handleUpdateTagSearch(text){
+    this.setState({tagSearchText: text})
+  }
+
+  handleClearFilter(){
+    this.setState({tagSearchText: ''}); 
+    this.setState({filteredStreams:[]})
+  }
+
   render () {
-    console.log('this.props in streams-container', this.props); 
     if (this.props.presentActiveStreams && this.props.presentActiveStreams.length) {
       return(
         <div style={ styles.root }>
+           <AutoComplete
+            floatingLabelText="Give me streams with this tag"
+            filter={AutoComplete.fuzzyFilter}
+            dataSource={this.props.activeTags}
+            onNewRequest= {this.handleTagSearch.bind(this)}
+            onUpdateInput= {this.handleUpdateTagSearch.bind(this)}
+            searchText={this.state.tagSearchText}/>
+            <IconButton 
+              tooltip="Clear Filter"
+              onClick={this.handleClearFilter.bind(this)}>
+              <Close />
+            </IconButton>
+          <br/>
           <GridList cellHeight={ 180 } style={ styles.gridList }>
             { this.renderEvents() }
           </GridList>
@@ -122,7 +143,17 @@ export class StreamsContainer extends Component {
     const style = {
       margin: 12,
     };
-    return this.props.presentActiveStreams.map((performance)=> {
+    
+    var activeStreams;  
+    if(this.state.filteredStreams.length>0){
+      console.log('displaying filtered streams'); 
+      activeStreams= this.state.filteredStreams; 
+    } else {
+      console.log('displaying unfiltered streams')
+      activeStreams= this.props.presentActiveStreams; 
+    }
+    // return this.props.presentActiveStreams.map((performance)=> {
+    return activeStreams.map((performance)=> {
       return (
         <div>
           <Link to={`/router/activeStream/${performance.room}`}>
@@ -162,7 +193,8 @@ export class StreamsContainer extends Component {
 function mapStateToProps(state){
   return {
     presentActiveStreams : state.data.activeStreams,
-    userId: state.auth.userDetails.id
+    userId: state.auth.userDetails.id,
+    activeTags: state.data.activeTags
   }
 }
 

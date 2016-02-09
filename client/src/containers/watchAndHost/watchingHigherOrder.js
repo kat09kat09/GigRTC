@@ -126,7 +126,6 @@ export function videoHigherOrderFunction(Component) {
                             {...this.state} {...this.props}/>
 
                     </div>
-                    
 
                     <div style={{float:'right'}}>
                         <Chat/>

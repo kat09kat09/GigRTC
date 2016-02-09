@@ -228,10 +228,7 @@ export function MakePerformance(formData){
                 console.log("++++++++++++++ response from server to MakePerformance", response);
                 try {
                     dispatch(perfDetailSuccess(response));
-                    //-> this should not point to a taged link it should just go to /router/activeStream
-                    // this is as per initial design it should point to streamYourself
-                    browserHistory.push('/router/streamYourself');
-                    //browserHistory.push('/router/activeStream/' + formData.room);
+                    browserHistory.push('/router/streamYourself'); 
                 } catch (e) {
                     dispatch(perfDetailFailure(response));
                 }
@@ -336,16 +333,7 @@ export function determineEnvironment(){
 
 export function getActivePerformances(){
 
-    // var data = axios.get('/api/activeStreams')
-    // console.log('data for get active performances', data); 
-    // return {
-    //     type : FETCH_ACTIVE_STREAMS,
-    //     payload : data
-    // }
-
     return (dispatch) => {
-        // dispatch(requestMessages())
-        // console.log('will call fetch here at endpoint:', '/api/messages/'+channel)
         return axios.get('/api/activeStreams')
         .then(function (response){
             console.log('activeStreams response', response); 
@@ -451,14 +439,6 @@ export function emailAllSubscribers(artistDetails){
 }
 
 export function addTag(tag) {
-
-    // axios.post('/api/addTag', tag)
-    // .then(response => {
-    //     console.log('add tag response', response)
-    //     dispatch(showTag(response.data)); 
-    // }).catch(error=> {
-    //     console.log("add tag error", error);
-    // })
     
     return (dispatch) => {
         return axios.post('/api/addTag', tag)
