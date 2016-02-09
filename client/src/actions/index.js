@@ -333,13 +333,25 @@ export function determineEnvironment(){
 
 export function getActivePerformances(){
 
-    var data = axios.get('/api/activeStreams')
+    // var data = axios.get('/api/activeStreams')
+    // console.log('data for get active performances', data); 
+    // return {
+    //     type : FETCH_ACTIVE_STREAMS,
+    //     payload : data
+    // }
 
-    return {
-        type : FETCH_ACTIVE_STREAMS,
-        payload : data
+    return (dispatch) => {
+        // dispatch(requestMessages())
+        // console.log('will call fetch here at endpoint:', '/api/messages/'+channel)
+        return axios.get('/api/activeStreams')
+        .then(function (response){
+            console.log('activeStreams response', response); 
+            dispatch({
+                type : FETCH_ACTIVE_STREAMS,
+                payload : response
+            })
+        })
     }
-
 }
 
 export function getAllStreams(){
@@ -436,18 +448,30 @@ export function emailAllSubscribers(artistID){
 }
 
 export function addTag(tag) {
-    console.log('/api/addTag', tag);
-    axios.post('/api/addTag', tag)
-    .then(function (response) {
-        dispatch(showTag(performanceId, response.data))
-    }).catch((error)=> {
-        //console.log("AXIOS ERROR", error);
-    })
 
+    // axios.post('/api/addTag', tag)
+    // .then(response => {
+    //     console.log('add tag response', response)
+    //     dispatch(showTag(response.data)); 
+    // }).catch(error=> {
+    //     console.log("add tag error", error);
+    // })
+    
+    return (dispatch) => {
+        return axios.post('/api/addTag', tag)
+        .then(response => {
+            console.log('add tag response', response)
+             dispatch(showTag(response.data)); 
+        }).catch(error=> {
+            console.log("add tag error", error);
+        })
+        
+    }
 }
 
 export function showTag(data){
-    console.log('addtag', ADD_TAG);
+    console.log('show tag called');
+    console.log('data from db', data); 
     return {
         type : ADD_TAG,
         payload : data

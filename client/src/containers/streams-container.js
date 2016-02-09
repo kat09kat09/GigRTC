@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {bindActionCreators} from 'redux'; 
 import { connect } from 'react-redux';
-import { getActivePerformances , addTag} from '../actions';
+// import { getActivePerformances , addTag} from '../actions';
+import * as actions from '../actions'; 
 import { Link } from 'react-router';
 
 
@@ -9,6 +11,9 @@ import GridList from '../../node_modules/material-ui/lib/grid-list/grid-list';
 import GridTile from '../../node_modules/material-ui/lib/grid-list/grid-tile';
 import StarBorder from '../../node_modules/material-ui/lib/svg-icons/toggle/star-border';
 import IconButton from '../../node_modules/material-ui/lib/icon-button';
+import RaisedButton from 'material-ui/lib/raised-button';
+
+
 
 const styles = {
   root: {
@@ -30,17 +35,29 @@ export class StreamsContainer extends Component {
     this.state={
       text: '', 
       typing: false
+     
     }
   }
 
   componentWillMount(){
-    this.props.getActivePerformances()
+    const {dispatch}= this.props; 
+    // this.props.getActivePerformances()
+    dispatch(actions.getActivePerformances()); 
+    // var activeTags= this.props.presentActiveStreams.reduce((allTags,stream) =>{
+    //   stream.tags.forEach(tag =>{
+    //     allTags[tag.tagname]=true;
+    //   })
+    // }, {});
+    // this.setState({activeTags: Object.keys(activeTags)}); 
   }
 
   handleSave(tag) {
+    const {dispatch}= this.props; 
+    console.log('this.props in streams-container', this.props)
     console.log('handlesave is called with tag: ', tag)
     if (tag.length !== 0) {
-      this.props.addTag(tag);
+      // this.props.addTag(tag);
+      dispatch(actions.addTag(tag)); 
     }
   }
 
@@ -76,6 +93,7 @@ export class StreamsContainer extends Component {
   }
 
   render () {
+    console.log('this.props in streams-container', this.props); 
     if (this.props.presentActiveStreams && this.props.presentActiveStreams.length) {
       return(
         <div style={ styles.root }>
@@ -97,6 +115,9 @@ export class StreamsContainer extends Component {
   // onSave={this.handleSave.bind(this, performance.id)
   renderEvents () {
     // return <div>Result</div>
+    const style = {
+      margin: 12,
+    };
     return this.props.presentActiveStreams.map((performance)=> {
       return (
         <div>
@@ -111,6 +132,11 @@ export class StreamsContainer extends Component {
               <img src='../../public/img/crowd.jpg' />
             </GridTile>
           </Link>
+          <div>
+            {performance.tags.map(tag =>
+              <RaisedButton label={tag.tagname} style={style} />
+            )}
+          </div>
           <input
                 style={{
                   height: '100%',
@@ -136,9 +162,11 @@ function mapStateToProps(state){
   }
 }
 
-const mapDispatchToProps = {
-  getActivePerformances,
-  addTag
-};
+// const mapDispatchToProps = {
+//   getActivePerformances,
+//   addTag
+// };
 
-export default connect(mapStateToProps,mapDispatchToProps)(StreamsContainer)
+// export default connect(mapStateToProps,mapDispatchToProps)(StreamsContainer)
+
+export default connect(mapStateToProps)(StreamsContainer)
