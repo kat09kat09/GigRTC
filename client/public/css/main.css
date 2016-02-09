@@ -314,9 +314,18 @@ i:first-of-type + div {
 
 /*PERFORMANCE DESCRIPTION PAGE FIXME not centered on page at all? Ask Auggie, styling master*/
 .performance-description-main {
-  width: 70%
+  width: 450px;
+  height: 400px;
+  margin: 10% auto;
+  padding: 2rem;
+  background-color: #A1A1A1;
+  border-style: 1px solid #212121;
+  border-radius: 12px .5px;
 }
 
+.formContainer {
+  margin: 0 30%;
+}
 /*MEDIA QUERIES*/
 @media (min-width: 1800px) {
     .avatar > img {
@@ -328,6 +337,7 @@ i:first-of-type + div {
     .avatar > img {
       margin: 0 25%;
     }
+    
 
 /*    .artistButton {
       margin-top: 45px,

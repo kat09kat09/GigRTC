@@ -49,6 +49,7 @@ class DescribePerformance extends Component {
 
     return (
       <div className='performance-description-main'>
+      <div className="formContainer">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <h2>Describe your performance</h2>
 
@@ -103,6 +104,7 @@ class DescribePerformance extends Component {
           <RaisedButton type="submit" >Submit</RaisedButton>
 
         </form>
+        </div>
       </div>
     )
   }
