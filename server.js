@@ -316,8 +316,9 @@ app.put('/api/activeStreams', function(req, res){
 
 app.get('/api/activeStreams', function(req, res) {
     Performances
-     // .query({where: {active: true}})
-    .fetch().then(function (performances) {
+    .query({where: {active: true}})
+    .fetch({withRelated:['tags']}).then(function (performances) {
+        console.log('active streams with tags from db: ', performances.models); 
         res.status(200).send(performances.models);
     });
 
@@ -366,7 +367,9 @@ app.post('/api/addTag', function (req,res){
             Performance.where({id: performanceId}).fetch()
             .then(performance => {
                performance.tags().attach(tag.id); 
+               res.status(200).send({tagname: null, performanceId: performanceId}); //return nothing if tag is already in db
                console.log('tag attached to performance'); 
+
             })
         } else {
             console.log('adding tag to db'); 
@@ -375,18 +378,23 @@ app.post('/api/addTag', function (req,res){
                 user_id: userId
             })
             newTag.save().then (function (tag){
+                console.log('tagname: ', tag.attributes.tagname); 
                 console.log('tag sucessfuly saved', tag.id); 
                 Tags.add(tag);
 
                 Performance.where({id: performanceId}).fetch()
                 .then(performance => {
                     performance.tags().attach(tag.id); 
-                    console.log('tag attached to performance'); 
+                    console.log('tag attached to performance', tag); 
+                    console.log('send back this obj: ', {tagId: tag.id, tagname: tag.attributes.tagname, performanceId: performanceId})
+                    // console.log('response pending', res); 
+                    res.status(200).send({tagId: tag.id, tagname: tag.attributes.tagname, performanceId: performanceId}); //return the performance with updated tags
+                    
                 })  
             })
         }
     })
-    
+    // res.status(200).send(req.body); 
 
 });
 
