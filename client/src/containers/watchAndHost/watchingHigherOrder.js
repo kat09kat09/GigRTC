@@ -67,6 +67,7 @@ export function videoHigherOrderFunction(Component) {
         onVideoBroadCast(){
             onBroadcast(this.props.userDetails.user_name);
             this.props.performanceActive({room:this.props.userDetails.user_name, active : true});
+
         }
 
         onVideoBroadCastEnd(){
@@ -98,7 +99,7 @@ export function videoHigherOrderFunction(Component) {
             if(this.props.userPrivelege == 'artist'){
                 this.onVideoBroadCast.call(this)
                 //This function may need to change to a Redux action call, based on twilio //TODO
-                this.emailAllSubscribers.call(this,{artist_id : this.props.userDetails.id})
+                this.emailAllSubscribers.call(this,{artist_id : this.props.userDetails.id, artist_name  : this.props.userDetails.user_name})
             }
             else{
                 this.onWatchVideoBroadcast.call(this)
@@ -108,7 +109,6 @@ export function videoHigherOrderFunction(Component) {
         componentWillUnmount(){
             this.onVideoBroadCastEnd.call(this)
         }
-
 
         render () {
             return (
@@ -126,7 +126,6 @@ export function videoHigherOrderFunction(Component) {
                             {...this.state} {...this.props}/>
 
                     </div>
-
 
                     <div style={{float:'right'}}>
                         <Chat/>

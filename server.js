@@ -483,13 +483,44 @@ app.get('/api/emailAllSubscribers',function(req,res){
     Artist_User.query({where: {artist_id :req.query.artist_id }}).fetchAll().then(function(emails){
         emails.models.map(function(user_id){
            User.query({where : {id : user_id.attributes.user_id}}).fetch().then(function(model){
-             //CALL TWILIO ACTION HERE //TODO
-              console.log(model.get('email_id'))
+              sendEmailTo(model.get('email_id'),req.query.artist_name,req,res)
+
           })
         })
     });
-    res.json("SOMETHIN IS HAPPENING")
+    res.json("EMAIL SENDING")
 });
+
+//************NODE EMAIL
+var emailJS = require('emailjs/email')
+
+var sendmail = emailJS.server.connect({
+    user: CONFIG.G_MAIL_ADDRESS,
+    password: CONFIG.G_PASSWORD,
+    host: "smtp.gmail.com",
+    ssl: true
+});
+
+function sendEmailTo (email_id,artist_name,req,res){
+    console.log("SEND EMAIL TO CALLED WITH " + email_id + " and " + artist_name)
+    var message = {
+
+        from: "GIGG.TV <teamdreamstream4@gmail.com>",
+        to: "User <" + email_id + ">",
+        subject: artist_name + " IS LIVE NOW!",
+        text: "Click on gigg.tv/router/activeStream/" + artist_name + " . Join in for a good time"
+    };
+
+    sendmail.send(message, function (err, message) {
+        var body = null;
+        if (err) {
+            body = err.toString();
+            console.log("ERROR IN SENDING EMAIL",body)
+        } else {
+            console.log("EMAIL SENT IN SERVER")
+        }
+    });
+}
 
 //******* Test  Chat **************
 //set env vars

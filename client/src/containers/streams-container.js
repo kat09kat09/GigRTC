@@ -44,6 +44,7 @@ export class StreamsContainer extends Component {
   componentWillMount(){
     const {dispatch}= this.props; 
     // this.props.getActivePerformances()
+
     dispatch(actions.getActivePerformances()); 
   }
 
