@@ -126,14 +126,11 @@ export function videoHigherOrderFunction(Component) {
                             {...this.state} {...this.props}/>
 
                     </div>
-                    
 
-<<<<<<< HEAD
+
                     <div style={{float:'right'}}>
                         <Chat/>
                     </div>
-=======
->>>>>>> (ENHANCE) style broadcaster page
                 </div>
             )
 

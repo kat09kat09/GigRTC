@@ -3,6 +3,7 @@ import { Component } from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import { Link } from 'react-router';
 import SignInModal from '../modals/userSigninModal';
+import StreamsUL from '../streamsList/listOfStreams';
 
 let artistButton = {
   'margin-top': "45px",
@@ -17,7 +18,7 @@ let fanButton = {
 let windowWidth = window.innerWidth;
 
 if(windowWidth < 1600){
-  artistButton['margin-left'] = '29%'; 
+  artistButton['margin-left'] = '29%';
 }
 
 export default class Landing extends Component {
@@ -26,34 +27,35 @@ export default class Landing extends Component {
       <div>
         <div className="land-wrap">
         <div className="mic-section">
-        
-        
+
+
           <div className="left">
           </div>
           <div className="live">
-            <h2> Currently Streaming </h2>
+            <h2> <Link to="router/nowStreaming">Currently Streaming</Link> </h2>
+            <StreamsUL />
           </div>
 
           <div className="right">
-            <h1> Pick up the mic! </h1> 
+            <h1> Pick up the mic! </h1>
             <h1>Broadcast your GIGG now! </h1>
-            <RaisedButton 
+            <RaisedButton
               label="Artists"
-              secondary={true} 
+              secondary={true}
               style={artistButton}
               linkButton={true}
-              containerElement={<Link to="/router/artistAuthenticate/signup" >Sign in/Up </Link>} 
+              containerElement={<Link to="/router/artistAuthenticate/signup" >Sign in/Up </Link>}
             />
-            <RaisedButton 
+            <RaisedButton
                label="Fans"
-               secondary={true} 
+               secondary={true}
                style={fanButton}
                linkButton={true}
-               containerElement={<Link to="/router/nowStreaming" className="logoLink"> Now Streaming </Link>}  
+               containerElement={<Link to="/router/nowStreaming" className="logoLink"> Now Streaming </Link>}
             />
           </div>
         </div>
-          
+
       </div>
   </div>
       )
