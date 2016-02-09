@@ -49,6 +49,7 @@ class DescribePerformance extends Component {
 
     return (
       <div className='performance-description-main'>
+      <div className="formContainer">
         <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           <h2>Describe your performance</h2>
 
@@ -70,7 +71,7 @@ class DescribePerformance extends Component {
             <TextField
               type="text"
               hintText="Info to display about you and your art"
-              floatingLabelText="Info to display about you and your art"
+              floatingLabelText="Info to display about your gigg"
               multiLine={ true }
               rows={ 3 }
               rowsMax={ 16 }
@@ -103,6 +104,7 @@ class DescribePerformance extends Component {
           <RaisedButton type="submit" >Submit</RaisedButton>
 
         </form>
+        </div>
       </div>
     )
   }
