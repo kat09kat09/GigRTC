@@ -346,14 +346,14 @@ width: 100%;
 .tagSearch {
   width: 500px;
   display: block;
-  margin: 0 auto;
+  
 }
 .tagInput {
   padding: 1rem;
 }
 .activeGrid {
   display: block;
-  width: 500px;
+  width: 50%;
   margin: 0 auto;
 }
 /*MEDIA QUERIES*/
