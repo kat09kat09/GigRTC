@@ -73,9 +73,8 @@ class Chat extends Component {
     });
   }
   componentDidUpdate() {
-    // console.log('this.refs', this.refs)
-    // const messageList = this.refs.messageList;
-    // messageList.scrollTop = messageList.scrollHeight;
+    const messageList = this.refs.messageList;
+    messageList.scrollTop = messageList.scrollHeight;
   }
   handleSave(newMessage) {
     const { dispatch } = this.props;
@@ -109,8 +108,9 @@ class Chat extends Component {
       };
       socket.emit('new message', newMessage);
       socket.emit('stop typing', { user: userName, channel: activeChannel });
-      this.handleSave(newMessage);
       this.setState({ text: '', typing: false });
+      this.handleSave(newMessage);
+      
     }
   }
   handleChange(event) {
@@ -154,7 +154,7 @@ class Chat extends Component {
 
         <div className="main" >
 
-          <div className="messageContainer">
+          <div className="messageContainer" ref="messageList">
             {filteredMessages.map(message =>
 
                   <MessageListItem  message={message} key={message.id} />
