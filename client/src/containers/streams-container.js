@@ -6,7 +6,6 @@ import * as actions from '../actions';
 import { Link } from 'react-router';
 import _ from 'lodash';
 
-
 import GridList from '../../node_modules/material-ui/lib/grid-list/grid-list';
 import GridTile from '../../node_modules/material-ui/lib/grid-list/grid-tile';
 import StarBorder from '../../node_modules/material-ui/lib/svg-icons/toggle/star-border';
@@ -14,6 +13,7 @@ import IconButton from '../../node_modules/material-ui/lib/icon-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import AutoComplete from 'material-ui/lib/auto-complete';
 import Close from 'material-ui/lib/svg-icons/navigation/close';
+import Popover from 'material-ui/lib/popover/popover';
 
 
 const styles = {
@@ -25,8 +25,10 @@ const styles = {
   gridList: {
     width: 800,
     height: 600,
-
     marginBottom: 24,
+  },
+  popover: {
+    padding: 20,
   },
 };
 
@@ -34,21 +36,21 @@ const defaultGridTileImage = '../../public/img/rocket.svg';
 
 export class StreamsContainer extends Component {
   constructor(props){
-    super(props)
+    super(props);
+
     this.state={
       text: '',
       typing: false,
       tagSearchText: '',
+      open: false,
       filteredStreams: []
-    }
+    };
   }
 
   componentWillMount(){
     const {dispatch}= this.props;
 
-
     dispatch(actions.getActivePerformances());
-
   }
 
   handleSave(tag) {
@@ -74,6 +76,7 @@ export class StreamsContainer extends Component {
       this.setState({ text: '', typing: false });
     }
   }
+
   handleChange(event) {
     const { userId} = this.props;
     if(!userId) {
@@ -99,6 +102,7 @@ export class StreamsContainer extends Component {
       this.setState({filteredStreams: filteredStreams});
     }
   }
+
   handleUpdateTagSearch(text){
     this.setState({tagSearchText: text})
   }
@@ -107,6 +111,19 @@ export class StreamsContainer extends Component {
     this.setState({tagSearchText: ''});
     this.setState({filteredStreams:[]})
   }
+
+  handleTouchTap = (event) => {
+    this.setState({
+      open: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
 
   render () {
     if (this.props.presentActiveStreams && this.props.presentActiveStreams.length) {
@@ -165,34 +182,62 @@ export class StreamsContainer extends Component {
     return activeStreams.map((performance)=> {
       return (
         <div>
-          <Link to={`/router/activeStream/${performance.room}`}>
-            <GridTile
-            key={performance.id}
-            title={performance.title}
-            subtitle={
-              <div>by <b>{performance.room}</b>
+          <GridTile
+          key={performance.id}
+          title={performance.title}
+          subtitle={
+            <div><Link to={`/router/activeStream/${performance.room}`}>by <b>{performance.room}</b></Link>
 
-                  {performance.tags.map(tag =>
-                    <RaisedButton className="tag-button" label={tag.tagname} style={style} />
-                  )}
+                {performance.tags.map(tag =>
+                  <RaisedButton className="tag-button" label={tag.tagname} style={style} />
+                )}
 
-              </div>
-            }
-            actionIcon={
-                this.props.userId ?
-                <IconButton><StarBorder color="yellow"/></IconButton>
-                :
+            </div>
+          }
+          actionIcon={
+              this.props.userId ?
+                <div>
+                  <RaisedButton
+                    onTouchTap={this.handleTouchTap}
+                    label="Tag This!"
+                  />
+                  <Popover
+                    open={this.state.open}
+                    anchorEl={this.state.anchorEl}
+                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                    onRequestClose={this.handleRequestClose}
+                  >
+                    <div style={styles.popover}>
+                      <div className="tagInput">
+                        <input
+                          style={{
+                            height: '100%',
+                            fontSize: '2em',
+                            marginBottom: '1em',
+                          }}
+                          type="textarea"
+                          autoFocus="true"
+                          placeholder="Add a tag"
+                          value={this.state.text}
+                          onChange={this.handleChange.bind(this)}
+                          onKeyDown={this.handleSubmit.bind(this, performance.id)}
+                        />
+                      </div>
+                    </div>
+                  </Popover>
+                </div>
+              :
                 <IconButton><StarBorder color="white"/></IconButton>
-              }
-            >
-              <img src={
-                performance.performance_image ?
-                performance.performance_image
-                :
-                defaultGridTileImage
-              } />
-            </GridTile>
-          </Link>
+            }
+          >
+            <img src={
+              performance.performance_image ?
+              performance.performance_image
+              :
+              defaultGridTileImage
+            } />
+          </GridTile>
 
           <div className="tagInput">
             <input
