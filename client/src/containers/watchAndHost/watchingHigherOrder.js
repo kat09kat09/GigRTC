@@ -22,7 +22,6 @@ export function videoHigherOrderFunction(Component) {
     });
 
     function onBroadcast(room){
-        console.log("FROM SKYLINK BROADCASTIG HIGHER ORDER WATCH STREAM",room)
 
         skylink.init({
             apiKey: CONFIG.SKYLINK_KEY,
@@ -76,14 +75,13 @@ export function videoHigherOrderFunction(Component) {
         }
 
         onWatchVideoBroadcast(){
+            console.log("CONSOLE FOR ONSTREAM button click")
             onStream(this.props.params.room);//this section needs the room of the clicked stream
-            this.props.updatePerformanceViewCount({room:this.props.params.room})
-
+            //this.props.updatePerformanceViewCount({room:this.props.params.room})
         }
 
         emailAllSubscribers(artistID){
             axios.get('/api/emailAllSubscribers',{params : artistID}).then((emails)=>{
-                console.log("ALL ARTIST SUBSRCRIBERS",emails)
             })
 
         }
@@ -96,14 +94,15 @@ export function videoHigherOrderFunction(Component) {
                 //    }, 1000)
                 //}
             //Based on user/artist it will call broadcast/watch
-            // if(this.props.userPrivelege == 'artist'){
-            if(this.props.userPrivelege == 'artist' && !this.props.params.room){
-                this.onVideoBroadCast.call(this)
-                //This function may need to change to a Redux action call, based on twilio //TODO
+            if(this.props.userPrivelege == 'artist'  && !this.props.params.room){
+
                 this.emailAllSubscribers.call(this,{artist_id : this.props.userDetails.id, artist_name  : this.props.userDetails.user_name})
             }
-            else{
+            else if (this.props.params.room){
                 this.onWatchVideoBroadcast.call(this)
+            }
+            else{
+                browserHistory.push('/')
             }
         }
 
@@ -120,7 +119,6 @@ export function videoHigherOrderFunction(Component) {
                     <div className="broadcastComponent">
                         <Component startBroadcast={this.onVideoBroadCast.bind(this)}
                                    endBroadcast={this.onVideoBroadCastEnd.bind(this)}
-
                                    currentPrivelege={this.props.userPrivelege}
                                    watchMode={!!this.props.params.room}
                                    watchVideo={this.onWatchVideoBroadcast.bind(this)}

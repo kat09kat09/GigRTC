@@ -45,7 +45,7 @@ export class StreamsContainer extends Component {
 
   componentWillMount(){
     const {dispatch}= this.props;
-    // this.props.getActivePerformances()
+
 
     dispatch(actions.getActivePerformances());
 
@@ -54,7 +54,7 @@ export class StreamsContainer extends Component {
   handleSave(tag) {
     const {dispatch}= this.props;
     if (tag.length !== 0) {
-      // this.props.addTag(tag);
+
       dispatch(actions.addTag(tag));
     }
   }
@@ -247,12 +247,5 @@ function mapStateToProps(state){
     activeTags: state.data.activeTags
   }
 }
-
-// const mapDispatchToProps = {
-//   getActivePerformances,
-//   addTag
-// };
-
-// export default connect(mapStateToProps,mapDispatchToProps)(StreamsContainer)
 
 export default connect(mapStateToProps)(StreamsContainer)
