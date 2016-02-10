@@ -153,6 +153,7 @@ db.knex.schema.hasTable('messages').then(function(exists) {
           messages.string('channelID', 255); // this will be the artist username (could be display_name, but it would need to be unique in the artists schema)
           messages.string('time', 255); // the time at which the message is created (on the client side)
           messages.text('text');
+          messages.longtext('user_image'); 
           //fake out performance id for now...
           messages.integer('performance_id');
 

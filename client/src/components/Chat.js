@@ -11,6 +11,8 @@ import uuid from 'node-uuid';
 import moment from 'moment';
 import List from 'material-ui/lib/lists/list';
 import Table from 'material-ui/lib/table/table';
+import ListItem from 'material-ui/lib/lists/list-item';
+import Avatar from 'material-ui/lib/avatar';
 
 // var socket = io.connect('https://gigg.tv');
 
@@ -34,13 +36,13 @@ class Chat extends Component {
 
   }
   componentWillMount() {
-    const {userDetails, dispatch, activeChannel } = this.props;
+    const {userDetails, dispatch, activeChannel } = this.props; 
     dispatch(actions.fetchMessages(activeChannel));
 
   }
   componentDidMount() {
     const {userDetails, dispatch, activeChannel}= this.props;
-    if(!userDetails) {
+    if(!userDetails|| userDetails.display_name===undefined) {
       var userName= 'Guest';
     } else {
       var userName= userDetails.user_name;
@@ -71,9 +73,9 @@ class Chat extends Component {
     });
   }
   componentDidUpdate() {
-    console.log('this.refs', this.refs)
-    const messageList = this.refs.messageList;
-    messageList.scrollTop = messageList.scrollHeight;
+    // console.log('this.refs', this.refs)
+    // const messageList = this.refs.messageList;
+    // messageList.scrollTop = messageList.scrollHeight;
   }
   handleSave(newMessage) {
     const { dispatch } = this.props;
@@ -85,11 +87,14 @@ class Chat extends Component {
   handleSubmit(event) {
 
     const { userDetails, activeChannel} = this.props;
-    if(!userDetails) {
+    if(!userDetails|| userDetails.display_name===undefined) {
       var userName= 'Guest';
+      var user_image= null;
     } else {
       var userName= userDetails.user_name;
+      var user_image= userDetails.user_image; 
     }
+
 
     const text = event.target.value.trim();
     if (event.which === 13) { //carriage return
@@ -99,11 +104,11 @@ class Chat extends Component {
         channelID: activeChannel,
         text: text,
         user: userName,
-        time: moment().calendar()
+        time: moment().calendar(),
+        user_image: user_image
       };
       socket.emit('new message', newMessage);
       socket.emit('stop typing', { user: userName, channel: activeChannel });
-      // this.props.onSave(newMessage);
       this.handleSave(newMessage);
       this.setState({ text: '', typing: false });
     }
@@ -126,17 +131,9 @@ class Chat extends Component {
       this.setState({ typing: false});
     }
   }
-   // <ul style={{wordWrap: 'break-word', margin: '0', overflowY: 'auto', padding: '0', paddingBottom: '1em', flexGrow: '1', order: '1'}} ref="messageList">
-   //          {filteredMessages.map(message =>
-
-   //              <MessageListItem message={message} key={message.id} />
-   //          )}
-   //        </ul>
 
 
   render() {
-
-
     const {messages, dispatch,userDetails, activeChannel}= this.props;
     console.log('this.props in Chat.js', this.props);
 
@@ -151,6 +148,7 @@ class Chat extends Component {
         margin: '20px auto 10px',
       },
     };
+
     return (
       <div className="chatWrapper">
 
@@ -185,7 +183,6 @@ class Chat extends Component {
 
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
       messages: state.messages.data,
       activeChannel: state.activeChannel.name,

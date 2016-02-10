@@ -6,7 +6,8 @@ var Message = db.Model.extend({
   defaults: {
     user_name: 'Guest',
     channelID: 'Lobby',
-    performance_id: 1 
+    performance_id: 1 ,
+    user_image: null
   },
   initialize: function(){
     this.on('creating', function(model, attrs, options){
