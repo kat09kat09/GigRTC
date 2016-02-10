@@ -320,12 +320,15 @@ i:first-of-type + div {
 /*PERFORMANCE DESCRIPTION PAGE FIXME not centered on page at all? Ask Auggie, styling master*/
 .performance-description-main {
   width: 480px;
-  height: 420px;
+  height: 450px;
   margin: 10% auto;
   padding: 2rem;
   background-color: #A1A1A1;
   border-style: 1px solid #212121;
-  border-radius: 12px .5px;
+  border-radius: 12px;
+}
+.uploadDescriptionImg {
+  margin-bottom: 1rem;
 }
 
 .formContainer {
@@ -388,12 +391,7 @@ i:first-of-type + div {
       text-align: center;
       color: orange;
     }
-     .live:link {
-      color:orange;
-    }
-    .streamLink {
-      color: orange;
-    }
+  
     .mic-section {
       height: 880px;
       background-position: 220px 0px;
