@@ -96,13 +96,15 @@ export function videoHigherOrderFunction(Component) {
                 //    }, 1000)
                 //}
             //Based on user/artist it will call broadcast/watch
-            if(this.props.userPrivelege == 'artist'){
-                this.onVideoBroadCast.call(this)
+            if(this.props.userPrivelege == 'artist'  && !this.props.params.room){
                 //This function may need to change to a Redux action call, based on twilio //TODO
                 this.emailAllSubscribers.call(this,{artist_id : this.props.userDetails.id, artist_name  : this.props.userDetails.user_name})
             }
-            else{
+            else if (this.props.params.room){
                 this.onWatchVideoBroadcast.call(this)
+            }
+            else{
+                browserHistory.push('/')
             }
         }
 
