@@ -25,7 +25,7 @@ const styles = {
   gridList: {
     width: 800,
     height: 600,
-    overflowY: 'auto',
+    
     marginBottom: 24,
   },
 };
@@ -111,7 +111,8 @@ export class StreamsContainer extends Component {
   render () {
     if (this.props.presentActiveStreams && this.props.presentActiveStreams.length) {
       return(
-        <div style={ styles.root }>
+        <div className="activeWrapper">
+        <div className="tagSearch">
           <AutoComplete
             floatingLabelText="Give me streams with this tag"
             filter={AutoComplete.fuzzyFilter}
@@ -119,16 +120,20 @@ export class StreamsContainer extends Component {
             onNewRequest= {this.handleTagSearch.bind(this)}
             onUpdateInput= {this.handleUpdateTagSearch.bind(this)}
             searchText={this.state.tagSearchText}
+            style={{"margin-left": "30px"}}
           />
             <IconButton
               tooltip="Clear Filter"
               onClick={this.handleClearFilter.bind(this)}>
               <Close />
             </IconButton>
+            </div>
           <br/>
-          <GridList cellHeight={ 180 } style={ styles.gridList }>
-            { this.renderEvents() }
-          </GridList>
+          <div className="activeGrid">
+            <GridList cellHeight={ 180 } style={ styles.gridList }>
+              { this.renderEvents() }
+            </GridList>
+          </div>
         </div>
       )
     } else {
@@ -177,18 +182,21 @@ export class StreamsContainer extends Component {
                 <RaisedButton label={tag.tagname} style={style} />
               )}
             </div>
+            <div className="tagInput">
             <input
                   style={{
                     height: '100%',
                     fontSize: '2em',
-                    marginBottom: '1em'
+                    marginBottom: '1em',
                   }}
                   type="textarea"
                   autoFocus="true"
                   placeholder="Add a tag"
                   value={this.state.text}
                   onChange={this.handleChange.bind(this)}
-                  onKeyDown={this.handleSubmit.bind(this, performance.id)}/>
+                  onKeyDown={this.handleSubmit.bind(this, performance.id)}
+                  />
+            </div>
           </div>
         )
       }
@@ -215,7 +223,9 @@ export class StreamsContainer extends Component {
                   style={{
                     height: '100%',
                     fontSize: '2em',
-                    marginBottom: '1em'
+                    marginBottom: '1em',
+                    marginLeft: '2rem',
+                    marginTop: '1rem'
                   }}
                   type="textarea"
                   autoFocus="true"

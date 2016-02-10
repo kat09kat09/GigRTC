@@ -338,6 +338,24 @@ i:first-of-type + div {
 .formGroup {
   width: 300px;
 }
+
+.activeWrapper {
+width: 100%;
+}
+
+.tagSearch {
+  width: 500px;
+  display: block;
+  margin: 0 auto;
+}
+.tagInput {
+  padding: 1rem;
+}
+.activeGrid {
+  display: block;
+  width: 500px;
+  margin: 0 auto;
+}
 /*MEDIA QUERIES*/
 @media (min-width: 1800px) {
     .avatar > img {
