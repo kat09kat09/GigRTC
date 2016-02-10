@@ -222,13 +222,13 @@ export function MakePerformance(formData){
         console.log("+++++++++++ formData SENT TO MakePerformance: ", formData)
         dispatch(perfDetailUpdate());
         return fetch(`/api/describe/`, config)
-            .then(checkHttpStatus) // WHAT
+            .then(checkHttpStatus) // this throws us into the catch if the response code isn't positive (200 etc)
             .then(parseJSON)
             .then(response => {
                 console.log("++++++++++++++ response from server to MakePerformance", response);
                 try {
                     dispatch(perfDetailSuccess(response));
-                    browserHistory.push('/router/streamYourself'); 
+                    browserHistory.push('/router/streamYourself');
                 } catch (e) {
                     dispatch(perfDetailFailure(response));
                 }
@@ -336,7 +336,7 @@ export function getActivePerformances(){
     return (dispatch) => {
         return axios.get('/api/activeStreams')
         .then(function (response){
-            console.log('activeStreams response', response); 
+            console.log('activeStreams response', response);
             dispatch({
                 type : FETCH_ACTIVE_STREAMS,
                 payload : response
@@ -439,22 +439,22 @@ export function emailAllSubscribers(artistDetails){
 }
 
 export function addTag(tag) {
-    
+
     return (dispatch) => {
         return axios.post('/api/addTag', tag)
         .then(response => {
             console.log('add tag response', response)
-             dispatch(showTag(response.data)); 
+             dispatch(showTag(response.data));
         }).catch(error=> {
             console.log("add tag error", error);
         })
-        
+
     }
 }
 
 export function showTag(data){
     console.log('show tag called');
-    console.log('data from db', data); 
+    console.log('data from db', data);
     return {
         type : ADD_TAG,
         payload : data
