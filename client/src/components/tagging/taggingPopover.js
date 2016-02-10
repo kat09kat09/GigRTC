@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Popover from 'material-ui/lib/popover/popover';
 import RaisedButton from 'material-ui/lib/raised-button';
+import TaggingPopoverContents from './taggingPopoverContents';
 
 const styles = {
   popover: {
@@ -36,7 +37,7 @@ export default class TaggingPopover extends React.Component {
       <div>
         <RaisedButton
           onTouchTap={this.handleTouchTap}
-          label="Click me"
+          label="Tags"
         />
         <Popover
           open={this.state.open}
@@ -46,7 +47,7 @@ export default class TaggingPopover extends React.Component {
           onRequestClose={this.handleRequestClose}
         >
           <div style={styles.popover}>
-            <RaisedButton primary={true} label="Here is a button"/>
+            <TaggingPopoverContents />
           </div>
         </Popover>
       </div>

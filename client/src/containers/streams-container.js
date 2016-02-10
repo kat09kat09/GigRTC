@@ -25,7 +25,7 @@ const styles = {
   gridList: {
     width: 800,
     height: 600,
-    
+
     marginBottom: 24,
   },
 };
@@ -112,22 +112,22 @@ export class StreamsContainer extends Component {
     if (this.props.presentActiveStreams && this.props.presentActiveStreams.length) {
       return(
         <div className="activeWrapper">
-        <div className="tagSearch">
-          <AutoComplete
-            floatingLabelText="Give me streams with this tag"
-            filter={AutoComplete.fuzzyFilter}
-            dataSource={this.props.activeTags}
-            onNewRequest= {this.handleTagSearch.bind(this)}
-            onUpdateInput= {this.handleUpdateTagSearch.bind(this)}
-            searchText={this.state.tagSearchText}
-            style={{"margin-left": "30px"}}
-          />
+          <div className="tagSearch">
+            <AutoComplete
+              floatingLabelText="Give me streams with this tag"
+              filter={AutoComplete.fuzzyFilter}
+              dataSource={this.props.activeTags}
+              onNewRequest= {this.handleTagSearch.bind(this)}
+              onUpdateInput= {this.handleUpdateTagSearch.bind(this)}
+              searchText={this.state.tagSearchText}
+              style={{"marginLeft": "30px"}}
+            />
             <IconButton
               tooltip="Clear Filter"
               onClick={this.handleClearFilter.bind(this)}>
               <Close />
             </IconButton>
-            </div>
+          </div>
           <br/>
           <div className="activeGrid">
             <GridList cellHeight={ 180 } style={ styles.gridList }>
@@ -139,7 +139,7 @@ export class StreamsContainer extends Component {
     } else {
       return (
         <div>
-          <div>Welcome!</div>
+          <div><h1>Welcome!</h1></div>
           <img src='../../public/img/crowd.jpg' width='800' height='600' />
         </div>
       )
@@ -163,79 +163,54 @@ export class StreamsContainer extends Component {
     }
     // return this.props.presentActiveStreams.map((performance)=> {
     return activeStreams.map((performance)=> {
-      if (performance.performance_image) {
-        return (
-          <div>
-            <Link to={`/router/activeStream/${performance.room}`}>
-              <GridTile
-              key={performance.id}
+      return (
+        <div>
+          <Link to={`/router/activeStream/${performance.room}`}>
+            <GridTile
+            key={performance.id}
+            title={performance.title}
+            subtitle={
+              <div>by <b>{performance.room}</b>
 
-              title={performance.title}
-              subtitle={<span>by <b>{performance.room}</b></span>}
-              actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
-              >
-                <img src={performance.performance_image} />
-              </GridTile>
-            </Link>
-            <div>
-              {performance.tags.map(tag =>
-                <RaisedButton label={tag.tagname} style={style} />
-              )}
-            </div>
-            <div className="tagInput">
-            <input
-                  style={{
-                    height: '100%',
-                    fontSize: '2em',
-                    marginBottom: '1em',
-                  }}
-                  type="textarea"
-                  autoFocus="true"
-                  placeholder="Add a tag"
-                  value={this.state.text}
-                  onChange={this.handleChange.bind(this)}
-                  onKeyDown={this.handleSubmit.bind(this, performance.id)}
-                  />
-            </div>
-          </div>
-        )
-      }
-      else {
-        return (
-          <div>
-            <Link to={`/router/activeStream/${performance.room}`}>
-              <GridTile
-              key={performance.id}
+                  {performance.tags.map(tag =>
+                    <RaisedButton className="tag-button" label={tag.tagname} style={style} />
+                  )}
 
-              title={performance.title}
-              subtitle={<span>by <b>{performance.room}</b></span>}
-              actionIcon={<IconButton><StarBorder color="white"/></IconButton>}
-              >
-                <img src={defaultGridTileImage} />
-              </GridTile>
-            </Link>
-            <div>
-              {performance.tags.map(tag =>
-                <RaisedButton label={tag.tagname} style={style} />
-              )}
-            </div>
+              </div>
+            }
+            actionIcon={
+                this.props.userId ?
+                <IconButton><StarBorder color="yellow"/></IconButton>
+                :
+                <IconButton><StarBorder color="white"/></IconButton>
+              }
+            >
+              <img src={
+                performance.performance_image ?
+                performance.performance_image
+                :
+                defaultGridTileImage
+              } />
+            </GridTile>
+          </Link>
+
+          <div className="tagInput">
             <input
-                  style={{
-                    height: '100%',
-                    fontSize: '2em',
-                    marginBottom: '1em',
-                    marginLeft: '2rem',
-                    marginTop: '1rem'
-                  }}
-                  type="textarea"
-                  autoFocus="true"
-                  placeholder="Add a tag"
-                  value={this.state.text}
-                  onChange={this.handleChange.bind(this)}
-                  onKeyDown={this.handleSubmit.bind(this, performance.id)}/>
+              style={{
+                height: '100%',
+                fontSize: '2em',
+                marginBottom: '1em',
+              }}
+              type="textarea"
+              autoFocus="true"
+              placeholder="Add a tag"
+              value={this.state.text}
+              onChange={this.handleChange.bind(this)}
+              onKeyDown={this.handleSubmit.bind(this, performance.id)}
+            />
           </div>
-        )
-      }
+        </div>
+      );
     })
   }
 }
