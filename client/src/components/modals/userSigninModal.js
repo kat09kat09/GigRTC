@@ -42,9 +42,9 @@ class SigninModal extends React.Component {
         return (
             <div>
                 <FlatButton
-                    label = "LogIn as User"
+                    label = "Login as User"
                     onClick = {() => this.handleOpen()}
-                    style = {{color: '#53b3cb'}} />
+                />
                 <Dialog
                     title="Login"
                     modal={false}

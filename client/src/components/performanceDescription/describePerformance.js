@@ -8,17 +8,26 @@ import { MakePerformance }  from '../../actions';
 import { Link } from 'react-router';
 import ImageUpload from '../image_upload/image_upload';
 import { connect } from 'react-redux';
+import Dialog from 'material-ui/lib/dialog';
+import FlatButton from 'material-ui/lib/flat-button';
 
-// put this instead of chat on broadcast page, disabling buttons, until there is a title submitted?
 
 class DescribePerformance extends Component {
 
   constructor(props) {
     super(props)
     this.state={
-      file : null
+      imageButton : false
     }
   }
+
+  handleOpen = () => {
+    this.setState({imageButton: true});
+  };
+
+  handleClose = () => {
+    this.setState({imageButton: false});
+  };
 
   onSubmit(formData) {
     formData.room = this.props.userDetails.user_name;
@@ -26,11 +35,15 @@ class DescribePerformance extends Component {
     this.props.MakePerformance(formData);
   }
 
-  imageLoading(files) {
-    const file = files[0];
-    this.setState({
-      file: file,
-    });
+  imageLoading(file) {
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      this.setState({
+        file: reader.result
+      });
+      console.log("PERFORMANCE IMAGE ++++++++++++++", reader.result)
+    }
+    reader.readAsDataURL(file)
   }
 
   render() {
@@ -46,6 +59,19 @@ class DescribePerformance extends Component {
           rated_r
         }
       } = this.props
+
+    const actions = [
+      <FlatButton
+          label="Submit"
+          primary={true}
+          onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+          label="Cancel"
+          secondary={true}
+          onTouchTap={this.handleClose}
+      />
+    ];
 
     return (
       <div className='performance-description-main'>
@@ -99,6 +125,22 @@ class DescribePerformance extends Component {
             <div className="text-help">
               {rated_r.touched ? rated_r.error : ''}
             </div>
+          </div>
+
+          <div>
+            <RaisedButton label="Upload Image" onTouchTap={()=>this.handleOpen()} />
+            <Dialog
+              title="Give us an image to display for this performance"
+              actions={actions}
+              modal={true}
+              autoScrollBodyContent={true}
+              autoDetectWindowHeight={true}
+              open={this.state.imageButton}
+            >
+              <ImageUpload {...performance_image}  />
+
+            </Dialog>
+
           </div>
 
           <RaisedButton type="submit" >Submit</RaisedButton>
