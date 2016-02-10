@@ -341,11 +341,8 @@ i:first-of-type + div {
       margin: 0 31%;
     }
 }
-@media (max-width: 1200px){
-  .chatComponent{
-    height: 670px;
-  }
-}
+
+
 @media (max-width: 1600px){
     .avatar > img {
       margin: 0 25%;
@@ -373,27 +370,27 @@ i:first-of-type + div {
       margin-top: 5%;
     }
     .chatComponent {
-      height: 670px;
+      height: 880px;
     }
 
     .messageContainer {
-      height: 600px;
+      height: 800px;
     }
 
     .art-land-wrap, .videoWrapper {
-      height: 670px;
+      height: 880px;
     }
     .live {
 
       float: left;
-      height: 670px;
+      height: 880px;
       background-color: #212121;
       text-align: center;
       color: orange;
     }
 
     .mic-section {
-      height: 670px;
+      height: 880px;
       background-position: 220px 0px;
     }
 
@@ -412,6 +409,57 @@ i:first-of-type + div {
 
     .wrapper {
       margin-top: 7%;
+    }
+}
+
+@media (max-width: 1500px){
+  .chatComponent {
+      height: 820px;
+    }
+
+    .messageContainer {
+      height: 740px;
+    }
+
+    .art-land-wrap, .videoWrapper {
+      height: 820px;
+    }
+    .live {
+      height: 100%;
+    }
+}
+
+@media (max-width: 1400px){
+  .chatComponent {
+      height: 740px;
+    }
+
+    .messageContainer {
+      height: 660px;
+    }
+
+    .art-land-wrap, .videoWrapper {
+      height: 740px;
+    }
+    .live {
+      height: 100%;
+    }
+}
+
+@media (max-width: 1300px){
+  .chatComponent {
+      height: 670px;
+    }
+
+    .messageContainer {
+      height: 600px;
+    }
+
+    .art-land-wrap, .videoWrapper {
+      height: 670px;
+    }
+    .live {
+      height: 100%;
     }
 }
 /*END MEDIA QUERY*/
