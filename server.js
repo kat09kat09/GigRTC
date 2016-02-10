@@ -285,7 +285,7 @@ app.put('/api/describe/', (req, res) => {
   Performance.where({ room: req.body.room }).fetch().then(function(updatedPerf){
     updatedPerf.save({
       long_description: req.body.long_description,
-      performance_image: req.body.user_image,
+      performance_image: req.body.performance_image,
       rated_r: JSON.parse(req.body.rated_r),
       short_description: req.body.short_description,
       title: req.body.title
