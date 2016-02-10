@@ -9,7 +9,6 @@ import RadioButton from 'material-ui/lib/radio-button'
 import RadioButtonGroup from 'material-ui/lib/radio-button-group'
 import {SignUpArtist}  from '../../actions';
 import {Link} from 'react-router'
-import Dropzone from 'react-dropzone';
 import ImageUpload from '../image_upload/image_upload'
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
@@ -58,15 +57,14 @@ class ArtistSignUp extends Component {
             } = this.props
 
         const actions = [
-
-            <FlatButton
-                label="Submit"
-                primary={true}
-                onTouchTap={this.handleClose}
-            />,
             <FlatButton
                 label="Cancel"
                 secondary={true}
+                onTouchTap={this.handleClose}
+            />,
+            <FlatButton
+                label="Submit"
+                primary={true}
                 onTouchTap={this.handleClose}
             />
         ];
@@ -125,7 +123,7 @@ class ArtistSignUp extends Component {
                     <div>
                         <RaisedButton label="Upload Image" onTouchTap={()=>this.handleOpen()} />
                         <Dialog
-                            title="Image Up"
+                            title="Give us an image for your avatar"
                             actions={actions}
                             modal={true}
                             autoScrollBodyContent={true}

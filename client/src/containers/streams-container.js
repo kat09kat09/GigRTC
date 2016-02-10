@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {bindActionCreators} from 'redux'; 
+import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
 // import { getActivePerformances , addTag} from '../actions';
-import * as actions from '../actions'; 
+import * as actions from '../actions';
 import { Link } from 'react-router';
 import _ from 'lodash';
 
@@ -13,7 +13,7 @@ import StarBorder from '../../node_modules/material-ui/lib/svg-icons/toggle/star
 import IconButton from '../../node_modules/material-ui/lib/icon-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import AutoComplete from 'material-ui/lib/auto-complete';
-import Close from 'material-ui/lib/svg-icons/navigation/close';  
+import Close from 'material-ui/lib/svg-icons/navigation/close';
 
 
 const styles = {
@@ -34,7 +34,7 @@ export class StreamsContainer extends Component {
   constructor(props){
     super(props)
     this.state={
-      text: '', 
+      text: '',
       typing: false,
       tagSearchText: '',
       filteredStreams: []
@@ -42,14 +42,18 @@ export class StreamsContainer extends Component {
   }
 
   componentWillMount(){
-    const {dispatch}= this.props; 
+    const {dispatch}= this.props;
 
-    dispatch(actions.getActivePerformances()); 
+
+    dispatch(actions.getActivePerformances());
+
+    const imgToUse = '../../public/img/crowd.jpg';
   }
 
   handleSave(tag) {
-    const {dispatch}= this.props; 
+    const {dispatch}= this.props;
     if (tag.length !== 0) {
+
       dispatch(actions.addTag(tag));
     }
   }
@@ -81,17 +85,17 @@ export class StreamsContainer extends Component {
       if (event.target.value.length === 0 && this.state.typing) {
         this.setState({ typing: false});
       }
-    }    
+    }
   }
 
   handleTagSearch(searchTag) {
     if(searchTag.length>0){
       var filteredStreams= _.filter(this.props.presentActiveStreams, function(stream){
         return stream.tags.some(function(tag){
-          return tag.tagname=== searchTag; 
+          return tag.tagname=== searchTag;
         })
-      }); 
-      this.setState({filteredStreams: filteredStreams}); 
+      });
+      this.setState({filteredStreams: filteredStreams});
     }
   }
   handleUpdateTagSearch(text){
@@ -99,7 +103,7 @@ export class StreamsContainer extends Component {
   }
 
   handleClearFilter(){
-    this.setState({tagSearchText: ''}); 
+    this.setState({tagSearchText: ''});
     this.setState({filteredStreams:[]})
   }
 
@@ -114,7 +118,7 @@ export class StreamsContainer extends Component {
             onNewRequest= {this.handleTagSearch.bind(this)}
             onUpdateInput= {this.handleUpdateTagSearch.bind(this)}
             searchText={this.state.tagSearchText}/>
-            <IconButton 
+            <IconButton
               tooltip="Clear Filter"
               onClick={this.handleClearFilter.bind(this)}>
               <Close />
@@ -129,7 +133,7 @@ export class StreamsContainer extends Component {
       return (
         <div>
           <div>Welcome!</div>
-          <img src='../../public/img/crowd.jpg' width='800' height='600' />
+          <img src={imgToUse} width='800' height='600' />
         </div>
       )
     }
@@ -141,14 +145,14 @@ export class StreamsContainer extends Component {
     const style = {
       margin: 12,
     };
-    
-    var activeStreams;  
+
+    var activeStreams;
     if(this.state.filteredStreams.length>0){
-      console.log('displaying filtered streams'); 
-      activeStreams= this.state.filteredStreams; 
+      console.log('displaying filtered streams');
+      activeStreams= this.state.filteredStreams;
     } else {
       console.log('displaying unfiltered streams')
-      activeStreams= this.props.presentActiveStreams; 
+      activeStreams= this.props.presentActiveStreams;
     }
     // return this.props.presentActiveStreams.map((performance)=> {
     return activeStreams.map((performance)=> {

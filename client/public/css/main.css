@@ -156,6 +156,10 @@ h1 {
   margin-bottom: 1em;
 }
 
+i:first-of-type + div {
+  color: #FCF660;
+}
+
 /*About page helper classes*/
 
 .art-land-wrap{
@@ -310,9 +314,22 @@ h1 {
 
 /*PERFORMANCE DESCRIPTION PAGE FIXME not centered on page at all? Ask Auggie, styling master*/
 .performance-description-main {
-  width: 70%
+  width: 480px;
+  height: 420px;
+  margin: 10% auto;
+  padding: 2rem;
+  background-color: #A1A1A1;
+  border-style: 1px solid #212121;
+  border-radius: 12px .5px;
 }
 
+.formContainer {
+  margin: 0 30%;
+}
+
+.formGroup {
+  width: 300px;
+}
 /*MEDIA QUERIES*/
 @media (min-width: 1800px) {
     .avatar > img {
@@ -324,6 +341,7 @@ h1 {
     .avatar > img {
       margin: 0 25%;
     }
+    
 
 /*    .artistButton {
       margin-top: 45px,
@@ -383,6 +401,7 @@ h1 {
       margin-top: 7%;
     }
 }
+/*END MEDIA QUERY*/
 
 
 .fileInput {

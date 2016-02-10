@@ -10,7 +10,7 @@ export class VideoContainer extends Component {
 
         return (
             <div id="videoBig">
-                <video id="video"  autoPlay width="640px" height="480px" poster="../../public/img/guitarist.png" />
+                <video id="video"  autoPlay width="640px" height="480px" poster="../../public/img/guitarist.jpg" />
                 <div className="video-overlay"></div>
                 <StreamButtons startBroadcast={this.props.startBroadcast}
                                endBroadcast={this.props.endBroadcast}
