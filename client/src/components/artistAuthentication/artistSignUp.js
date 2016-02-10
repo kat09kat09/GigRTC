@@ -57,15 +57,14 @@ class ArtistSignUp extends Component {
             } = this.props
 
         const actions = [
-
-            <FlatButton
-                label="Submit"
-                primary={true}
-                onTouchTap={this.handleClose}
-            />,
             <FlatButton
                 label="Cancel"
                 secondary={true}
+                onTouchTap={this.handleClose}
+            />,
+            <FlatButton
+                label="Submit"
+                primary={true}
                 onTouchTap={this.handleClose}
             />
         ];

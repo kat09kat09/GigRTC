@@ -285,7 +285,7 @@ app.put('/api/describe/', (req, res) => {
   Performance.where({ room: req.body.room }).fetch().then(function(updatedPerf){
     updatedPerf.save({
       long_description: req.body.long_description,
-      // performance_image: FileList, // FIXME how does this happen
+      performance_image: req.body.user_image,
       rated_r: JSON.parse(req.body.rated_r),
       short_description: req.body.short_description,
       title: req.body.title
@@ -297,7 +297,7 @@ app.put('/api/describe/', (req, res) => {
         title: perf.get('title'),
         short_description: perf.get('short_description'),
         long_description: perf.get('long_description'),
-        performance_image: perf.get('performance_image') // FIXME wait and see how this works
+        performance_image: perf.get('performance_image')
       };
       res.status(200).json(responseObject); // this object is returned to the client
     });

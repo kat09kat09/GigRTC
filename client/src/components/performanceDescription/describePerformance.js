@@ -62,13 +62,13 @@ class DescribePerformance extends Component {
 
     const actions = [
       <FlatButton
-          label="Submit"
-          primary={true}
+          label="Cancel"
+          secondary={true}
           onTouchTap={this.handleClose}
       />,
       <FlatButton
-          label="Cancel"
-          secondary={true}
+          label="Submit"
+          primary={true}
           onTouchTap={this.handleClose}
       />
     ];
