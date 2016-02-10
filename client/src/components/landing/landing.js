@@ -32,7 +32,7 @@ export default class Landing extends Component {
           <div className="left">
           </div>
           <div className="live">
-            <h2> <Link to="router/nowStreaming">Currently Streaming</Link> </h2>
+            <h2> <Link to="router/nowStreaming" style={{"color": "orange"}}>Currently Streaming</Link> </h2>
             <StreamsUL />
           </div>
 

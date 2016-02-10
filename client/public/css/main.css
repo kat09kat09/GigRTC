@@ -388,7 +388,12 @@ i:first-of-type + div {
       text-align: center;
       color: orange;
     }
-
+     .live:link {
+      color:orange;
+    }
+    .streamLink {
+      color: orange;
+    }
     .mic-section {
       height: 880px;
       background-position: 220px 0px;
