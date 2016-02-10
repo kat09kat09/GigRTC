@@ -127,8 +127,8 @@ class DescribePerformance extends Component {
             </div>
           </div>
 
-          <div>
-            <RaisedButton label="Upload Image" onTouchTap={()=>this.handleOpen()} />
+          <div className="uploadDescriptionImg">
+            <RaisedButton  label="Upload Image" onTouchTap={()=>this.handleOpen()} />
             <Dialog
               title="Give us an image to display for this performance"
               actions={actions}

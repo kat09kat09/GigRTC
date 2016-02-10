@@ -50,7 +50,8 @@ module.exports = function(router) {
       user_name: req.body.user,
       channelID: req.body.channelID,
       time: req.body.time,
-      text: req.body.text
+      text: req.body.text,
+      user_image: req.body.user_image
     })
 
     newMessage.save()
