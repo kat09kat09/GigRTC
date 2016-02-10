@@ -33,6 +33,7 @@ class Chat extends Component {
 
 
     // connect_socket(props.token);
+    
 
   }
   componentWillMount() {
