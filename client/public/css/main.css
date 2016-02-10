@@ -356,6 +356,10 @@ width: 100%;
   width: 50%;
   margin: 0 auto;
 }
+
+.artistCard {
+  margin: 1rem auto;
+}
 /*MEDIA QUERIES*/
 @media (min-width: 1800px) {
     .avatar > img {
