@@ -9,18 +9,20 @@ export default class MessageListItem extends React.Component {
 
   constructor(props) {
     super(props);
+    console.log('super props in message list item', super(props)); 
     console.log('this.props in MessageListItem', props)
   }
   
   render() {
     const { message } = this.props;
-    console.log('messagelistitem', message); 
+    console.log('this.props in message list', this.props); 
+    console.log('messagelistitem', message);
     return (
       <div>
         <ListItem
             disabled={true}
             leftAvatar={
-              <Avatar icon={<FontIcon className="muidocs-icon-communication-voicemail" />} />
+              <Avatar src= {message.user_image || 'http://lorempixel.com/400/200'} />
             }
           >
           <b style={{color: '#66c'}}>{message.user|| message.user_name}</b>
