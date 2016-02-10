@@ -51,7 +51,6 @@ export class RegisteredArtists extends Component{
     }
 
     filterData(criteria){
-        console.log("SEARCH BAR CRITERIA",criteria)
         var results = _.filter(this.props.registeredArtists, function(artist) {
             if( criteria.selected === "Artist" && criteria.text){
                return  artist.display_name == criteria.text

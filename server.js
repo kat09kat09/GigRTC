@@ -309,6 +309,7 @@ app.put('/api/activeStreams', function(req, res){
 
     Performance.where({ room: req.body.room }).fetch()
     .then(performance => {
+        console.log("ACTIVE STREAMS",performance);
         performance.save({active: req.body.active}, {patch: true});
         res.json({active : req.body.active})
     })
