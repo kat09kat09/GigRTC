@@ -137,23 +137,28 @@ h1 {
 }
 /*CHAT BOX STYLES*/
 .messageContainer{
-  height: 850px;
+  height: 840px;
   overflow: hidden;
 }
 .chatFieldWrapper {
   z-index: 52;
   left: 21.1rem;
   right: 1rem;
-  width: 100%;
-  flexShrink: 0;
-  order: 2;
-  marginTop: .5em;
+  height: 50px;
+  width: 90%;
+  margin: .5rem .5rem 0 .5rem;
+
+}
+
+.main {
+  height: 95%;
+  width: 95%;
 }
 
 .chatInput {
-  height: 100%;
+  height: 90%;
   font-size: 2em;
-  margin-bottom: 1em;
+  
 }
 
 i:first-of-type + div {
@@ -336,7 +341,11 @@ i:first-of-type + div {
       margin: 0 31%;
     }
 }
-
+@media (max-width: 1200px){
+  .chatComponent{
+    height: 670px;
+  }
+}
 @media (max-width: 1600px){
     .avatar > img {
       margin: 0 25%;
@@ -365,6 +374,10 @@ i:first-of-type + div {
     }
     .chatComponent {
       height: 670px;
+    }
+
+    .messageContainer {
+      height: 600px;
     }
 
     .art-land-wrap, .videoWrapper {
