@@ -556,3 +556,16 @@ input[type="file"] {
   width: 50px;
   background-color: #eCe630;
 }
+
+.tag-pill {
+  line-height: 25px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-right: 4px;
+  background: #fea92f;
+  border-radius: 15px;
+  /*font-weight: 700;*/
+  font-size: 10pt;
+  color: #000;
+  /*font-family: arial;*/
+}

@@ -189,8 +189,7 @@ export class StreamsContainer extends Component {
           <div>
             <span>{performance.short_description}</span><br />
             {performance.tags.map(tag =>
-              <RaisedButton className="tag-button" label={tag.tagname} />
-            )}
+              <span className="tag-pill">{tag.tagname}</span>)}
             <div>
               <Popover
                 open={this.state.open}
