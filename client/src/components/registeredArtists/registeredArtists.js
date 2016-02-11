@@ -12,8 +12,8 @@ import CardActions from 'material-ui/lib/card/card-actions';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardMedia from 'material-ui/lib/card/card-media';
 import CardTitle from 'material-ui/lib/card/card-title';
-import FlatButton from 'material-ui/lib/flat-button';
 import CardText from 'material-ui/lib/card/card-text';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 const styles = {
     root: {
@@ -95,7 +95,7 @@ export class RegisteredArtists extends Component{
         } else {
             return (
                 <div>
-                    <div>All The Artists We Host!</div>
+                    <div><h2>All The Artists We Host!</h2></div>
                 </div>
             )
         }
@@ -110,25 +110,20 @@ export class RegisteredArtists extends Component{
                 <div className="artistCard">
                 <li key={Artist.id}>
                         <Card>
-                            <CardHeader
-                                title={Artist.display_name}
-                                avatar="http://lorempixel.com/100/100/nature/"
-                            />
                             <CardMedia
-                                overlay={<CardTitle title={Artist.genre}  />}
+                                overlay={<CardTitle title={<span>My genre is {Artist.genre}</span>}  />}
                             >
                                 <img src={Artist.user_image} />
                             </CardMedia>
-                            <CardTitle title="Hey there!" subtitle="I'm the OG " />
-                            <CardText>
-                                {Artist.id}
-                            </CardText>
-                            <CardActions>
-                                 <FlatButton
+
+                            <CardTitle title={
+                              <div>
+                                {Artist.display_name} <RaisedButton
                                     onTouchTap={()=>this.props.subscribeToArtist({artist_id : Artist.id,user_id : this.props.user_id })}
                                     label="Subscribe to me" />
-
-                            </CardActions>
+                              </div>
+                            }
+                            subtitle={Artist.brief_description} />
                         </Card>
                 </li>
                 </div>
@@ -152,4 +147,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(RegisteredArtists)
-//to={`/router/artistPage/${Artist.user_name}`}
