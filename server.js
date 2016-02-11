@@ -178,8 +178,7 @@ passport.use(new FacebookStrategy({
     function(accessToken, refreshToken, profile, done) {
 
         new User({facebook_id : profile.id}).fetch().then(function(response){
-            console.log("FB RESPONSE",response)
-            console.log("FB PROFILE",profile)
+
             if(response){
                 return done(null,response.attributes)
             }
@@ -247,7 +246,6 @@ app.get('/auth/facebook/callback/',
     passport.authenticate('facebook', { failureRedirect: '/' }),
 
     function(req, res) {
-        console.log("RESPONSE IN CALLBACK facebook",req.user);
         current_user = req.user;
         current_token = jwt.sign({user_name: (req.user.email_id ) },CONFIG.JWT_SECRET);
         res.redirect('/router/socialLogin')
