@@ -3,6 +3,7 @@ import FlatButton from 'material-ui/lib/flat-button';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { auth } from '../../actions/index';
+import FontIcon from 'material-ui/lib/font-icon';
 
 
 const style = {
@@ -22,6 +23,7 @@ class FBButton extends Component {
 
     render() {
         return (
+
             <FlatButton
                 label = "Log In With Facebook"
                 style = {style}

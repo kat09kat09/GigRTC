@@ -124,7 +124,6 @@ export class RegisteredArtists extends Component{
                                 {Artist.id}
                             </CardText>
                             <CardActions>
-                                <FlatButton label="Buffer" />
                                  <FlatButton
                                     onTouchTap={()=>this.props.subscribeToArtist({artist_id : Artist.id,user_id : this.props.user_id })}
                                     label="Subscribe to me" />
