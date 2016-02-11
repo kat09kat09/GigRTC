@@ -6,19 +6,19 @@ import SignInModal from '../modals/userSigninModal';
 import StreamsUL from '../streamsList/listOfStreams';
 
 let artistButton = {
-  'margin-top': "45px",
-  'margin-left': "35%",
+  'marginTop': "45px",
+  'marginLeft': "35%",
 };
 
 let fanButton = {
-  'margin-top': '45px',
-  'margin-left': "10%",
+  'marginTop': '45px',
+  'marginLeft': "10%",
 };
 
 let windowWidth = window.innerWidth;
 
 if(windowWidth < 1600){
-  artistButton['margin-left'] = '29%';
+  artistButton['marginLeft'] = '29%';
 }
 
 export default class Landing extends Component {
