@@ -115,6 +115,7 @@ export class RegisteredArtists extends Component{
                             >
                                 <img src={Artist.user_image} />
                             </CardMedia>
+
                             <CardTitle title={
                               <div>
                                 {Artist.display_name} <RaisedButton
@@ -146,4 +147,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(RegisteredArtists)
-//to={`/router/artistPage/${Artist.user_name}`}

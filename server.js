@@ -405,24 +405,6 @@ app.get('/auth/getTokenizedUserDetails',(req,res)=>{
 })
 
 
-//**************UPLOAD IMAGE************************
-var cloudinary = require('cloudinary');
-
-cloudinary.config({
- cloud_name: CONFIG.CLOUD_NAME,
- api_key: CONFIG.CLOUD_API_KEY,
- api_secret: CONFIG.CLOUD_API_SECRET
- });
-
-app.post('/api/uploadImage',function(req,res){
-
-    cloudinary.uploader.upload(req.body.image,{tags:'basic_sample'})
-    .then(function(image){
-        res.json({url : image.url})
-    })
-
-});
-
 //********* Fetch all registered users
 
 app.get('/api/allRegisteredArtists',function(req,res){
@@ -442,11 +424,20 @@ app.post('/api/subscribeToArtist',function(req,res){
     new Artist_User({
         artist_id: data.artist_id,
         user_id: data.user_id
+    }).fetch().then(function(found){
+        if(found){
+            res.json({error : 'already subscribed'})
+        }
+        else{
+           new Artist_User({
+                artist_id: data.artist_id,
+                user_id: data.user_id
+            }).save()
+               .then(function(data){
+                   res.json({data : 'Subscribed successfully'});
+               })
+        }
     })
-        .save()
-        .then(function(data){
-            res.json({data : 'Subscribed successfully'});
-        })
 
 })
 
