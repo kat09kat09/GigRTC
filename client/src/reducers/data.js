@@ -23,7 +23,6 @@ export default createReducer(initialState, {
           return uniqueTags;
         }, {}); 
         var activeTags= Object.keys(uniqueActiveTags);
-        console.log('active tags');  
         return Object.assign({}, state, {
 
               activeStreams: payload.data, 
@@ -41,7 +40,6 @@ export default createReducer(initialState, {
 
     [FETCH_ALL_STREAMS] : (state,payload) =>{
 
-        console.log("FETCHING ALL PERFORMANCES ",payload)
         return Object.assign({}, state, {
             allStreams : payload.data
         });

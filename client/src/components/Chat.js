@@ -25,7 +25,6 @@ class Chat extends Component {
 
   constructor(props, context) {
     super(props, context);
-    console.log('props in Chat', props);
     this.state = {
       text: '',
       typing: false
@@ -50,10 +49,8 @@ class Chat extends Component {
     }
 
     socket.on('receive socket', socketID =>{
-      console.log('received socket id', socketID)
       dispatch(actions.receiveSocket(socketID))
     });
-    console.log('user in Chat', userName);
     socket.emit('chat mounted', userName);
     socket.on('new bc message', msg =>
       dispatch(actions.receiveRawMessage(msg))
@@ -68,7 +65,6 @@ class Chat extends Component {
       dispatch(actions.receiveRawChannel(channel))
     );
     socket.on('receive socket', socketID =>{
-      console.log('received socket', socketID)
       dispatch(actions.receiveSocket(socketID))
     });
   }
@@ -135,7 +131,6 @@ class Chat extends Component {
 
   render() {
     const {messages, dispatch,userDetails, activeChannel}= this.props;
-    console.log('this.props in Chat.js', this.props);
 
     const filteredMessages = messages.filter(message => message.channelID === activeChannel);
     const styles = {

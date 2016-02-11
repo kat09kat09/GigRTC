@@ -15,7 +15,6 @@ export class DropZone extends Component {
         const file = files[0];
         //var data = this.convertToBase64(file.preview)
         this.props.uploadPicture(file.preview);
-        console.log("IMAGE FILE",file)
         this.setState({
             rejected: false,
             file: file,

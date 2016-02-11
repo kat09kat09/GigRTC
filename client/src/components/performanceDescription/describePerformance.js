@@ -41,13 +41,11 @@ class DescribePerformance extends Component {
       this.setState({
         file: reader.result
       });
-      console.log("PERFORMANCE IMAGE ++++++++++++++", reader.result)
     }
     reader.readAsDataURL(file)
   }
 
   render() {
-    console.log(this.props.state, "++++++++++++++++++++++ this is props state in DescribePerformance");
 
     const {
       handleSubmit,

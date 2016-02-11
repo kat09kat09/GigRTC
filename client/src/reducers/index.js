@@ -17,14 +17,7 @@ const rootReducer = combineReducers({
   form : formReducer,
   performance,
   messages,
-  // channels,
   activeChannel
-  // auth,
-  // typers,
-  // welcomePage,
-  // userValidation,
-  // environment
-
 });
 
 export default rootReducer;

@@ -125,7 +125,6 @@ app.post('/auth/signUp/', (req, res) => {
 
     new Artist({user_name: req.body.user_name, password: req.body.password}).fetch().then(function (found) {
         if (found) {
-            console.log("APPARENTLY FOUND",found)
             res.status(403);
 
         }
@@ -140,7 +139,6 @@ app.post('/auth/signUp/', (req, res) => {
                 display_name: req.body.display_name,
                 genre: req.body.genre
             });
-            console.log("NEW ARTIST BEING SAVED",newArtist)
             newArtist.save().then(function (artist) {
                 Artists.add(artist);
                 var myToken = jwt.sign({user_name: req.body.email_id}, CONFIG.JWT_SECRET)
@@ -208,8 +206,7 @@ passport.use(new GoogleStrategy({
     function(accessToken, refreshToken, profile, done) {
         new User({google_id : profile.id}).fetch().then(function(response){
             if(response){
-                console.log("GOOGLE RESPONSE",response)
-                console.log("GOOGLE PROFILE",profile)
+                
                 return done(null,response.attributes)
             }
             else{
@@ -261,7 +258,6 @@ app.get('/auth/google/callback/',
     passport.authenticate('google', { failureRedirect: '/login' }),
 
     function(req, res) {
-        console.log("response for Google in callback",req.user);
         current_user = req.user;
         current_token = jwt.sign({user_name: (req.user.email_id ) },CONFIG.JWT_SECRET);
         res.redirect('/router/socialLogin')
@@ -278,7 +274,6 @@ app.get('/auth/validateSocialToken',(req, res) => {
 /////////////////ACTIVE STREAM//////////
 
 app.put('/api/describe/', (req, res) => {
-  // console.log(req.body, '<---- req.body in api/describe');
 
   Performance.where({ room: req.body.room }).fetch().then(function(updatedPerf){
     updatedPerf.save({
@@ -296,7 +291,6 @@ app.put('/api/describe/', (req, res) => {
         long_description: perf.get('long_description'),
         performance_image: perf.get('performance_image')
       };
-      console.log('Just updated this performance ---> ', responseObject.title, responseObject.short_description);
       res.status(200).json(responseObject); // this object is returned to the client
     });
   });
@@ -307,7 +301,6 @@ app.put('/api/activeStreams', function(req, res){
 
     Performance.where({ room: req.body.room }).fetch()
     .then(performance => {
-        console.log("ACTIVE STREAMS",performance);
         performance.save({active: req.body.active}, {patch: true});
         res.json({active : req.body.active})
     })
@@ -317,7 +310,6 @@ app.get('/api/activeStreams', function(req, res) {
     Performances
     // .query({where: {active: true}})
     .fetch({withRelated:['tags']}).then(function (performances) {
-        console.log('active streams with tags from db: ', performances.models);
         res.status(200).send(performances.models);
     });
 
@@ -354,7 +346,6 @@ app.get('/api/currentViewers', function(req, res) {
 
 //*********Tags
 app.post('/api/addTag', function (req,res){
-    console.log('/api/addTag route called: ',req.body);
     var tagName= req.body.tagname;
     var userId= req.body.user_Id;
     var performanceId= req.body.performanceId;
@@ -362,38 +353,30 @@ app.post('/api/addTag', function (req,res){
     Tag.where({ tagname: tagName }).fetch()
     .then(tag => {
         if(tag) {
-            console.log('tag exists in db');
             Performance.where({id: performanceId}).fetch()
             .then(performance => {
                performance.tags().attach(tag.id);
                res.status(200).send({tagname: null, performanceId: performanceId}); //return nothing if tag is already in db
-               console.log('tag attached to performance');
 
             })
         } else {
-            console.log('adding tag to db');
             var newTag= new Tag({
                 tagname: tagName,
                 user_id: userId
             })
             newTag.save().then (function (tag){
-                console.log('tagname: ', tag.attributes.tagname);
-                console.log('tag sucessfuly saved', tag.id);
+            
                 Tags.add(tag);
 
                 Performance.where({id: performanceId}).fetch()
                 .then(performance => {
                     performance.tags().attach(tag.id);
-                    console.log('tag attached to performance', tag);
-                    console.log('send back this obj: ', {tagId: tag.id, tagname: tag.attributes.tagname, performanceId: performanceId})
-                    // console.log('response pending', res);
                     res.status(200).send({tagId: tag.id, tagname: tag.attributes.tagname, performanceId: performanceId}); //return the performance with updated tags
 
                 })
             })
         }
     })
-    // res.status(200).send(req.body);
 
 });
 
@@ -401,17 +384,14 @@ app.post('/api/addTag', function (req,res){
 
 //**********RETOKENIZE LOGIN
 app.get('/auth/getTokenizedUserDetails',(req,res)=>{
-    console.log("RETOKENIZE",req.query)
     Artist.query({where: {email_id: req.query.email}}).fetch().then(function(found){
         if(found){
-            console.log("RETOKEN IZE ARTIST",found)
             var myToken = jwt.sign({user_name:found.get('email_id')},CONFIG.JWT_SECRET)
             res.status(200).json({token: myToken, artist_details : found});
         }
         else {
             User.query({where: {email_id: req.query.email}}).fetch().then(function(response){
                 if(response){
-                    console.log("FB PRFILE RETOKEN",response)
                     res.status(200).json({token: myToken, artist_details : response});
 
                 }
@@ -435,11 +415,9 @@ cloudinary.config({
  });
 
 app.post('/api/uploadImage',function(req,res){
-    console.log("IMAGE TO SERVER",req.body)
 
     cloudinary.uploader.upload(req.body.image,{tags:'basic_sample'})
     .then(function(image){
-        console.log("OPEN IMAGE",image)
         res.json({url : image.url})
     })
 
@@ -460,7 +438,6 @@ app.get('/api/allRegisteredArtists',function(req,res){
 //***************** Create Artist User Relation
 
 app.post('/api/subscribeToArtist',function(req,res){
-    console.log("SUBSCRIBE CALLED",req.body)
     var data = req.body;
     new Artist_User({
         artist_id: data.artist_id,
@@ -468,7 +445,6 @@ app.post('/api/subscribeToArtist',function(req,res){
     })
         .save()
         .then(function(data){
-            console.log("RELATIONSHIP MADE",data)
             res.json({data : 'Subscribed successfully'});
         })
 
@@ -501,7 +477,6 @@ var sendmail = emailJS.server.connect({
 });
 
 function sendEmailTo (email_id,artist_name,req,res){
-    console.log("SEND EMAIL TO CALLED WITH " + email_id + " and " + artist_name)
     var message = {
 
         from: "GIGG.TV <teamdreamstream4@gmail.com>",
@@ -514,7 +489,6 @@ function sendEmailTo (email_id,artist_name,req,res){
         var body = null;
         if (err) {
             body = err.toString();
-            console.log("ERROR IN SENDING EMAIL",body)
         } else {
             console.log("EMAIL SENT IN SERVER")
         }
@@ -546,10 +520,8 @@ io.set('transports', ["websocket", "polling"]);
 
 
 io.on('connection', function (socket){
-    console.log('a user connected');
     socket.join('Lobby');
     socket.on('chat mounted', function(user) {
-      console.log('socket heard: chat mounted...user is: ', user);
       // TODO: Does the server need to know the user?
       socket.emit('receive socket', socket.id)
     })

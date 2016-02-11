@@ -69,7 +69,6 @@ export class RegisteredArtists extends Component{
     }
 
     createArtistSubscription(data){
-        console.log("SUBSRICTION IN REGISTED ARTISTS",data)
        axios.post('/api/subscribeToArtist', {
             user_id: data.user_id,
             artist_id: data.artist_id

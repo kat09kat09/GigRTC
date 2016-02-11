@@ -11,7 +11,6 @@ const initialState = {
 
 export default createReducer(initialState, {
     [FETCH_TAGS]: (state, payload) => {
-        console.log("CREATE REDUCER FOR FETCH_TAGS",payload)
         return Object.assign({}, state, {
             data : payload
         });

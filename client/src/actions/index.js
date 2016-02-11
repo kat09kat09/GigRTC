@@ -35,7 +35,6 @@ import io from 'socket.io-client';
 
 
 export function loginUserSuccess(userObj){
-    console.log("LOGIN USER SUCCESS",userObj)
     localStorage.setItem('token',userObj.token);
     return{
         type : LOGIN_USER_SUCCESS,
@@ -115,16 +114,13 @@ export function loginArtist(creds){
     return (dispatch) =>{
         //return fetch(location.host + '/auth/getToken/', config) -> initial approach
         dispatch(loginUserRequest());
-        //console.log('login',`${environment}/auth/getToken/`)
         return fetch(`/auth/signIn/`, config)
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
-                console.log("login response",response)
 
                 try {
                     let decoded = jwtDecode(response.token);
-                    console.log("TOKEN DECOED",decoded)
                     dispatch(loginArtistSuccess({token : response.token, artist_details:response.artist_details}));
                     browserHistory.push('/')
                 } catch (e) {
@@ -155,13 +151,11 @@ export function SignUpArtist(creds){
     }
 
     return (dispatch) =>{
-        console.log("CREDS SENT TO SIGN UP",creds)
         dispatch(loginUserRequest());
         return fetch(`/auth/signUp/`, config)
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
-                console.log("login response",response)
 
                 try {
                     let decoded = jwtDecode(response.token);
@@ -190,7 +184,6 @@ export function perfDetailUpdate() {
 }
 
 export function perfDetailSuccess(perfObj) {
-  console.log('in perfDetailSuccess, this is perfObj ++++++++++++++++++', perfObj);
   return {
     type : PERFORMANCE_DETAIL_SUCCESS,
     payload : perfObj
@@ -198,7 +191,6 @@ export function perfDetailSuccess(perfObj) {
 }
 
 export function perfDetailFailure(errObj) {
-  console.log('in perfDetailFailure, this is errObj ++++++++++++++++++', errObj);
   return {
     type: PERFORMANCE_DETAIL_FAILURE,
     payload : {
@@ -219,13 +211,11 @@ export function MakePerformance(formData){
     }
 
     return (dispatch) =>{
-        console.log("+++++++++++ formData SENT TO MakePerformance: ", formData)
         dispatch(perfDetailUpdate());
         return fetch(`/api/describe/`, config)
             .then(checkHttpStatus) // this throws us into the catch if the response code isn't positive (200 etc)
             .then(parseJSON)
             .then(response => {
-                console.log("++++++++++++++ response from server to MakePerformance", response);
                 try {
                     dispatch(perfDetailSuccess(response));
                     browserHistory.push('/router/streamYourself');
@@ -234,7 +224,6 @@ export function MakePerformance(formData){
                 }
             })
             .catch(error => {
-                console.log(error, "+++++++++++++ Error in MakePerformance return from server");
                 dispatch(perfDetailFailure(error));
             })
     }
@@ -266,13 +255,11 @@ export function fetchProtectedData(token,environment) {
             .then(checkHttpStatus)
             .then(parseJSON)
             .then(response => {
-                console.log('response data after login', response.data);
                 dispatch(receiveProtectedData(response.data));
 
             })
             .catch(error => {
                 if(error.response.status === 401) {
-                    console.log('there was an error with logging in');
                     dispatch(loginUserFailure(error));
                     browserHistory.push('/');
                 }
@@ -312,7 +299,6 @@ export function determineEnvironment(){
             .then(response => {
                 try {
                     //let decoded = jwtDecode(response.token);
-                    console.log("ACTION RECEIVED AS LOGIN SUCCSS",response.user_details)
                     dispatch(loginUserSuccess({token : response.token, user_details:response.user_details}));
                     browserHistory.push('/')
                 } catch (e) {
@@ -336,7 +322,6 @@ export function getActivePerformances(){
     return (dispatch) => {
         return axios.get('/api/activeStreams')
         .then(function (response){
-            console.log('activeStreams response', response);
             dispatch({
                 type : FETCH_ACTIVE_STREAMS,
                 payload : response
@@ -385,10 +370,9 @@ export function updatePerformanceViewCount(room){
 
          axios.put('/api/updatePerformanceViewCount', room)
         .then(function (response) {
-            //console.log("DEFINITION OF DISPATCH",dispatch)
             dispatch(showTotalViewersWatching(response.data.views))
         }).catch((error)=> {
-            //console.log("AXIOS ERROR", error);
+            console.log("AXIOS ERROR", error);
         })
 
 
@@ -430,7 +414,6 @@ export function subscribeToArtist(info) {
 //This Action may not be necessary based on twilio implementation // TODO
 export function emailAllSubscribers(artistDetails){
     var data = axios.get('/api/emailAllSubscribers',{params : artistDetails})
-    console.log("GET ALL RELATIONS TO ARTIST ACTION CALLED")
 
     return {
         type : SUBSCRIBED_USERS,
@@ -443,7 +426,6 @@ export function addTag(tag) {
     return (dispatch) => {
         return axios.post('/api/addTag', tag)
         .then(response => {
-            console.log('add tag response', response)
              dispatch(showTag(response.data));
         }).catch(error=> {
             console.log("add tag error", error);
@@ -453,8 +435,6 @@ export function addTag(tag) {
 }
 
 export function showTag(data){
-    console.log('show tag called');
-    console.log('data from db', data);
     return {
         type : ADD_TAG,
         payload : data
