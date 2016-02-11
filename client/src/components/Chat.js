@@ -14,10 +14,10 @@ import Table from 'material-ui/lib/table/table';
 import ListItem from 'material-ui/lib/lists/list-item';
 import Avatar from 'material-ui/lib/avatar';
 
-// var socket = io.connect('https://gigg.tv');
+ var socket = io.connect('https://gigg.tv');
 
 
-var socket = io.connect('https://localhost:1338');
+//var socket = io.connect('https://localhost:1338');
 
 
 
