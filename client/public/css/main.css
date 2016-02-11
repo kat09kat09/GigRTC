@@ -361,7 +361,7 @@ i:first-of-type + div {
 }
 
 .activeWrapper {
-width: 100%;
+  width: 100%;
 }
 
 .tagSearch {
@@ -374,7 +374,7 @@ width: 100%;
 }
 .activeGrid {
   display: block;
-  width: 50%;
+  width: 80%;
   margin: 0 auto;
 }
 
