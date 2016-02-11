@@ -50,7 +50,6 @@ export class Header extends Component {
           <div>
 
               <div>
-                  {console.log("THIS IS IN HEADER",this.props.userDetails)}
               {this.props.isAuthenticated
                 ? <LoggedInHeader user_details={userName}
                                   logoutAndRedirect={this.props.logoutAndRedirect.bind(this)}

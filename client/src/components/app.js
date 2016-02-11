@@ -30,7 +30,6 @@ export class App extends Component {
         const{dispatch} = this.props
       if(localStorage.getItem('token')){
 
-      console.log("PRESENT TOKEN DECODED",jwtDecode(localStorage.getItem('token')).user_name)
       dispatch(refreshLoginState({email : jwtDecode(localStorage.getItem('token')).user_name}))
       }
   }

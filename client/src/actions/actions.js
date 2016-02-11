@@ -58,27 +58,22 @@ export function receiveRawChannel(channel) {
 
 
 function requestMessages() {
-  console.log('request messages action called'); 
   return {
     type: types.LOAD_MESSAGES
   }
 }
 
 export function fetchMessages(channel) {
-  console.log('fetch messages action called for :', channel); 
   return (dispatch) => {
     dispatch(requestMessages())
-    console.log('will call fetch here at endpoint:', '/api/messages/'+channel)
     return axios.get('/api/messages/'+ channel)
       .then(function (response){
-        console.log('it gets here', response); 
         dispatch(receiveMessages(response, channel))
       })
   }
 }
 
 function receiveMessages(json, channel) {
-  console.log('receiveMessages action called', json); 
   const date = moment().format('lll');
   return {
     type: types.LOAD_MESSAGES_SUCCESS,

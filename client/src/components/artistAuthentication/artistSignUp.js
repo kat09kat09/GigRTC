@@ -31,7 +31,6 @@ class ArtistSignUp extends Component {
     };
 
     onSubmit(formData) {
-        console.log("FORM DATA",formData)
         this.props.SignUpArtist(formData)
     }
 
@@ -41,7 +40,6 @@ class ArtistSignUp extends Component {
             this.setState({
                 file: reader.result
             });
-            console.log("IMAGE",reader.result)
         }
         reader.readAsDataURL(file)
 

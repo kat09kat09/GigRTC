@@ -64,7 +64,6 @@ export class StreamsContainer extends Component {
 
   handleSubmit(performanceId, event) {
     const { userId} = this.props;
-    console.log(performanceId, '++++++++++++++++handleSubmit perfID in SUBMIT');
 
     const text = event.target.value.trim();
     if (event.which === 13) { //carriage return
@@ -115,8 +114,6 @@ export class StreamsContainer extends Component {
   }
 
   handleTouchTap = (perfID) => {
-    console.log(perfID, '++++++++++++++++handleTouchTap perfID');
-    console.log(event, '++++++++++++++++handleTouchTap event');
     this.setState({
       open: true,
       currentID: perfID,
@@ -174,10 +171,8 @@ export class StreamsContainer extends Component {
     var activeStreams;
     if(this.state.filteredStreams.length>0){
       activeStreams = this.state.filteredStreams;
-      console.log('displaying filtered streams', activeStreams);
     } else {
       activeStreams = this.props.presentActiveStreams;
-      console.log('displaying unfiltered streams', activeStreams)
     }
 
     // return this.props.presentActiveStreams.map((performance)=> {

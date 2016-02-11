@@ -20,9 +20,6 @@ export class VideoContainer extends Component {
                                watchVideo={this.props.watchVideo}
                 />
 
-                <div>{this.props.view_count}</div>
-
-
             </div>
         );
 
