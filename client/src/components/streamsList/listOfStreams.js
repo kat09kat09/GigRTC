@@ -37,9 +37,10 @@ export class StreamsUL extends Component {
   renderEvents () {
     return this.props.presentActiveStreams.map((performance)=> {
       return (
-        <li className="sidebar-li" key={performance.room} style={{"margin-top": "1em"}}>
+        <li className="sidebar-li" key={performance.room} style={{"marginTop": "1em"}}>
         <Link to={`/router/activeStream/${performance.room}`} style={{"color": "white"}}>
-          {performance.title} by {performance.room}
+          {performance.title} <br />
+          by {performance.room}
         </Link>
         </li>
       )
