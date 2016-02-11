@@ -22,7 +22,7 @@ const styles = {
         justifyContent: 'space-around'
     },
     searchBar : {
-        margin: '0 auto'
+        margin: '1rem auto'
     }
 };
 
@@ -108,6 +108,7 @@ export class RegisteredArtists extends Component{
             var performanceProfile = _.find(this.props.allStreams,{room : Artist.user_name}) //This data's image will be used to fill up the banner for the tile, line 111
 
             return (
+                <div className="artistCard">
                 <li key={Artist.id}>
                         <Card>
                             <CardHeader
@@ -132,7 +133,7 @@ export class RegisteredArtists extends Component{
                             </CardActions>
                         </Card>
                 </li>
-
+                </div>
             )
         })
     }

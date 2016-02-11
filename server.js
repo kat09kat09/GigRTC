@@ -278,7 +278,7 @@ app.get('/auth/validateSocialToken',(req, res) => {
 /////////////////ACTIVE STREAM//////////
 
 app.put('/api/describe/', (req, res) => {
-  console.log(req.body, '<---- req.body in api/describe');
+  // console.log(req.body, '<---- req.body in api/describe');
 
   Performance.where({ room: req.body.room }).fetch().then(function(updatedPerf){
     updatedPerf.save({
@@ -289,7 +289,6 @@ app.put('/api/describe/', (req, res) => {
       title: req.body.title
     }, {patch: true})
     .then(function(perf) {
-      console.log('Just updated this performance ---> ', perf);
       Performances.add(perf);
       var responseObject = {
         title: perf.get('title'),
@@ -297,6 +296,7 @@ app.put('/api/describe/', (req, res) => {
         long_description: perf.get('long_description'),
         performance_image: perf.get('performance_image')
       };
+      console.log('Just updated this performance ---> ', responseObject.title, responseObject.short_description);
       res.status(200).json(responseObject); // this object is returned to the client
     });
   });

@@ -22,6 +22,16 @@ a {
   text-decoration: none;
 }
 
+a:link {
+    color: #FCF660;
+}
+
+/* visited link */
+a:visited {
+    color: #FCF660;
+}
+
+
 body {
   background-color:  #FFFFFF;
   color: #141414;
@@ -40,6 +50,7 @@ video {
   background-image: none;
   border: 1px solid #000;
   margin-top: 20px;
+  transform: rotateY(-180deg);
 }
 
 .header{
@@ -92,6 +103,16 @@ h1 {
   /*font-family: 'Iceland', cursive;*/
 
 }
+
+h2 {
+
+  /*font-family: 'Chelsea Market', cursive;*/
+  font-family: 'Changa One', cursive;
+ /* font-family: 'Hind Vadodara', sans-serif;*/
+  /*font-family: 'Iceland', cursive;*/
+
+}
+
 
 .streamYourself {
   position: absolute;
@@ -158,7 +179,7 @@ h1 {
 .chatInput {
   height: 90%;
   font-size: 2em;
-  
+
 }
 
 i:first-of-type + div {
@@ -340,21 +361,25 @@ i:first-of-type + div {
 }
 
 .activeWrapper {
-width: 100%;
+  width: 100%;
 }
 
 .tagSearch {
   width: 500px;
   display: block;
-  
+
 }
 .tagInput {
   padding: 1rem;
 }
 .activeGrid {
   display: block;
-  width: 50%;
+  width: 80%;
   margin: 0 auto;
+}
+
+.artistCard {
+  margin: 1rem auto;
 }
 /*MEDIA QUERIES*/
 @media (min-width: 1800px) {
@@ -368,7 +393,7 @@ width: 100%;
     .avatar > img {
       margin: 0 25%;
     }
-    
+
 
 /*    .artistButton {
       margin-top: 45px,
@@ -409,7 +434,7 @@ width: 100%;
       text-align: center;
       color: orange;
     }
-  
+
     .mic-section {
       height: 880px;
       background-position: 220px 0px;
@@ -530,4 +555,17 @@ input[type="file"] {
   height : 20px;
   width: 50px;
   background-color: #eCe630;
+}
+
+.tag-pill {
+  line-height: 25px;
+  padding-left: 8px;
+  padding-right: 8px;
+  margin-right: 4px;
+  background: #fea92f;
+  border-radius: 15px;
+  /*font-weight: 700;*/
+  font-size: 10pt;
+  color: #000;
+  /*font-family: arial;*/
 }
