@@ -14,7 +14,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import AutoComplete from 'material-ui/lib/auto-complete';
 import Close from 'material-ui/lib/svg-icons/navigation/close';
 import Popover from 'material-ui/lib/popover/popover';
-
+import HeartTag from '../../node_modules/material-ui/lib/svg-icons/action/loyalty';
 
 const styles = {
   root: {
@@ -32,7 +32,7 @@ const styles = {
   },
 };
 
-const defaultGridTileImage = '../../public/img/rocket.svg';
+const defaultGridTileImage = '../../public/img/crowdLarge.jpg';
 
 export class StreamsContainer extends Component {
   constructor(props){
@@ -165,10 +165,6 @@ export class StreamsContainer extends Component {
 
   // onSave={this.handleSave.bind(this, performance.id)
   renderEvents () {
-    // return <div>Result</div>
-    const style = {
-      margin: 12,
-    };
 
     var activeStreams;
     if(this.state.filteredStreams.length>0){
@@ -178,83 +174,67 @@ export class StreamsContainer extends Component {
       activeStreams = this.props.presentActiveStreams;
       console.log('displaying unfiltered streams', activeStreams)
     }
+
     // return this.props.presentActiveStreams.map((performance)=> {
     return activeStreams.map((performance)=> {
       return (
-        <div>
-          <GridTile
-          key={performance.id}
-          title={performance.title}
-          subtitle={
-            <div><Link to={`/router/activeStream/${performance.room}`}>by <b>{performance.room}</b></Link>
-
-                {performance.tags.map(tag =>
-                  <RaisedButton className="tag-button" label={tag.tagname} style={style} />
-                )}
-
-            </div>
-          }
-          actionIcon={
-              this.props.userId ?
-                <div>
-                  <RaisedButton
-                    onTouchTap={this.handleTouchTap}
-                    label="Tag This!"
-                  />
-                  <Popover
-                    open={this.state.open}
-                    anchorEl={this.state.anchorEl}
-                    anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                    onRequestClose={this.handleRequestClose}
-                  >
-                    <div style={styles.popover}>
-                      <div className="tagInput">
-                        <input
-                          style={{
-                            height: '100%',
-                            fontSize: '2em',
-                            marginBottom: '1em',
-                          }}
-                          type="textarea"
-                          autoFocus="true"
-                          placeholder="Add a tag"
-                          value={this.state.text}
-                          onChange={this.handleChange.bind(this)}
-                          onKeyDown={this.handleSubmit.bind(this, performance.id)}
-                        />
-                      </div>
-                    </div>
-                  </Popover>
+        <GridTile
+        key={performance.id}
+        title={
+          <Link to={`/router/activeStream/${performance.room}`}>
+          <span>{performance.room} presents: {performance.title}</span>
+          </Link>
+        }
+        subtitle={
+          <div>
+            <span>{performance.short_description}</span><br />
+            {performance.tags.map(tag =>
+              <RaisedButton className="tag-button" label={tag.tagname} />
+            )}
+            <div>
+              <Popover
+                open={this.state.open}
+                anchorEl={this.state.anchorEl}
+                anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                onRequestClose={this.handleRequestClose}
+              >
+                <div style={styles.popover}>
+                  <div className="tagInput">
+                    <input
+                      style={{
+                        height: '100%',
+                        fontSize: '2em',
+                        marginBottom: '1em',
+                      }}
+                      type="textarea"
+                      autoFocus="true"
+                      placeholder="Add a tag"
+                      value={this.state.text}
+                      onChange={this.handleChange.bind(this)}
+                      onKeyDown={this.handleSubmit.bind(this, performance.id)}
+                    />
+                  </div>
                 </div>
-              :
-                <IconButton><StarBorder color="white"/></IconButton>
-            }
-          >
-            <img src={
+              </Popover>
+            </div>
+          </div>
+        }
+        actionIcon={this.props.userId ?
+          <IconButton onTouchTap={this.handleTouchTap}><HeartTag color="white"/></IconButton>
+        :
+          <Link to={`/router/activeStream/${performance.room}`}><IconButton><StarBorder color="white"/></IconButton></Link>
+        }
+        >
+          <img
+            src={
               performance.performance_image ?
               performance.performance_image
               :
               defaultGridTileImage
-            } />
-          </GridTile>
-
-          <div className="tagInput">
-            <input
-              style={{
-                height: '100%',
-                fontSize: '2em',
-                marginBottom: '1em',
-              }}
-              type="textarea"
-              autoFocus="true"
-              placeholder="Add a tag"
-              value={this.state.text}
-              onChange={this.handleChange.bind(this)}
-              onKeyDown={this.handleSubmit.bind(this, performance.id)}
-            />
-          </div>
-        </div>
+            }
+          />
+        </GridTile>
       );
     })
   }
