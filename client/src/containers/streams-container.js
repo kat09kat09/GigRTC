@@ -43,6 +43,7 @@ export class StreamsContainer extends Component {
       typing: false,
       tagSearchText: '',
       open: false,
+      currentID: null,
       filteredStreams: []
     };
   }
@@ -63,6 +64,7 @@ export class StreamsContainer extends Component {
 
   handleSubmit(performanceId, event) {
     const { userId} = this.props;
+    console.log(performanceId, '++++++++++++++++handleSubmit perfID in SUBMIT');
 
     const text = event.target.value.trim();
     if (event.which === 13) { //carriage return
@@ -112,9 +114,12 @@ export class StreamsContainer extends Component {
     this.setState({filteredStreams:[]})
   }
 
-  handleTouchTap = (event) => {
+  handleTouchTap = (perfID) => {
+    console.log(perfID, '++++++++++++++++handleTouchTap perfID');
+    console.log(event, '++++++++++++++++handleTouchTap event');
     this.setState({
       open: true,
+      currentID: perfID,
       anchorEl: event.currentTarget,
     });
   };
@@ -211,7 +216,7 @@ export class StreamsContainer extends Component {
                       placeholder="Add a tag"
                       value={this.state.text}
                       onChange={this.handleChange.bind(this)}
-                      onKeyDown={this.handleSubmit.bind(this, performance.id)}
+                      onKeyDown={this.handleSubmit.bind(this, this.state.currentID)}
                     />
                   </div>
                 </div>
@@ -220,7 +225,7 @@ export class StreamsContainer extends Component {
           </div>
         }
         actionIcon={this.props.userId ?
-          <IconButton onTouchTap={this.handleTouchTap}><HeartTag color="white"/></IconButton>
+          <IconButton onTouchTap={this.handleTouchTap.bind(this, performance.id)}><HeartTag color="white"/></IconButton>
         :
           <Link to={`/router/activeStream/${performance.room}`}><IconButton><StarBorder color="white"/></IconButton></Link>
         }
