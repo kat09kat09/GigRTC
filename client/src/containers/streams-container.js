@@ -94,6 +94,11 @@ export class StreamsContainer extends Component {
   }
 
   handleTagSearch(searchTag) {
+    // when search happens because tag is clicked on, fill in search bar
+    if(!this.state.tagSearchText) {
+      this.handleUpdateTagSearch(searchTag);
+    }
+
     if(searchTag.length>0){
       var filteredStreams= _.filter(this.props.presentActiveStreams, function(stream){
         return stream.tags.some(function(tag){
@@ -189,7 +194,7 @@ export class StreamsContainer extends Component {
           <div>
             <span>{performance.short_description}</span><br />
             {performance.tags.map(tag =>
-              <span className="tag-pill">{tag.tagname}</span>)}
+              <span className="tag-pill" onClick={() => this.handleTagSearch(tag.tagname)}>{tag.tagname}</span>)}
             <div>
               <Popover
                 open={this.state.open}
